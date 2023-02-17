@@ -1,0 +1,46 @@
+{
+    "name": "tebox",
+    "version": "1.0.0",
+    "description": "A site's online helper",
+    "license": "MIT",
+    "private": true,
+    "author": {
+        "name": "Vlad Pischaeff",
+        "email": "pischaeff@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vlad-pischaeff/tebox"
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "start": "npx lerna run start --stream",
+        "dev-server": "npx lerna run dev-server --stream",
+        "dev-webadmin": "npm run dev-webadmin --prefix ./packages/webadmin",
+        "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-webadmin\"",
+        "build:web": "npx lerna run build:web --stream",
+        "dev:app": "cd packages/app && yarn dev:app && cd ../../",
+        "build:android": "cd packages/app && yarn build:android && cd ../../",
+        "build:ios": "cd packages/app && yarn build:ios && cd ../../",
+        "script": "npx lerna run script --stream",
+        "dev:docs": "npx lerna run dev:docs --stream",
+        "build:docs": "npx lerna run build:docs --stream",
+        "deploy:docs": "npx lerna run deploy:docs --stream",
+        "lint": "eslint ./ --ext js,jsx,ts,tsx --ignore-pattern .eslintignore --cache --fix",
+        "test": "jest",
+        "ts-check": "tsc --noEmit",
+        "install": "npx lerna bootstrap && yarn link"
+    },
+    "engines": {
+        "node": ">= 14"
+    },
+    "devDependencies": {
+        "lerna": "^6.5.1",
+        "concurrently": "^7.2.2",
+        "cross-env": "^7.0.3",
+        "jest": "^29.3.1",
+        "nodemon": "^2.0.19"
+    }
+}

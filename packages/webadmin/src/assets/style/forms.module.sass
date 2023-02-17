@@ -1,0 +1,77 @@
+/**
+ * services add/edit form description
+ */
+.Form, .FormEditor
+    width: 80%
+    max-width: 400px
+    z-index: 2
+    color: var(--C5)
+    padding: 1rem
+    display: flex
+    flex-flow: column nowrap
+    justify-content: space-between
+    align-items: flex-end
+    background: var(--C2)
+    border: 2px solid var(--C2)
+    border-radius: 8px
+    box-shadow: 0px 0px 23px 0px var(--color-SHADOW)
+    fieldset
+        display: flex
+        flex-flow: column nowrap
+        justify-content: space-between
+        border: none
+        height: 100%
+        & > label
+            font-size: 14px
+            color: var(--C4)
+            text-transform: lowercase
+            margin-bottom: 1rem
+.FormEditor
+    width: 95%
+.FormBody, .FormBodyEditor
+    width: 100%
+    margin-bottom: 1rem
+.FormBodyEditor
+    border-radius: 6px
+    background: white
+    color: black
+.FormTextArea
+    border-radius: 6px
+    overflow: hidden
+    margin-bottom: 1rem
+    textarea
+        width: 100%
+        resize: none
+        border: none
+        padding: 6px
+        &:focus
+            background: var(--color-INPUTFOCUS)
+            color: #0F1A2B
+            outline: none
+.FormInput
+    width: 100%
+    border-radius: 6px
+    border: none
+    padding: 6px
+    margin-bottom: 1rem
+    font-size: 1rem
+    &::placeholder
+        color: var(--C8)
+    &:focus
+        background: var(--color-INPUTFOCUS)
+        color: #0F1A2B
+        outline: none
+.FormButtons
+    width: 100%
+    display: flex
+    justify-content: space-between
+.Button
+    height: 3rem
+    font-size: 1.125rem
+    border: none
+    border-radius: 6px
+    padding: 0 1rem
+    background: var(--C1)
+    &:hover
+        cursor: pointer
+        box-shadow: 0px 0px 10px -2px var(--color-SHADOW)

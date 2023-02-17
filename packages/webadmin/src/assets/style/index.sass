@@ -1,0 +1,72 @@
+// @use './variables.module' as var
+
+@font-face
+    font-family: 'Roboto'
+    src: url('http://localhost:3000/fonts/roboto-v20-latin_cyrillic-100.woff2') format('woff2')
+    src: url('http://localhost:3000/fonts/roboto-v20-latin_cyrillic-100.woff') format('woff')
+    font-weight: 100
+    font-style: normal
+
+@font-face
+    font-family: 'Roboto'
+    src: url('http://localhost:3000/fonts/roboto-v20-latin_cyrillic-300.woff2') format('woff2')
+    src: url('http://localhost:3000/fonts/roboto-v20-latin_cyrillic-300.woff') format('woff')
+    font-weight: 300
+    font-style: normal
+
+@font-face
+    font-family: 'Strong'
+    src: url('http://localhost:3000/fonts/Strong-Regular.woff2') format('woff2')
+    src: url('http://localhost:3000/fonts/Strong-Regular.woff') format('woff')
+    font-weight: 300
+    font-style: normal
+
+@font-face
+    font-family: 'Sharetech'
+    src: url('http://localhost:3000/fonts/sharetechrusbydaymarius.woff2') format('woff2')
+    src: url('http://localhost:3000/fonts/sharetechrusbydaymarius.woff') format('woff')
+    font-weight: 300
+    font-style: normal
+
+@font-face
+    font-family: 'Continu'
+    src: url('http://localhost:3000/fonts/continuummedium.woff2') format('woff2')
+    src: url('http://localhost:3000/fonts/continuummedium.woff') format('woff')
+    font-weight: 300
+    font-style: normal
+
+@font-face
+    font-family: 'PT_Sans'
+    src: url('http://localhost:3000/fonts/PT_Sans-Narrow-Web-Regular.woff2') format('woff2')
+    src: url('http://localhost:3000/fonts/PT_Sans-Narrow-Web-Regular.woff') format('woff')
+    font-weight: 400
+    font-style: normal
+@font-face
+    font-family: 'PT_Sans'
+    src: url('http://localhost:3000/fonts/PT_Sans-Narrow-Web-Bold.woff2') format('woff2')
+    src: url('http://localhost:3000/fonts/PT_Sans-Narrow-Web-Bold.woff') format('woff')
+    font-weight: 700
+    font-style: bold
+
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+    font-family: var(--font-PTSANS)
+    letter-spacing: 1px
+#root
+    width: 100vw
+    height: 100vh
+    background: var(--color-BACKGROUND)
+    // background-color: #001031
+    background-image: linear-gradient(43deg, #009efd1c 0%, var(--color-BACKGROUND) 46%, #ff990015 100%)
+    display: grid
+    grid-template-columns: minmax(10rem, 15%) 1fr
+.layout
+    height: 100%
+    display: grid
+    grid-template-rows: 3rem 1fr 3rem
+.content
+    display: grid
+    place-items: center
+    width: 100%

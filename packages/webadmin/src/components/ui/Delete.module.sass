@@ -1,0 +1,34 @@
+// @use 'assets/style/variables.module' as var
+
+$checked-color: #{var(--C7)}
+$unchecked-color: #{var(--C8)}
+$checkbox-height: 20px
+
+.container
+    padding: 2px
+    margin: 0 6px
+.item, .itemDone
+    height: $checkbox-height
+    width: $checkbox-height
+    background-color: transparent
+    position: relative
+    display: inline-block
+    cursor: pointer
+    &::before, &::after
+        position: absolute
+        height: 0
+        width: 80%
+        content: ' '
+    &::before
+        transform: rotate(-45deg)
+        top: calc($checkbox-height * .35)
+    &::after
+        transform: rotate(45deg)
+        top: calc($checkbox-height * .35)
+        right: 0
+.item
+    &::before, &::after
+        border: 2px solid $unchecked-color
+.itemDone
+    &::before, &::after
+        border: 2px solid $checked-color

@@ -1,0 +1,126 @@
+// @use 'assets/style/variables.module' as var
+
+$checked-color: #{var(--C7)}
+$unchecked-color: #{var(--C8)}
+$checkbox-height: 20px
+$background-color: transparent
+$duration: .4s
+$duration2: .2s
+
+.container
+    padding: 2px
+    margin: 0 6px
+
+// @-moz-keyframes dothabottomcheck
+//     0%
+//         height: 0
+//     100%
+//         height: calc($checkbox-height / 2)
+
+// @-webkit-keyframes dothabottomcheck
+//     0%
+//         height: 0
+//     100%
+//         height: calc($checkbox-height / 2)
+
+@keyframes dothabottomcheck
+    0%
+        height: 0
+    100%
+        height: calc($checkbox-height / 2)
+
+@keyframes dothatopcheck
+    0%
+        height: 0
+    50%
+        height: 0
+    100%
+        height: calc($checkbox-height * 1.2)
+
+// @-webkit-keyframes dothatopcheck
+//     0%
+//         height: 0
+//     50%
+//         height: 0
+//     100%
+//         height: calc($checkbox-height * 1.2)
+
+// @-moz-keyframes dothatopcheck
+//     0%
+//         height: 0
+//     50%
+//         height: 0
+//     100%
+//         height: calc($checkbox-height * 1.2)
+
+input[type=checkbox]
+    display: none
+
+.checkbox
+    height: $checkbox-height
+    width: $checkbox-height
+    background-color: transparent
+    border: 1px solid $unchecked-color
+    border-radius: 5px
+    position: relative
+    display: inline-block
+    // -moz-box-sizing: border-box
+    // -webkit-box-sizing: border-box
+    // box-sizing: border-box
+    // -moz-transition: border-color ease $duration2
+    // -o-transition: border-color ease $duration2
+    // -webkit-transition: border-color ease $duration2
+    transition: border-color ease $duration2
+    cursor: pointer
+    &::before, &::after
+        // -moz-box-sizing: border-box
+        // -webkit-box-sizing: border-box
+        // box-sizing: border-box
+        position: absolute
+        height: 0
+        width: calc($checkbox-height * .2)
+        background-color: $checked-color
+        display: inline-block
+        // -moz-transform-origin: left top
+        // -ms-transform-origin: left top
+        // -o-transform-origin: left top
+        // -webkit-transform-origin: left top
+        transform-origin: left top
+        border-radius: 5px
+        content: ' '
+        // -webkit-transition: opacity ease .5
+        // -moz-transition: opacity ease .5
+        transition: opacity ease .5
+    &::before
+        top: calc($checkbox-height * .7)
+        left: calc($checkbox-height * .4)
+        box-shadow: 0 0 0 calc($checkbox-height * .05) $background-color
+        // -moz-transform: rotate(-135deg)
+        // -ms-transform: rotate(-135deg)
+        // -o-transform: rotate(-135deg)
+        // -webkit-transform: rotate(-135deg)
+        transform: rotate(-135deg)
+    &::after
+        top: calc($checkbox-height * .37)
+        left: calc($checkbox-height * .05)
+        // -moz-transform: rotate(-45deg)
+        // -ms-transform: rotate(-45deg)
+        // -o-transform: rotate(-45deg)
+        // -webkit-transform: rotate(-45deg)
+        transform: rotate(-45deg)
+
+input[type=checkbox]:checked + .checkbox,
+.checkbox.checked
+    border-color: $checked-color
+    &::after
+        height: calc($checkbox-height * .5)
+        // -moz-animation: dothabottomcheck $duration2 ease 0s forwards
+        // -o-animation: dothabottomcheck $duration2 ease 0s forwards
+        // -webkit-animation: dothabottomcheck $duration2 ease 0s forwards
+        animation: dothabottomcheck $duration2 ease 0s forwards
+    &::before
+        height: calc($checkbox-height * 1.2)
+        // -moz-animation: dothatopcheck $duration ease 0s forwards
+        // -o-animation: dothatopcheck $duration ease 0s forwards
+        // -webkit-animation: dothatopcheck $duration ease 0s forwards
+        animation: dothatopcheck $duration ease 0s forwards

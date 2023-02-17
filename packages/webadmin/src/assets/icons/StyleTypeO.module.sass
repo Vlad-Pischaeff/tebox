@@ -1,0 +1,25 @@
+.svg
+    width: 2.5rem
+    height: 2.5rem
+    border-radius: 50%
+    border: 2px solid var(--C2)
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 6px
+    margin-right: 4px
+    &:hover
+        cursor: pointer
+        background: var(--C2)
+    &:hover .strokeStyle
+        stroke: var(--C4)
+.fillStyle
+    fill: none
+.strokeStyle
+    stroke: var(--C5)
+    stroke-width: 50
+    stroke-linecap: round
+    stroke-miterlimit: 23
+.active
+    background: var(--C5)
+    stroke: var(--C2)

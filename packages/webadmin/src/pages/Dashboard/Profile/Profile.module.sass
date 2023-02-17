@@ -1,0 +1,249 @@
+.Container
+    display: grid
+    grid-template-columns: minmax(15rem, 15%) 1fr
+    position: relative
+    padding: 1rem
+    width: 100%
+    height: 100%
+.RightSubContainer
+    display: grid
+    grid-template-rows: 1fr 1rem 1fr
+.LeftSubContainer
+    display: flex
+    flex-flow: column nowrap
+    justify-content: space-between
+    align-items: flex-start
+    margin-right: 1rem
+    padding-right: 1rem
+    border-right: 1px solid var(--C2)
+.ManagedTeamSubContainer,
+.ManagedSitesSubContainer
+    flex: 1 1 auto
+    display: flex
+    flex-flow: column
+/**
+ * image profile description
+ */
+.Image
+    width: 6rem
+    height: 6rem
+    margin: 4px
+    border-radius: 6px
+.ImageFill
+    fill: #bbbbbbee
+.Item
+    display: grid
+    grid-template-columns: minmax(5rem, 25%) 1fr
+    width: 100%
+    padding: 4px
+    color: var(--C5)
+.ItemTitle
+    color: gray
+.ItemIcon
+    margin: 4px
+.ItemTitle,
+.ItemValue
+    line-break: anywhere
+.ItemContainer
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    color: var(--C5)
+    &:hover
+        background: var(--color-HOVER)
+/**
+ * web sites description
+ */
+.ItemsContainer
+    flex: 1 1 8rem
+    width: 100%
+    padding: 4px
+    overflow: auto
+    border: 1px solid #a0a0a030
+    border-radius: 8px
+.ItemsListTitle
+    flex: 0 0 2rem
+    display: flex
+    justify-content: space-between
+    align-items: center
+    color: gray
+    margin-bottom: 1rem
+/**
+ * web sites item description
+ */
+.PropertyContainer
+    display: flex
+    justify-content: space-between
+    align-items: flex-start
+    color: var(--C5)
+    padding: 4px
+    &:hover
+        background: var(--color-HOVER)
+    &:hover .PropertyIcon
+        visibility: visible
+.PropertyTitle
+    color: gray
+    flex: 0 0 2.5rem
+.PropertyValue,
+.PropertySite,
+.PropertyHash
+    padding-right: 8px
+    word-break: break-all
+.PropertySite
+    flex: 0 0 9rem
+.PropertyHash
+    flex: 1 1 auto
+.PropertyIcon
+    margin-left: 8px
+    visibility: hidden
+.PropertyFavIcon
+    width: 24px
+    height: 24px
+    margin-right: 8px
+.PropertyMemberIcon
+    width: 40px
+    height: 40px
+    margin-right: 1rem
+    border-radius: 4px
+    & > img,
+    & > svg
+        max-width: 100%
+        max-height: 100%
+        object-fit: contain
+        & > g
+            fill: gray
+.PropertyFlexRow
+    display: flex
+    align-items: flex-start
+.flex11
+    flex: 0 0 11rem
+/**
+ * add item button description
+ */
+.AddItem
+    flex: 0 0 2rem
+    text-transform: uppercase
+    font-size: 1rem
+    font-weight: 900
+    line-height: 2rem
+    color: var(--C6)
+    background: transparent
+    padding: 0 8px
+    width: fit-content
+    border-radius: 8px
+    border: 2px solid var(--C2)
+    &:hover
+        color: var(--C4)
+        cursor: pointer
+        background: var(--C2)
+/**
+ * placeholder description
+ */
+.MainPlaceholder
+    display: grid
+    place-items: center
+    height: 100%
+    p
+        font-size: 1.5rem
+        font-weight: var(--font-700)
+        color: var(--C2)
+/**
+ * canvas description
+ */
+.previewContainer,
+.imageContainer
+    width: 100%
+    margin-bottom: 1rem
+    display: grid
+    place-items: center
+.previewCanvas
+    border-radius: 8px
+    object-fit: contain
+    width: 6rem
+    height: 6rem
+.hiddenCanvas
+    display: none
+.imageContainer
+    min-height: 10rem
+    font-size: 1.5rem
+    font-weight: var(--font-700)
+    color: var(--C4)
+/**
+ * change image button description
+ */
+.label
+    display: inline-block
+    height: 100%
+    &:hover
+        cursor: pointer
+/**
+ * modal checkbox description
+ */
+$checked-color: #{var(--C7)}
+$unchecked-color: #{var(--C1)}
+$checkbox-height: 20px
+$background-color: transparent
+$duration: .4s
+$duration2: .2s
+
+.CheckboxContainer
+    padding: 2px
+    margin: 0 6px
+
+@keyframes dothabottomcheck
+    0%
+        height: 0
+    100%
+        height: calc($checkbox-height / 2)
+
+@keyframes dothatopcheck
+    0%
+        height: 0
+    50%
+        height: 0
+    100%
+        height: calc($checkbox-height * 1.2)
+
+input[type=checkbox]
+    display: none
+
+.Checkbox
+    height: $checkbox-height
+    width: $checkbox-height
+    background-color: transparent
+    border: 1px solid $unchecked-color
+    border-radius: 5px
+    position: relative
+    display: inline-block
+    transition: border-color ease $duration2
+    cursor: pointer
+    margin-bottom: 0
+    &::before, &::after
+        position: absolute
+        height: 0
+        width: calc($checkbox-height * .2)
+        background-color: $checked-color
+        display: inline-block
+        transform-origin: left top
+        border-radius: 5px
+        content: ' '
+        transition: opacity ease .5
+    &::before
+        top: calc($checkbox-height * .7)
+        left: calc($checkbox-height * .4)
+        box-shadow: 0 0 0 calc($checkbox-height * .05) $background-color
+        transform: rotate(-135deg)
+    &::after
+        top: calc($checkbox-height * .37)
+        left: calc($checkbox-height * .05)
+        transform: rotate(-45deg)
+
+input[type=checkbox]:checked + .Checkbox,
+.Checkbox.checked
+    border-color: $checked-color
+    &::after
+        height: calc($checkbox-height * .5)
+        animation: dothabottomcheck $duration2 ease 0s forwards
+    &::before
+        height: calc($checkbox-height * 1.2)
+        animation: dothatopcheck $duration ease 0s forwards

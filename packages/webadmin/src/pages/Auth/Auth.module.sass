@@ -1,0 +1,97 @@
+.authForm
+    width: 22rem
+    min-height: 25rem
+    border-radius: 8px
+    background: var(--C2)
+    color: var(--C5)
+    display: flex
+    flex-flow: column
+    justify-content: space-between
+    align-items: flex-start
+    overflow: hidden
+    .header
+        width: 100%
+        height: 3rem
+        background: var(--C4)
+        font-size: 2rem
+        margin-bottom: 1rem
+        display: flex
+        justify-content: flex-end
+        p
+            margin: 0 1rem
+            height: 3rem
+            line-height: 3rem
+    .body
+        width: 100%
+        padding: 1rem
+        margin-bottom: 1rem
+        fieldset
+            display: flex
+            flex-flow: column nowrap
+            border: none
+            margin-bottom: .5rem
+            input
+                height: 2.5rem
+                font-size: 1.3rem
+                border: none
+                padding: 0 .4rem
+                border-radius: 4px
+                &::placeholder
+                    color: var(--C6)
+                &:focus
+                    background: var(--color-INPUTFOCUS)
+                    outline: none
+                    box-shadow: 0px 0px 43px 0px var(--color-SHADOW)
+            label
+                font-size: .9rem
+                color: var(--C6)
+                text-transform: lowercase
+                letter-spacing: .1rem
+                margin: .4rem 0
+    .footer
+        width: 100%
+        min-height: 4rem
+        display: flex
+        font-size: .8rem
+        align-items: center
+        justify-content: flex-end
+        background: #00000020
+        padding: 1rem
+        a
+            color: var(--C6)
+            &:hover
+                color: var(--C5)
+
+.inputWrap
+    position: relative
+    height: 2.5rem
+    & > img
+        position: absolute
+        width: 2rem
+        height: 2rem
+        right: 1rem
+        top: .2rem
+        & path
+            color: gray
+    & > input
+        position: absolute
+        width: 100%
+.AuthButton
+    height: 3rem
+    min-height: 3rem
+    font-size: 1.5rem
+    border: none
+    margin: 1rem
+    padding: 0 2rem
+    border-radius: 5px
+    background: var(--C1)
+    &:hover
+        cursor: pointer
+        box-shadow: 0px 0px 43px 0px var(--color-SHADOW)
+
+a
+    text-decoration: none
+
+strong
+    font-size: 1rem
+    font-weight: 600
