@@ -2,6 +2,7 @@
     "name": "@tebox/webadmin",
     "version": "0.1.0",
     "description": "tebox admin panel",
+    "main": "src/index.tsx",
     "private": true,
     "dependencies": {
         "@icon/icofont": "^1.0.1-alpha.1",

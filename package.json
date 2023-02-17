@@ -18,7 +18,7 @@
     "scripts": {
         "start": "npx lerna run start --stream",
         "dev-server": "npx lerna run dev-server --stream",
-        "dev-webadmin": "npm run dev-webadmin --prefix ./packages/webadmin",
+        "dev-webadmin": "npx lerna run dev-webadmin --stream",
         "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-webadmin\"",
         "build:web": "npx lerna run build:web --stream",
         "dev:app": "cd packages/app && yarn dev:app && cd ../../",
