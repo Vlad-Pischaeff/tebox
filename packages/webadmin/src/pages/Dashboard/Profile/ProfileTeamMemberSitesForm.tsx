@@ -27,8 +27,8 @@ const Form = () => {
             const observedSites = owner?.team.filter((user) => {
                 return user.member === member.id
             })
-
-            if (observedSites) {
+            console.log('observedSites...', observedSites, member.id)
+            if (observedSites && observedSites[0].sites.length !== 0) {
                 setValue('sites', observedSites[0].sites );
             }
         }

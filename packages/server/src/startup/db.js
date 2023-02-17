@@ -5,6 +5,13 @@ const config = require('#s/config/config');
 const { MDB_SERVER, MDB_DATABASE } = config;
 
 module.exports = async () => {
+    await mongoose.set('strictQuery', true);
+
+    await mongoose.set('toJSON', {
+        virtuals: true,
+        versionKey: false
+    });
+
     await mongoose.connect(
         `mongodb://${MDB_SERVER}:27017/${MDB_DATABASE}`,
         {
@@ -14,8 +21,4 @@ module.exports = async () => {
         },
         () => { console.log('connected to db'); }
     );
-    await mongoose.set('toJSON', {
-        virtuals: true,
-        versionKey: false
-    });
 };
