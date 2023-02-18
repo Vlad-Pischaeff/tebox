@@ -7,6 +7,7 @@ import sloth from './sloth.svg';
 import microbe from './microbe.svg';
 import admin from './microbe.svg';
 import oldking from './oldking.svg';
+import github from './github.svg';
 
 export {
     lion,
@@ -17,5 +18,6 @@ export {
     sloth,
     microbe,
     admin,
-    oldking
+    oldking,
+    github
 };

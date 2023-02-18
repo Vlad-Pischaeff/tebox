@@ -17,9 +17,9 @@
     ],
     "scripts": {
         "start": "npx lerna run start --stream",
-        "dev-server": "npx lerna run dev-server --stream",
-        "dev-webadmin": "npx lerna run dev-webadmin --stream",
-        "dev": "cross-env NODE_ENV=development concurrently --kill-others-on-fail \"npm run dev-server\" \"npm run dev-webadmin\"",
+        "dev-server": "npx lerna run dev-server",
+        "dev-webadmin": "npx lerna run dev-webadmin",
+        "dev": "cross-env NODE_ENV=development npx lerna run dev-server,dev-webadmin --stream",
         "build:web": "npx lerna run build:web --stream",
         "dev:app": "cd packages/app && yarn dev:app && cd ../../",
         "build:android": "cd packages/app && yarn build:android && cd ../../",
@@ -34,13 +34,12 @@
         "install": "npx lerna bootstrap && yarn link"
     },
     "engines": {
-        "node": ">= 14"
+        "node": ">= 18.14"
     },
     "devDependencies": {
-        "lerna": "^6.5.1",
-        "concurrently": "^7.2.2",
         "cross-env": "^7.0.3",
         "jest": "^29.3.1",
+        "lerna": "^6.5.1",
         "nodemon": "^2.0.19"
     }
 }
