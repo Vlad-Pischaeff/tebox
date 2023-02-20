@@ -1,0 +1,1 @@
+export { MainChat } from './MainChat';

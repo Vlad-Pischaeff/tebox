@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.sass';
+import { MainChat } from 'components';
+import 'styles/App.sass';
 
 function App() {
     return (
@@ -17,9 +18,11 @@ function App() {
                     service menu
                 </div>
             </header>
+
             <main className="App-main">
-                Main chat...
+                <MainChat />
             </main>
+
             <footer className="App-footer">
                 footer
             </footer>

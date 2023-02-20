@@ -1,17 +1,11 @@
 interface iMessage {
+    'from': string,
+    'to': string,
     'message': string,
-    'date': string
+    'date': Date
 }
 
-export interface iManager extends iMessage {
-    'manager': string,
-}
-
-export interface iClient extends iMessage{
-    'client': string,
-}
-
-export type iChat = Array<iManager | iChat>
+export type iChat = Array<iMessage>
 
 export interface iContext {
     chat: iChat,

@@ -1,21 +1,29 @@
-import { useContext, useMemo, useState, createContext } from "react";
-import { iChat, iContext, iPropsWithChildren } from 'types/types.context';
+import React, { useContext, useMemo, useState, useEffect } from "react";
+import { iChat, iPropsWithChildren } from 'types/types.context';
+import { chatMock, USER_ID, MANAGER_ID } from 'templates';
 
-const ChatContext = createContext<iContext | []>([]);
+const useChat = () => {
+    const [ chat, setChat ] = useState<iChat>(chatMock);
+    const [ userId, setUserId ] = useState(USER_ID);
+    const [ managerId, setManagerId ] = useState(MANAGER_ID);
 
-function useCardContext () {
-    return useContext(ChatContext);
-}
-
-function useChat() {
-    const [ chat, setChat ] = useState<iChat>([]);
-
-    const chatContext = useMemo(() => ({ chat, setChat }), [ chat ]);
+    const chatContext = useMemo(() => ({
+        chat,
+        setChat,
+        userId,
+        managerId
+    }), [ chat ]);
 
     return chatContext;
 }
 
-const Provider: React.FC<iPropsWithChildren> = ({ children }) => {
+const ChatContext = React.createContext({} as ReturnType<typeof useChat>)
+
+export const useChatContext = () => {
+    return useContext(ChatContext);
+}
+
+export const Provider: React.FC<iPropsWithChildren> = ({ children }) => {
     const chatContext = useChat();
 
     return (
