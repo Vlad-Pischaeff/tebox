@@ -9,13 +9,14 @@ const isProduction = process.env.NODE_ENV === 'production';
 module.exports = app => {
     app.use('/upload', express.static(path.join(__dirname, '..', '/public/upload')));
 
-    // iframe client
-    app.use('/client', express.static(path.join(__dirname, '../../..', 'webclient' )));
+    // iframe Web-panel
+    app.use('/client', express.static(path.join(__dirname, '../../..', 'webpanel', 'build' )));
+    app.use('/static', express.static(path.join(__dirname, '../../..', 'webpanel', 'build', 'static' )));
     app.get('/client', (req, res) => {
-        console.log('iFrame client req...\n',
+        console.log('✅ iFrame client req...\n',
                     '\tto ...\t', req.headers.host,
                     '\n\tfrom ...\t', req.headers.referer, req.url, req.originalUrl);
-        res.sendFile(path.resolve(__dirname, '../../..', 'webclient', 'index.html'));
+        res.sendFile(path.resolve(__dirname, '../../..', 'webpanel', 'build', 'index.html'));
     })
 
     app.use('/api', ROUTER.usersRouter);

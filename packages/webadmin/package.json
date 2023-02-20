@@ -37,7 +37,7 @@
     },
     "scripts": {
         "dev-webadmin": "react-scripts start",
-        "build": "react-scripts build",
+        "build-webadmin": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "lint": "eslint -c .eslintrc --ext .ts,.tsx .",
