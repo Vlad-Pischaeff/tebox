@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import * as ReactRedux from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
