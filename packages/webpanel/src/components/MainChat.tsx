@@ -6,12 +6,16 @@ import s from 'styles/MainChat.module.sass';
 export const MainChat = () => {
     const { userId, managerId, chat } = useChatContext();
 
-    console.log('✅ id => ', userId, managerId);
+    const GROUPED = chat.reduce((r: iMessage[][], o: iMessage, i: number, a: iMessage[]) => {
+        if (a[i].from === (a[i - 1] && a[i - 1].from)) {
+            r[r.length - 1].push(o);
+        } else {
+            r.push([o]);
+        }
+        return r;
+    }, []);
 
-    // type iArr = {
-    //     from: number,
-    //     to: number
-    // }
+    console.log('✅ grouped..', GROUPED);
 
     const indexOfAll = (arr: iChat, val: string) => {
         return arr.reduce((acc: number[], el: iMessage, i: number) => (
@@ -20,24 +24,28 @@ export const MainChat = () => {
         );
     }
 
-    const arrangeMessages = (arr: iChat) => {
-        console.log('✅ idx...',indexOfAll(arr, userId));
-        return <div></div>
-    }
-
     return (
-        <div className={s.MainContainer}>
-            <div>
-                {arrangeMessages(chat)}
-            </div>
-
+        <div className={s.MainContainer} role="listbox">
             {
-                chat.map((msg) => (
-                    <div className={`${s.MessageContainer} ${msg.from === managerId ? s.right : s.left}`} key={msg.date.toISOString()}>
-                        <div>from {msg.from}</div>
-                        <div>to {msg.to}</div>
-                        <div>{msg.message}</div>
-                        <div>{msg.date.toISOString()}</div>
+                GROUPED.map((group) => (
+                    <div key={Date.now()} className={s.MsgGroup} role="listbox">
+                        {
+                            group.map((msg) => (
+                                <div
+                                    className={`
+                                        ${s.MsgContainer}
+                                        ${msg.from === userId ? s.left : s.right}
+                                    `}
+                                    key={Date.now()}
+                                    role="listitem"
+                                >
+                                    <div>from {msg.from}</div>
+                                    <div>to {msg.to}</div>
+                                    <div>{msg.message}</div>
+                                    <div>{msg.date.toISOString()}</div>
+                                </div>
+                            ))
+                        }
                     </div>
                 ))
             }

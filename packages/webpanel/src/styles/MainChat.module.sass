@@ -1,14 +1,25 @@
 .MainContainer
     padding: .5rem
     background-color: ivory
-    display: flex
-    flex-flow: column nowrap
-.MessageContainer
-    max-width: 80%
+.MsgContainer
     padding: .5rem
     margin: 4px
     border: 1px solid gray
+    border-radius: 8px
+.MsgGroup
+    display: flex
+    flex-flow: column nowrap
 .left
+    max-width: 80%
     align-self: flex-end
+    &:first-child
+        border-top-left-radius: 24px
+    &:last-child
+        border-bottom-left-radius: 24px
 .right
+    max-width: 80%
     align-self: flex-start
+    &:first-child
+        border-top-right-radius: 24px
+    &:last-child
+        border-bottom-right-radius: 24px
