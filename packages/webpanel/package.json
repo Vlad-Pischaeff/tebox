@@ -1,43 +1,37 @@
 {
     "name": "@tebox/webpanel",
     "version": "0.1.0",
-    "private": true,
     "description": "tebox client panel",
     "main": "src/index.tsx",
+    "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
-        "@testing-library/user-event": "^13.5.0",
+        "@testing-library/user-event": "^14.4.3",
         "@types/jest": "^27.5.2",
-        "@types/node": "^16.18.12",
+        "@types/node": "^17.0.45",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.11",
+        "date-fns": "^2.29.3",
+        "html-react-parser": "^3.0.8",
         "randomstring": "^1.2.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-scripts": "5.0.1",
+        "react-hook-form": "^7.33.1",
+        "react-image-crop": "^10.0.9",
+        "react-quill": "^2.0.0",
+        "react-quill-emoji": "^0.1.9",
+        "react-router-dom": "^6.8.1",
+        "react-scripts": "^5.0.1",
         "typescript": "^4.9.5",
-        "web-vitals": "^2.1.4"
-    },
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.30.7",
-        "@typescript-eslint/parser": "^5.30.7",
-        "cross-env": "^7.0.3",
-        "eslint": "^8.20.0",
-        "eslint-plugin-react": "^7.30.1",
-        "sass": "^1.56.1"
+        "web-vitals": "^2.1.4",
+        "yup": "^0.32.11"
     },
     "scripts": {
         "dev-webpanel": "cross-env PORT=3001 react-scripts start",
         "build-webpanel": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
     },
     "browserslist": {
         "production": [
@@ -50,5 +44,21 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "@types/randomstring": "^1.1.8",
+        "@typescript-eslint/eslint-plugin": "^5.30.7",
+        "@typescript-eslint/parser": "^5.30.7",
+        "cross-env": "^7.0.3",
+        "cypress": "^11.2.0",
+        "eslint": "^8.20.0",
+        "eslint-plugin-react": "^7.30.1",
+        "http-proxy-middleware": "^2.0.6",
+        "msw": "^0.49.1",
+        "sass": "^1.58.3",
+        "start-server-and-test": "^1.14.0"
+    },
+    "browser": {
+        "crypto": false
     }
 }

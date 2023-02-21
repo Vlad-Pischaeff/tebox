@@ -12,9 +12,27 @@ export const chatMock: iChat = [
         'date': new Date(2011, 1, 19),
     },
     {
+        'from': USER_ID,
+        'to': MANAGER_ID,
+        'message': 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+        'date': new Date(2011, 1, 19),
+    },
+    {
         'from': MANAGER_ID,
         'to': USER_ID,
         'message': 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+        'date': new Date(2011, 1, 21),
+    },
+    {
+        'from': MANAGER_ID,
+        'to': USER_ID,
+        'message': 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+        'date': new Date(2011, 1, 21),
+    },
+    {
+        'from': MANAGER_ID,
+        'to': USER_ID,
+        'message': 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut',
         'date': new Date(2011, 1, 21),
     },
     {
@@ -28,5 +46,17 @@ export const chatMock: iChat = [
         'to': USER_ID,
         'message': 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?',
         'date': new Date(2012, 2, 15),
+    },
+    {
+        'from': USER_ID,
+        'to': MANAGER_ID,
+        'message': 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt',
+        'date': new Date(2012, 3, 12),
+    },
+    {
+        'from': USER_ID,
+        'to': MANAGER_ID,
+        'message': 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt',
+        'date': new Date(2012, 3, 13),
     },
 ];
