@@ -8,7 +8,7 @@ const useChat = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ userId, setUserId ] = useState(USER_ID());
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [ serverId, setServerrId ] = useState(SERVER_ID);
+    const [ serverId, setServerId ] = useState(SERVER_ID);
 
     const WS = useMemo(() => ({
         prepareMessage(type: string, msg = '') {
