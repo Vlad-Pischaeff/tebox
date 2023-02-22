@@ -1,6 +1,7 @@
 import React from 'react';
 import { useChatContext } from 'store';
 import { iChat, iMessage } from  'types/types.context';
+import { ChatBubble } from './ChatBubble';
 import s from 'styles/MainChat.module.sass';
 
 export const MainChat = () => {
@@ -17,13 +18,6 @@ export const MainChat = () => {
 
     console.log('✅ grouped..', GROUPED);
 
-    const indexOfAll = (arr: iChat, val: string) => {
-        return arr.reduce((acc: number[], el: iMessage, i: number) => (
-                el.from === val ? [...acc, i] : acc
-            ), []
-        );
-    }
-
     return (
         <div className={s.MainContainer} role="listbox">
             {
@@ -31,19 +25,7 @@ export const MainChat = () => {
                     <div key={Date.now()} className={s.MsgGroup} role="listbox">
                         {
                             group.map((msg) => (
-                                <div
-                                    className={`
-                                        ${s.MsgContainer}
-                                        ${msg.from === userId ? s.left : s.right}
-                                    `}
-                                    key={Date.now()}
-                                    role="listitem"
-                                >
-                                    <div>from {msg.from}</div>
-                                    <div>to {msg.to}</div>
-                                    <div>{msg.message}</div>
-                                    <div>{msg.date.toISOString()}</div>
-                                </div>
+                                <ChatBubble msg={msg} />
                             ))
                         }
                     </div>

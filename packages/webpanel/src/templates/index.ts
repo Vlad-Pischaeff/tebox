@@ -45,18 +45,18 @@ export const chatMock: iChat = [
         'from': MANAGER_ID,
         'to': USER_ID,
         'message': 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?',
-        'date': new Date(2012, 2, 15),
+        'date': new Date(2023, 1, 15, 7, 0, 15),
     },
     {
         'from': USER_ID,
         'to': MANAGER_ID,
         'message': 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt',
-        'date': new Date(2012, 3, 12),
+        'date': new Date(2023, 1, 21, 15, 21, 35),
     },
     {
         'from': USER_ID,
         'to': MANAGER_ID,
         'message': 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt',
-        'date': new Date(2012, 3, 13),
+        'date': new Date(2023, 1, 22, 9, 20, 48),
     },
 ];
