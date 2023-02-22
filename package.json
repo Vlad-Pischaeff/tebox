@@ -37,7 +37,7 @@
         "install": "npx lerna bootstrap && yarn link"
     },
     "engines": {
-        "node": ">= 18.14"
+        "node": ">= 16.14"
     },
     "devDependencies": {
         "@babel/preset-flow": "^7.18.6",

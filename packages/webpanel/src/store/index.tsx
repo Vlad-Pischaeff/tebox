@@ -1,30 +1,44 @@
 import React, { useContext, useMemo, useState, useEffect } from "react";
-import { iChat, iPropsWithChildren } from 'types/types.context';
-import { chatMock, USER_ID, MANAGER_ID } from 'templates';
-import { SocketSend } from 'utils/websocket';
+import { iChat, iPropsWithChildren, iWebSocketMessage } from 'types/types.context';
+import { chatMock, USER_ID, SERVER_ID } from 'templates';
+import { socket } from 'utils/websocket';
 
 const useChat = () => {
     const [ chat, setChat ] = useState<iChat>(chatMock);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ userId, setUserId ] = useState(USER_ID());
-    const [ managerId, setManagerId ] = useState(MANAGER_ID);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ serverId, setServerrId ] = useState(SERVER_ID);
+
+    const WS = useMemo(() => ({
+        prepareMessage(type: string, msg = '') {
+            return {
+                [type]: {
+                    'fromUserId': userId,
+                    'toServerKey': serverId,
+                    'message': msg,
+                    'date': Date.now(),
+                }
+            }
+        },
+        sendMessage(message: iWebSocketMessage) {
+            socket.send(JSON.stringify(message));
+        }
+    }), [userId, serverId]);
 
     useEffect(() => {
         // ✅ send registration information to server
-        const message = {
-            'register user': {
-                'userId': userId,
-                'serverKey': MANAGER_ID
-            }
-        };
-        SocketSend(message);
-    }, [])
+        const message = WS.prepareMessage('register user');
+        WS.sendMessage(message);
+    }, [WS])
 
     const context = useMemo(() => ({
         chat,
         setChat,
         userId,
-        managerId
-    }), [chat]);
+        serverId,
+        WS
+    }), [chat, userId, serverId, WS]);
 
     return context;
 }
