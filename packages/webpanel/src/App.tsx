@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainChat } from 'components';
+import { MainChat, MainChatInput } from 'components';
 import 'styles/App.sass';
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
             </main>
 
             <footer className="App-footer">
-                footer
+                <MainChatInput />
             </footer>
         </div>
     );
