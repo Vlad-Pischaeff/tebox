@@ -20,9 +20,13 @@ export const ChatBubble = ({ msg }: iProps) => {
             key={Date.now()}
             role="listitem"
         >
-            <div className={s.date}>{formatDistanceToNow(msg.date, {addSuffix: true, includeSeconds: true})}</div>
+            <div className={s.date}>
+                { formatDistanceToNow(msg.date, {addSuffix: true, includeSeconds: true}) }
+            </div>
+
             {/* <div className={s.msg}>from {msg.from}</div>
             <div className={s.msg}>to {msg.to}</div> */}
+
             <div className={s.msg}>{msg.message}</div>
         </div>
     );
