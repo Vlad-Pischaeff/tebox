@@ -14,6 +14,15 @@ export const USER_ID = () => {
 
 export const MANAGER_ID = randomstring.generate();
 
+// export function wMessage(type: string, msg?: string) {
+//     this.type = {
+//         'fromUserId': USER_ID(),
+//         'toServerKey': MANAGER_ID,
+//         'message':  msg,
+//         'date': Date.now()
+//     };
+// }
+
 export const chatMock: iChat = [
     {
         'from': USER_ID(),
