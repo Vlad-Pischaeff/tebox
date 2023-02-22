@@ -10,9 +10,11 @@ module.exports = async (server) => {
         wss.on('connection', (ws, req) => {
             ws.isAlive = true;
 
+            console.log('✅ WS connection');
+
             ws.on('message', message => {
                 let data = JSON.parse(message);
-                console.log('👍 ws message...', data);
+                console.log('🔵 ws message...', data);
             })
 
             ws.on('pong', () => {

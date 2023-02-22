@@ -1,11 +1,16 @@
 import React, { useContext, useMemo, useState, useEffect } from "react";
 import { iChat, iPropsWithChildren } from 'types/types.context';
 import { chatMock, USER_ID, MANAGER_ID } from 'templates';
+import { socket } from 'utils/websocket';
 
 const useChat = () => {
     const [ chat, setChat ] = useState<iChat>(chatMock);
-    const [ userId, setUserId ] = useState(USER_ID);
+    const [ userId, setUserId ] = useState(USER_ID());
     const [ managerId, setManagerId ] = useState(MANAGER_ID);
+
+    useEffect(() => {
+        socket.send(JSON.stringify({ 'register user': userId }))
+    }, [])
 
     const chatContext = useMemo(() => ({
         chat,
