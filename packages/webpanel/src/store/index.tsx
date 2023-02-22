@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useState, useEffect } from "react";
 import { iChat, iPropsWithChildren } from 'types/types.context';
 import { chatMock, USER_ID, MANAGER_ID } from 'templates';
-import { socket } from 'utils/websocket';
+import { SocketSend } from 'utils/websocket';
 
 const useChat = () => {
     const [ chat, setChat ] = useState<iChat>(chatMock);
@@ -9,17 +9,24 @@ const useChat = () => {
     const [ managerId, setManagerId ] = useState(MANAGER_ID);
 
     useEffect(() => {
-        socket.send(JSON.stringify({ 'register user': userId }))
+        // ✅ send registration information to server
+        const message = {
+            'register user': {
+                'userId': userId,
+                'serverKey': MANAGER_ID
+            }
+        };
+        SocketSend(message);
     }, [])
 
-    const chatContext = useMemo(() => ({
+    const context = useMemo(() => ({
         chat,
         setChat,
         userId,
         managerId
-    }), [ chat ]);
+    }), [chat]);
 
-    return chatContext;
+    return context;
 }
 
 const ChatContext = React.createContext({} as ReturnType<typeof useChat>)
@@ -29,10 +36,10 @@ export const useChatContext = () => {
 }
 
 export const Provider: React.FC<iPropsWithChildren> = ({ children }) => {
-    const chatContext = useChat();
+    const context = useChat();
 
     return (
-        <ChatContext.Provider value={chatContext}>
+        <ChatContext.Provider value={context}>
             {children}
         </ChatContext.Provider>
     );
