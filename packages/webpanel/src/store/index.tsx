@@ -16,6 +16,7 @@ const useChat = () => {
         if (iWS.messageFromManager in data) {
             const chatCopy = JSON.parse(JSON.stringify(chat));
             chatCopy.push(data.messageFromManager);
+            setChat(chatCopy);
         }
         // eslint-disable-next-line
     }, []);
