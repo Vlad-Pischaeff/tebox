@@ -1,6 +1,7 @@
 'use strict';
 
 const WebSocket = require('ws');
+const wsClientsMap = new WeakMap();
 
 module.exports = async (server) => {
     try {
@@ -15,6 +16,9 @@ module.exports = async (server) => {
             ws.on('message', message => {
                 let data = JSON.parse(message);
                 console.log('🔵 ws message...', data);
+                if ('REGISTER CLIENT' in data) {
+                    wsClientsMap.set(ws, data['REGISTER CLIENT'].from);
+                }
             })
 
             ws.on('pong', () => {
@@ -30,9 +34,11 @@ module.exports = async (server) => {
             wss.clients.forEach(ws => {
                 ws.isAlive = false;
                 ws.ping();
+
+                const TO = wsClientsMap.get(ws);
                 const MSG = {
                     'MSG FROM MANAGER': {
-                        'to': 'qtwppJ9mif5wMlEmQm4QlgZdNHVcTUIx',
+                        'to': TO,
                         'from': '0eidy3BTCn7TnLKUpGCr094hNXzYKhWN',
                         'message': 'test message',
                         'date': Date.now()
@@ -40,7 +46,7 @@ module.exports = async (server) => {
                 };
                 ws.send(JSON.stringify(MSG));
             });
-        }, 30000);
+        }, 3000);
 
     } catch (e) {
         console.log('WS SERVER errors...', e);

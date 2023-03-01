@@ -44,14 +44,14 @@ const useChat = () => {
     useEffect(() => {
         const getChatMessage = (evt: MessageEvent) => {
             const data = JSON.parse(evt.data);
-            
+
             if (iWS.messageFromManager in data) {
                 updateChat(data[iWS.messageFromManager]);
             }
         };
         // ✅ add websocket listener
         socket.addEventListener('message', getChatMessage);
-    
+
         return () => {
                 socket.removeEventListener('message', getChatMessage);
         }
@@ -59,7 +59,7 @@ const useChat = () => {
 
     useEffect(() => {
         // ✅ send registration information to server
-        const message = WS.prepareMessage(iWS.clientIsOnline);
+        const message = WS.prepareMessage(iWS.registerClient);
         WS.sendMessage(message);
     }, [])
 
