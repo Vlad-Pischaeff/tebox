@@ -39,14 +39,14 @@ module.exports = async (server) => {
                 const MSG = {
                     'MSG FROM MANAGER': {
                         'to': TO,
-                        'from': '0eidy3BTCn7TnLKUpGCr094hNXzYKhWN',
+                        'from': 'server',
                         'message': 'test message',
                         'date': Date.now()
                     }
                 };
                 ws.send(JSON.stringify(MSG));
             });
-        }, 3000);
+        }, 30000);
 
     } catch (e) {
         console.log('WS SERVER errors...', e);

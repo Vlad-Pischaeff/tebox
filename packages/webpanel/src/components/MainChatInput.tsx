@@ -11,7 +11,7 @@ type tFormInputs = {
 }
 
 export const MainChatInput = () => {
-    const { WS, updateChat } = useChatContext();
+    const { WS } = useChatContext();
     const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
     useEffect(() => {
@@ -20,13 +20,7 @@ export const MainChatInput = () => {
 
     const onSubmit = async (formData: tFormInputs) => {
         if (formData.message) {
-            const message = WS.prepareMessage(
-                iWS.messageFromClient,
-                formData.message
-            );
-            WS.sendMessage(message);
-            updateChat(message[iWS.messageFromClient]);
-            // console.log('✅ Submit...', message, Object.keys(message))
+            WS.sendMessage(formData.message, iWS.messageFromClient);
             clearInput();
         }
     };
