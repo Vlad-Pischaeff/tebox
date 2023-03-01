@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useChatContext } from 'store';
 import { ButtonSendMessage } from './ButtonSendMessage';
+import { iWS} from 'types/types.websocket';
 import s from 'styles/MainChatInput.module.sass';
 
 type tFormInputs = {
@@ -8,6 +10,7 @@ type tFormInputs = {
 }
 
 export const MainChatInput = () => {
+    const { WS, updateChat } = useChatContext();
     const { setFocus, setValue, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
     useEffect(() => {
@@ -22,19 +25,14 @@ export const MainChatInput = () => {
     }, [setValue]);
 
     const onSubmit = async (formData: tFormInputs) => {
-        // ✅ вызываем API '/websites', обновляем 'website'
-        // const key = randomstring.generate();
-        // const site = formData.siteName;
-        // const hash = await bcrypt.hashSync(key + site);
-        console.log('✅ Submit...')
         if (formData.message) {
-        //     if (!!editedSite && 'id' in editedSite) {
-        //         // ✅ invoke when edit site
-        //         updateSite({ id: editedSite.id, key, hash, site });
-        //     } else {
-        //         // ✅ invoke when add site
-        //         addSite({ key, hash, site });
-            // }
+            const message = WS.prepareMessage(
+                iWS.messageFromClient, 
+                formData.message
+            );
+            WS.sendMessage(message);
+            updateChat(message[iWS.messageFromClient]);
+            console.log('✅ Submit...', message, Object.keys(message))
             clearInput();
         }
     };

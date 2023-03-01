@@ -30,8 +30,17 @@ module.exports = async (server) => {
             wss.clients.forEach(ws => {
                 ws.isAlive = false;
                 ws.ping();
+                const MSG = {
+                    'MSG FROM MANAGER': {
+                        'to': 'qtwppJ9mif5wMlEmQm4QlgZdNHVcTUIx',
+                        'from': '0eidy3BTCn7TnLKUpGCr094hNXzYKhWN',
+                        'message': 'test message',
+                        'date': Date.now()
+                    }
+                };
+                ws.send(JSON.stringify(MSG));
             });
-        }, 3000);
+        }, 30000);
 
     } catch (e) {
         console.log('WS SERVER errors...', e);

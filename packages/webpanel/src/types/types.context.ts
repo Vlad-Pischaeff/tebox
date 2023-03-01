@@ -2,7 +2,7 @@ export interface iMessage {
     'from': string,
     'to': string,
     'message': string,
-    'date': Date
+    'date': number
 }
 
 export type iChat = Array<iMessage>
@@ -12,10 +12,5 @@ export interface iPropsWithChildren {
 }
 
 export interface iWebSocketMessage {
-    [x: string]: {
-        fromUserId: string;
-        toServerKey: string;
-        message: string;
-        date: number;
-    };
+    [x: string]: iMessage
 }

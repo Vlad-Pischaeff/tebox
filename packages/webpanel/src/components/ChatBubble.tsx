@@ -14,7 +14,7 @@ export const ChatBubble = ({ msg }: iProps) => {
             <div className={s.date}>
                 {
                     formatDistanceToNow(
-                        msg.date,
+                        new Date(msg.date),
                         { addSuffix: true, includeSeconds: true }
                     )
                 }

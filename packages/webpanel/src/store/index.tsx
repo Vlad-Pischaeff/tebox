@@ -1,8 +1,32 @@
 import React, { useContext, useMemo, useCallback, useState, useEffect } from "react";
-import { iChat, iPropsWithChildren } from 'types/types.context';
+import { iChat, iMessage, iPropsWithChildren, iWebSocketMessage } from 'types/types.context';
 import { iWS} from 'types/types.websocket';
 import { chatMock, USER_ID, SERVER_ID } from 'templates';
-import { WS, socket } from 'utils/websocket';
+import { config } from 'config';
+
+export const socket = new WebSocket(config.WEBSOCKET_ADDR);
+
+socket.onopen = () => {
+    console.log('✅ tebox panel connected ... ');
+}
+
+export const WS = {
+    prepareMessage(type: string, msg = '') {
+        return {
+            [type]: {
+                'from': USER_ID(),
+                'to': SERVER_ID,
+                'message': msg,
+                'date': Date.now(),
+            }
+        }
+    },
+    sendMessage(message: iWebSocketMessage) {
+        if (socket) {
+            socket.send(JSON.stringify(message));
+        }
+    },
+};
 
 const useChat = () => {
     const [ chat, setChat ] = useState<iChat>(chatMock);
@@ -11,23 +35,27 @@ const useChat = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState(SERVER_ID);
 
-    const getChatMessage = useCallback((evt: MessageEvent) => {
-        const data = JSON.parse(evt.data);
-        if (iWS.messageFromManager in data) {
-            const chatCopy = JSON.parse(JSON.stringify(chat));
-            chatCopy.push(data.messageFromManager);
-            setChat(chatCopy);
-        }
-        // eslint-disable-next-line
-    }, []);
+    const updateChat = useCallback((data: iMessage) => {
+        const chatCopy = JSON.parse(JSON.stringify(chat));
+        chatCopy.push(data);
+        setChat(chatCopy);
+    }, [chat]);
 
     useEffect(() => {
+        const getChatMessage = (evt: MessageEvent) => {
+            const data = JSON.parse(evt.data);
+            
+            if (iWS.messageFromManager in data) {
+                updateChat(data[iWS.messageFromManager]);
+            }
+        };
         // ✅ add websocket listener
         socket.addEventListener('message', getChatMessage);
+    
         return () => {
-            socket.removeEventListener('message', getChatMessage);
+                socket.removeEventListener('message', getChatMessage);
         }
-    }, [getChatMessage])
+    }, [updateChat])
 
     useEffect(() => {
         // ✅ send registration information to server
@@ -38,10 +66,11 @@ const useChat = () => {
     const context = useMemo(() => ({
         chat,
         setChat,
+        updateChat,
         userId,
         serverId,
         WS
-    }), [chat, userId, serverId]);
+    }), [chat, userId, serverId, updateChat]);
 
     return context;
 }
