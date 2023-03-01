@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useChatContext } from 'store';
@@ -11,28 +12,21 @@ type tFormInputs = {
 
 export const MainChatInput = () => {
     const { WS, updateChat } = useChatContext();
-    const { setFocus, setValue, register, resetField, handleSubmit } = useForm<tFormInputs>();
+    const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
     useEffect(() => {
         setFocus('message', { shouldSelect: false });
     }, [setFocus]);
 
-    useEffect(() => {
-        // ✅ invoke when editing site
-        // if (editedSite && 'site' in editedSite) {
-        //     setValue('siteName', editedSite.site);
-        // }
-    }, [setValue]);
-
     const onSubmit = async (formData: tFormInputs) => {
         if (formData.message) {
             const message = WS.prepareMessage(
-                iWS.messageFromClient, 
+                iWS.messageFromClient,
                 formData.message
             );
             WS.sendMessage(message);
             updateChat(message[iWS.messageFromClient]);
-            console.log('✅ Submit...', message, Object.keys(message))
+            // console.log('✅ Submit...', message, Object.keys(message))
             clearInput();
         }
     };
