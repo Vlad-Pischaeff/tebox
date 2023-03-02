@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useChatContext } from 'store';
 import { ButtonSendMessage } from './ButtonSendMessage';
-import { iWS} from 'types/types.websocket';
+import { iWS } from 'types/types.context';
 import s from 'styles/MainChatInput.module.sass';
 
 type tFormInputs = {
@@ -19,15 +19,12 @@ export const MainChatInput = () => {
     }, [setFocus]);
 
     const onSubmit = async (formData: tFormInputs) => {
-        if (formData.message) {
-            WS.sendMessage(formData.message, iWS.messageFromClient);
-            clearInput();
+        const { message } = formData;
+        if (message) {
+            WS.sendMessage(message, iWS.messageFromClient);
+            resetField('message');
         }
     };
-
-    const clearInput = () => {
-        resetField('message');
-    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.Form}>

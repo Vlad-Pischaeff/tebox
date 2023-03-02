@@ -1,8 +1,7 @@
 // eslint-disable-next-line
 import React, { useMemo, useCallback, useState, useEffect } from "react";
 import { useWebsocket } from './hookUseWebsocket';
-import { iChat, iMessage } from 'types/types.context';
-import { iWS} from 'types/types.websocket';
+import { iChat, iMessage, iWS } from 'types/types.context';
 import { chatMock, USER_ID, SERVER_ID } from 'templates';
 
 export const useChat = () => {
@@ -59,7 +58,7 @@ export const useChat = () => {
 
     useEffect(() => {
         // ✅ send registration information to server
-        WS.sendMessage('ONLINE', iWS.registerClient);
+        WS.sendMessage('CLIENT IS ONLINE', iWS.registerClient);
         // eslint-disable-next-line
     }, [])
 
