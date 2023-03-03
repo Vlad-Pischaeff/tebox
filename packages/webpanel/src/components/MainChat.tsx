@@ -17,7 +17,7 @@ export const MainChat = () => {
     }, []);
 
     // console.log('✅ grouped..', GROUPED);
-    console.log('✅ chat..', chat);
+    console.log('🍀 chat..', chat);
 
     return (
         <div className={s.MainContainer} role="listbox" >

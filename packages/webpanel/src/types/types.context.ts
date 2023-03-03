@@ -20,5 +20,6 @@ export enum iMSG {
     'messageFromClient' = 'MSG_FROM_CLIENT',
     'messageFromManager' = 'MSG_FROM_MANAGER',
     'managerIsOnline' = 'MANAGER_IS_ONLINE',
+    'managerProfile' = 'MANAGER_PROFILE',
     'clientIsOnline' = 'CLIENT_IS_ONLINE',
 }

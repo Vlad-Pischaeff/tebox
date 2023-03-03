@@ -8,7 +8,7 @@ interface iProps extends React.HTMLAttributes<HTMLDivElement>{
 }
 
 export const ChatBubble = ({ msg }: iProps) => {
-    const chatRef = useRef<HTMLInputElement>(null);
+    const chatRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         chatRef.current?.scrollIntoView({ behavior: 'smooth'});

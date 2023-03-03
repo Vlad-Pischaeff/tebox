@@ -45,7 +45,7 @@ export const useWebsocket = () => {
     useEffect(() => {
         if (socket) {
             socket.onopen = () => {
-                console.log('✅ tebox panel connected ... ');
+                console.log('🔷 tebox panel connected.. ');
                 sendMessage(iMSG.registerClient, 'NULL');
             }
             // ✅ add websocket listener
