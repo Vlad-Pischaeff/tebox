@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import { emitter } from 'utils';
 import { useWebsocket } from './hookUseWebsocket';
 import { iChat } from 'types/types.context';
@@ -13,14 +13,13 @@ export const useChat = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState(SERVER_ID);
 
-    // eslint-disable-next-line
-    const updateChat = (data: CustomEvent) => {
+    const updateChat = useCallback((data: CustomEvent) => {
         const message = data.detail;
         const chatCopy = JSON.parse(JSON.stringify(chat));
         chatCopy.push(message);
         setChat(chatCopy);
-        console.log('🔰 updateChat 2...', chat)
-    };
+        console.log('🔔 updateChat..', chat)
+    }, [chat]);
 
     useEffect(() => {
         emitter.on('update chat array', updateChat);
