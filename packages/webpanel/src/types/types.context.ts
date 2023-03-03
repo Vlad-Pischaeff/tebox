@@ -15,10 +15,10 @@ export interface iWebSocketMessage {
     [x: string]: iMessage
 }
 
-export enum iWS {
-    'registerClient' = 'REGISTER CLIENT',
-    'messageFromClient' = 'MSG FROM CLIENT',
-    'messageFromManager' = 'MSG FROM MANAGER',
-    'managerIsOnline' = 'MANAGER IS ONLINE',
-    'clientIsOnline' = 'CLIENT IS ONLINE',
+export enum iMSG {
+    'registerClient' = 'REGISTER_CLIENT',
+    'messageFromClient' = 'MSG_FROM_CLIENT',
+    'messageFromManager' = 'MSG_FROM_MANAGER',
+    'managerIsOnline' = 'MANAGER_IS_ONLINE',
+    'clientIsOnline' = 'CLIENT_IS_ONLINE',
 }

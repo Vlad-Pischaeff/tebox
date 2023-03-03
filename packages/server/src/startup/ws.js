@@ -16,8 +16,8 @@ module.exports = async (server) => {
             ws.on('message', message => {
                 let data = JSON.parse(message);
                 console.log('🔵 ws message...', data);
-                if ('REGISTER CLIENT' in data) {
-                    wsClientsMap.set(ws, data['REGISTER CLIENT'].from);
+                if ('REGISTER_CLIENT' in data) {
+                    wsClientsMap.set(ws, data['REGISTER_CLIENT'].from);
                 }
             })
 
@@ -37,7 +37,7 @@ module.exports = async (server) => {
 
                 const TO = wsClientsMap.get(ws);
                 const MSG = {
-                    'MSG FROM MANAGER': {
+                    'MSG_FROM_MANAGER': {
                         'to': TO,
                         'from': 'server',
                         'message': 'test message',
