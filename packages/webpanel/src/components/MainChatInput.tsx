@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useChatContext } from 'store';
+import { useWebSocket } from 'hooks/useWebSocket';
 import { ButtonSendMessage } from './ButtonSendMessage';
 import { iMSG } from 'types/types.context';
 import s from 'styles/MainChatInput.module.sass';
@@ -11,7 +11,7 @@ type tFormInputs = {
 }
 
 export const MainChatInput = () => {
-    const { sendMessage } = useChatContext();
+    const { sendMessage } = useWebSocket();
     const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
     useEffect(() => {

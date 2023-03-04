@@ -1,39 +1,28 @@
 // eslint-disable-next-line
-import React, { useMemo, useState, useEffect, useCallback } from "react";
-import { emitter } from 'utils';
-import { useWebsocket } from './hookUseWebsocket';
-import { iChat } from 'types/types.context';
+import React, { useMemo, useState, useCallback } from "react";
+import { iMessage, iChat } from 'types/types.context';
 import { chatMock, USER_ID, SERVER_ID } from 'templates';
 
 export const useChat = () => {
-    const { sendMessage } = useWebsocket();
     const [ chat, setChat ] = useState<iChat>(chatMock);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ userId, setUserId ] = useState(USER_ID());
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState(SERVER_ID);
 
-    const updateChat = useCallback((data: CustomEvent) => {
-        const message = data.detail;
+    const updChat = useCallback((message: iMessage) => {
         const chatCopy = JSON.parse(JSON.stringify(chat));
         chatCopy.push(message);
         setChat(chatCopy);
-        console.log('🔔 updateChat..', chat)
+        console.log('🔔 updChat..', chat)
     }, [chat]);
-
-    useEffect(() => {
-        emitter.on('update chat array', updateChat);
-        return () => {
-            emitter.off('update chat array', updateChat);
-        }
-    }, [updateChat]);
 
     const context = useMemo(() => ({
         chat,
-        sendMessage,
+        updChat,
         userId,
         serverId,
-    }), [chat, userId, serverId, sendMessage]);
+    }), [chat, userId, serverId, updChat]);
 
     return context;
 }

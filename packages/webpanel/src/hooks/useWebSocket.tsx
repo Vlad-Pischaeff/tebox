@@ -1,11 +1,12 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useCallback } from "react";
-import { emitter } from 'utils';
+import { useChatContext } from 'store';
 import { iMSG } from 'types/types.context';
 import { USER_ID, SERVER_ID } from 'templates';
 import { config } from 'config';
 
-export const useWebsocket = () => {
+export const useWebSocket = () => {
+    const { updChat } = useChatContext();
     const [ socket, setSocket ] = useState<WebSocket>();
 
     useEffect(() => {
@@ -30,17 +31,17 @@ export const useWebsocket = () => {
         !!socket && socket.send(JSON.stringify(newMsg));
 
         if (type === (iMSG.messageFromClient || iMSG.messageFromManager)) {
-            emitter.emit('update chat array', newMsg[type]);
+            updChat(newMsg[type]);
         }
-    }, [socket, prepareMessage]);
+    }, [socket, prepareMessage, updChat]);
 
     const getMessage = useCallback((evt: MessageEvent) => {
         const data = JSON.parse(evt.data);
 
         if (iMSG.messageFromManager in data) {
-            emitter.emit('update chat array', data[iMSG.messageFromManager]);
+            updChat(data[iMSG.messageFromManager]);
         }
-    }, []);
+    }, [updChat]);
 
     useEffect(() => {
         if (socket) {
@@ -59,6 +60,5 @@ export const useWebsocket = () => {
     return ({
         socket,
         sendMessage,
-        getMessage,
     });
 }
