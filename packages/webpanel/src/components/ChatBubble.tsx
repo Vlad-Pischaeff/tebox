@@ -25,7 +25,12 @@ export const ChatBubble = ({ msg }: iProps) => {
                 }
             </div>
 
-            <div className={s.msg}>{msg.message}</div>
+            <div className={s.msg}>
+                {
+                    typeof msg.message === 'string' &&
+                        msg.message
+                }
+            </div>
         </div>
     );
 };

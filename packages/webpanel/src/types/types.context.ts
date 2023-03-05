@@ -1,7 +1,7 @@
 export interface iMessage {
     'from': string,
     'to': string,
-    'message': string,
+    'message': string | object,
     'date': number
 }
 
