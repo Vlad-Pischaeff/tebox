@@ -1,9 +1,9 @@
 // eslint-disable-next-line
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+import config from '@tebox/config/client';
 import { useChatContext } from 'store';
 import { iMSG, iWebSocketMessage } from 'types/types.context';
 import { USER_ID, SERVER_ID } from 'templates';
-import { config } from 'config';
 
 export const useWebSocket = () => {
     const { updChat, setMngProfile } = useChatContext();

@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useMemo, useState, useCallback } from "react";
+import React, { useState } from "react";
 import { iMessage, iChat } from 'types/types.context';
 import { chatMock, USER_ID, SERVER_ID } from 'templates';
 

@@ -1,7 +1,7 @@
 'use strict';
 
+const config = require('@tebox/config/server');
 const Tokens = require('#s/models/tokens');
-const config = require('#s/config/config');
 const jwt = require('jsonwebtoken');
 
 class TokenService {

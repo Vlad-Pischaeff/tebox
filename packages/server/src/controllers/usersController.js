@@ -1,6 +1,6 @@
 'use strict';
 
-const config = require('#s/config/config');
+const config = require('@tebox/config/server');
 const Users = require('#s/models/users');
 const UserService = require('#s/services/userService');
 const MailService = require('#s/services/mailService');

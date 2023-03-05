@@ -1,0 +1,9 @@
+{
+    "name": "@tebox/config",
+    "version": "1.0.0",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "dotenv": "^16.0.3"
+    }
+}

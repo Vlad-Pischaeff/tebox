@@ -1,6 +1,6 @@
 'use strict';
 
-const config = require('#s/config/config');
+const config = require('@tebox/config/server');
 const nodemailer = require('nodemailer');
 
 class MailService {

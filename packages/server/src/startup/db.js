@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const config = require('#s/config/config');
+const config = require('@tebox/config/server');
 const { MDB_SERVER, MDB_DATABASE } = config;
 
 module.exports = async () => {
@@ -19,6 +19,6 @@ module.exports = async () => {
             useUnifiedTopology: true,
             socketTimeoutMS: 3000
         },
-        () => { console.log('connected to db'); }
+        () => { console.log('🧶 connected to db'); }
     );
 };
