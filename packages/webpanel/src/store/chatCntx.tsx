@@ -10,19 +10,19 @@ export const useChat = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState(SERVER_ID);
 
-    const updChat = useCallback((message: iMessage) => {
+    const updChat = (message: iMessage) => {
         const chatCopy = JSON.parse(JSON.stringify(chat));
         chatCopy.push(message);
         setChat(chatCopy);
         console.log('🔔 updChat..', chat)
-    }, [chat]);
+    };
 
-    const context = useMemo(() => ({
+    const context = {
         chat,
         updChat,
         userId,
         serverId,
-    }), [chat, userId, serverId, updChat]);
+    };
 
     return context;
 }
