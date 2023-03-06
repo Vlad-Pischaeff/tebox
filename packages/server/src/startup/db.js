@@ -5,14 +5,14 @@ const config = require('@tebox/config/server');
 const { MDB_SERVER, MDB_DATABASE } = config;
 
 module.exports = async () => {
-    await mongoose.set('strictQuery', true);
+    mongoose.set('strictQuery', true);
 
-    await mongoose.set('toJSON', {
+    mongoose.set('toJSON', {
         virtuals: true,
         versionKey: false
     });
 
-    await mongoose.connect(
+    mongoose.connect(
         `mongodb://${MDB_SERVER}:27017/${MDB_DATABASE}`,
         {
             useNewUrlParser: true,

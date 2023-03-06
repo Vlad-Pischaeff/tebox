@@ -1,9 +1,7 @@
 const config = {
     SERVER_PORT:        5000,
     SERVER_ADDR:        'localhost',
-    WS_PROTO:           window.location.protocol === 'https:'
-                            ? 'wss:'
-                            : 'ws:',
+    WS_PROTO:           'ws:',
     WEBSOCKET_ADDR:     '',
     HOST:               'http://localhost:3000',
     LIFETIME:           '10m',

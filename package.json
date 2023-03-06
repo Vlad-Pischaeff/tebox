@@ -34,7 +34,7 @@
         "test": "jest",
         "test-webadmin": "cd packages/webadmin && npm run test && cd ../..",
         "ts-check": "tsc --noEmit",
-        "install": "npx lerna bootstrap && yarn link"
+        "install": "npx lerna bootstrap"
     },
     "engines": {
         "node": ">= 16.14"
