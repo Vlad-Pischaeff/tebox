@@ -5,6 +5,11 @@ import { useChatContext } from 'store';
 import { iMSG, iWebSocketMessage } from 'types/types.context';
 import { USER_ID, SERVER_ID } from 'templates';
 
+type eSendMsgType = Extract<
+    iMSG,
+    iMSG.messageFromClient | iMSG.clientIsOnline | iMSG.registerClient
+>;
+
 export const useWebSocket = () => {
     const { updChat, setMngProfile } = useChatContext();
     const [ socket, setSocket ] = useState<WebSocket>();
@@ -27,6 +32,7 @@ export const useWebSocket = () => {
             setMngProfile(obj.message);
         },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
+            !!socket && socket.send(JSON.stringify(data));
             console.log('🎃 iMSG.managerProfile', data);
         },
         [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
@@ -53,7 +59,7 @@ export const useWebSocket = () => {
         }
     }, []);
 
-    const sendMessage = useCallback((type: iMSG, message: string ) => {
+    const sendMessage = useCallback((type: eSendMsgType, message: string ) => {
         const msg = prepareMessage(type, message);
         actions.run(msg);
     }, [prepareMessage, actions]);
