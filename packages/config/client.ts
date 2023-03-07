@@ -1,7 +1,10 @@
+console.log(process.env)
 const config = {
-    SERVER_PORT:        5000,
-    SERVER_ADDR:        'localhost',
-    WS_PROTO:           'ws:',
+    SERVER_PORT:        process.env.REACT_APP_SERVER_PORT,
+    SERVER_ADDR:        process.env.REACT_APP_SERVER_ADDR,
+    WEBSOCKET_PROTO:    process.env.REACT_APP_SERVER_PROTO === 'https'
+                            ? 'wss:'
+                            : 'ws:',
     WEBSOCKET_ADDR:     '',
     HOST:               'http://localhost:3000',
     LIFETIME:           '10m',
@@ -26,8 +29,8 @@ const config = {
     MDB_DATABASE:       process.env.MDB_DATABASE,
 };
 
-const { WS_PROTO, SERVER_ADDR, SERVER_PORT } = config;
+const { WEBSOCKET_PROTO, SERVER_ADDR, SERVER_PORT } = config;
 
-config.WEBSOCKET_ADDR = `${WS_PROTO}//${SERVER_ADDR}:${SERVER_PORT}/ws`;
+config.WEBSOCKET_ADDR = `${WEBSOCKET_PROTO}//${SERVER_ADDR}:${SERVER_PORT}/ws`;
 
 export default config;

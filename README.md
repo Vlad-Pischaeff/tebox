@@ -5,7 +5,6 @@
 - before starting the program, make sure that you have installed lerna and yarn
 ```
 npm i -g lerna
-npm i -g yarn
 ```
 - в каталоге программы выполните команды
 ```
@@ -23,9 +22,12 @@ SMTP_HOST="smtp.gmail.com"
 SMTP_PORT="587"
 SMTP_USER="YourMail@gmail.com"
 SMTP_PASS="YourPassKey"
+REACT_APP_SERVER_ADDR='localhost'
+REACT_APP_SERVER_PORT='5000'
+REACT_APP_SERVER_PROTO='http'
 ```
-где MDB_SERVER   - адрес сервера MongoDB, 
-    MDB_DATABASE - имя базы данных на этом сервере
+где:  - MDB_SERVER   - адрес сервера MongoDB, 
+      - MDB_DATABASE - имя базы данных на этом сервере
 
 - запустите все в режиме разработки
 ```
