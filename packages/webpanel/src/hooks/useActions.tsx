@@ -18,7 +18,10 @@ export const useActions = () => {
             updChat(data[iMSG.messageFromManager]);
         },
         [iMSG.messageFromClient]: (data: iWebSocketMessage) => {
-            !!socket && socket.send(JSON.stringify(data));
+            if (socket) {
+                console.log(`🎃 iMSG.messageFromClient socket defined..${!!socket}`)
+                socket.send(JSON.stringify(data));
+            }
             updChat(data[iMSG.messageFromClient]);
         },
         [iMSG.managerProfile]: (data: iWebSocketMessage) => {
@@ -27,10 +30,10 @@ export const useActions = () => {
         },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
             if (socket) {
-                console.log('🎃 iMSG.registerClient socket..', socket)
+                console.log(`🎃 iMSG.registerClient socket defined..${!!socket}`)
                 socket.send(JSON.stringify(data));
             }
-            console.log('🎃 iMSG.registerClient data..', data);
+            console.log('🎃 iMSG.registerClient message..', data);
         },
         [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
             console.log('🤢 iMSG.managerIsOnline');

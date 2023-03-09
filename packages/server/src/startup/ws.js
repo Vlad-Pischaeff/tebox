@@ -1,8 +1,7 @@
 'use strict';
 
 const WebSocket = require('ws');
-const { getMappedHashSites } = require('#s/helpers/index');
-const wsClientsMap = new WeakMap();
+const { CLIENTS_MAP, DISPATCHER } = require('#s/helpers/index');
 
 module.exports = async (server) => {
     try {
@@ -14,18 +13,11 @@ module.exports = async (server) => {
 
             console.log('✅ WS connection');
 
-            ws.on('message', message => {
+            ws.on('message', async message => {
                 let data = JSON.parse(message);
-                console.log('🔵 ws message...', data);
+                console.log('🧭 WS MSG DATA..', data);
                 if ('REGISTER_CLIENT' in data) {
-                    wsClientsMap.set(ws, data['REGISTER_CLIENT'].from);
-
-                    const siteHash = data['REGISTER_CLIENT'].message;
-                    const mappedHashSites = getMappedHashSites();
-
-                    const site = mappedHashSites[`$2a$10$${siteHash}`];
-                    const ownerId = site.ownerId;
-                    console.log('🔵 ws REGISTER_CLIENT...', site.siteName, ownerId);
+                    DISPATCHER.register_client(ws, data);
                 }
             })
 
@@ -43,16 +35,7 @@ module.exports = async (server) => {
                 ws.isAlive = false;
                 ws.ping();
 
-                const TO = wsClientsMap.get(ws);
-                const MSG = {
-                    'MSG_FROM_MANAGER': {
-                        'to': TO,
-                        'from': 'server',
-                        'message': 'test message',
-                        'date': Date.now()
-                    }
-                };
-                ws.send(JSON.stringify(MSG));
+                DISPATCHER.msg_from_manager(ws, 'test message');
             });
         }, 30000);
 
