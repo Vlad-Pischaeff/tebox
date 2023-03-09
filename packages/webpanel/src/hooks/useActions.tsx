@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import config from '@tebox/config/client';
 import { useChatContext } from 'store';
-import { iMSG, iWebSocketMessage } from 'types/types.context';
+import { iMSG, iWebSocketMessage, isMngProfile } from 'types/types.context';
 
 export const useActions = () => {
     const { updChat, setMngProfile } = useChatContext();
@@ -25,8 +25,11 @@ export const useActions = () => {
             updChat(data[iMSG.messageFromClient]);
         },
         [iMSG.managerProfile]: (data: iWebSocketMessage) => {
-            const obj = data[iMSG.managerProfile];
-            setMngProfile(obj.message);
+            const { message } = data[iMSG.managerProfile];
+
+            if (typeof message !== 'string' && isMngProfile(message)) {
+                setMngProfile(message);
+            }
         },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
             if (socket) {

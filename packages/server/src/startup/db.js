@@ -29,7 +29,7 @@ module.exports = async () => {
             options,
             () => {
                 doWebSitesHashReduce();
-                console.log(`🧶 connected to ${uri}`);
+                console.log(`🧶 connected to -> ${uri}`);
             }
         );
     } catch(e) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainChat, MainChatInput } from 'components';
+import { MainChat, MainChatInput, ManagerProfile } from 'components';
 import 'styles/App.sass';
 
 function App() {
@@ -12,10 +12,10 @@ function App() {
                     </a>
                 </div>
                 <div className="App-profile">
-                    profile
-                </div>
-                <div className="App-service">
-                    service menu
+                    <ManagerProfile />
+                    {/* <div className="App-service">
+                        service menu
+                    </div> */}
                 </div>
             </header>
 
