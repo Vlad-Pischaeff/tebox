@@ -4,9 +4,10 @@ const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
 
 let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
-const wsClientsMap = new WeakMap();
+const mapWsToClient = new WeakMap();
+const mapClientToWs = new WeakMap();
 
-const doWebSitesHashReduce = async () => {
+const runWebSitesHashReduce = async () => {
     try {
         const websites = await Websites.find();
         const users = await Users.find();
@@ -55,7 +56,7 @@ const doWebSitesHashReduce = async () => {
         //     '\n✅ mappedUsers => \n', mappedUsers
         // );
     } catch(e) {
-        console.log('doWebSitesHashReduce error ...', e);
+        console.log('runWebSitesHashReduce error ...', e);
     }
 }
 
@@ -83,11 +84,21 @@ const getSiteOwnerProfile = async function(hash) {
 };
 
 const CLIENTS_MAP = {
-    set(ws, obj) {
-        wsClientsMap.set(ws, obj);
+    set(ws, id) {
+        const obj = { 'ID': id };
+        mapWsToClient.set(ws, obj);
+        mapClientToWs.set(obj, ws);
     },
-    get(ws) {
-        return wsClientsMap.get(ws);
+    getID(ws) {
+        const obj = mapWsToClient.get(ws);
+        // console.log('data...', id);
+        return obj;
+    },
+    getWS(id) {
+        const obj = { 'ID': id };
+        const ws = mapClientToWs.get(obj);
+        // console.log('data...', ws);
+        return ws;
     },
 };
 
@@ -98,34 +109,36 @@ const DISPATCHER = {
         const siteHash = data['REGISTER_CLIENT'].message;
         const owner = await getSiteOwnerProfile(siteHash);
 
-        const TO = CLIENTS_MAP.get(ws);
+        const { ID } = CLIENTS_MAP.getID(ws);
         const MSG = {
             'MANAGER_PROFILE': {
-                'to': TO,
+                'to': ID,
                 'from': owner.id,
                 'message': owner,
                 'date': Date.now()
             }
         };
         ws.send(JSON.stringify(MSG));
-        console.log('🔵 ws REGISTER_CLIENT...', MSG);
+        // console.log('🔵 ws REGISTER_CLIENT...', MSG);
     },
     msg_from_manager(ws, data) {
-        const TO = CLIENTS_MAP.get(ws);
-        const MSG = {
-            'MSG_FROM_MANAGER': {
-                'to': TO,
-                'from': 'server',
-                'message': data,
-                'date': Date.now()
-            }
-        };
-        ws.send(JSON.stringify(MSG));
+        const obj = CLIENTS_MAP.getID(ws);
+        if (obj) {
+            const { ID } = obj;
+            const MSG = {
+                'MSG_FROM_MANAGER': {
+                    'to': ID,
+                    'from': 'server',
+                    'message': data,
+                    'date': Date.now()
+                }
+            };
+            ws.send(JSON.stringify(MSG));
+        }
     },
 };
 
 module.exports = {
-    doWebSitesHashReduce,
-    CLIENTS_MAP,
+    runWebSitesHashReduce,
     DISPATCHER
 };

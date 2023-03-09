@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const config = require('@tebox/config/server');
 const { MDB_SERVER, MDB_DATABASE } = config;
 
-const { doWebSitesHashReduce } = require('#s/helpers/index');
+const { runWebSitesHashReduce } = require('#s/helpers/index');
 
 const uri = `mongodb://${MDB_SERVER}:27017/${MDB_DATABASE}`;
 const options = {
@@ -28,7 +28,7 @@ module.exports = async () => {
             uri,
             options,
             () => {
-                doWebSitesHashReduce();
+                runWebSitesHashReduce();
                 console.log(`🧶 connected to -> ${uri}`);
             }
         );
