@@ -3,7 +3,7 @@
 const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
 
-let mappedSites = {}, mappedUsers = {};
+let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
 
 exports.doWebSitesHashReduce = async () => {
     try {
@@ -14,6 +14,16 @@ exports.doWebSitesHashReduce = async () => {
             summary[item.id.toString()] = {
                 'siteName': item.site,
                 'siteHash': item.hash,
+                'ownerId': item.user.toString(),
+                'teamUserIds': [],
+            };
+            return summary;
+        }, {});
+
+        mappedHashSites = websites.reduce((summary, item) => {   // mappedSites
+            summary[item.hash] = {
+                'siteName': item.site,
+                'siteId': item.id,
                 'ownerId': item.user.toString(),
                 'teamUserIds': [],
             };
@@ -31,11 +41,18 @@ exports.doWebSitesHashReduce = async () => {
                     let siteId = site.toString();
                     let memberId = item.member.toString();
                     mappedSites[siteId].teamUserIds.push(memberId);
+
+                    let siteHash = mappedSites[siteId].siteHash;
+                    mappedHashSites[siteHash].teamUserIds.push(memberId);
                 })
             }
         });
 
-        // console.log('✅ mappedSites => \n', mappedSites, '\n✅ mappedUsers => \n', mappedUsers);
+        // console.log(
+        //     '✅ mappedSites => \n', mappedSites,
+        //     '\n✅ mappedHashSites => \n', mappedHashSites,
+        //     '\n✅ mappedUsers => \n', mappedUsers
+        // );
     } catch(e) {
         console.log('doWebSitesHashReduce error ...', e);
     }
@@ -43,6 +60,10 @@ exports.doWebSitesHashReduce = async () => {
 
 exports.getMappedSites = function() {
     return mappedSites;
+};
+
+exports.getMappedHashSites = function() {
+    return mappedHashSites;
 };
 
 exports.getMappedUsers = function() {

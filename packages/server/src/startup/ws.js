@@ -1,6 +1,7 @@
 'use strict';
 
 const WebSocket = require('ws');
+const { getMappedHashSites } = require('#s/helpers/index');
 const wsClientsMap = new WeakMap();
 
 module.exports = async (server) => {
@@ -8,7 +9,7 @@ module.exports = async (server) => {
         const wss = new WebSocket.Server({ server , path: '/ws'});
         console.log('🚀 WS server -> listen');
 
-        wss.on('connection', (ws, req) => {
+        wss.on('connection', async (ws, req) => {
             ws.isAlive = true;
 
             console.log('✅ WS connection');
@@ -18,6 +19,13 @@ module.exports = async (server) => {
                 console.log('🔵 ws message...', data);
                 if ('REGISTER_CLIENT' in data) {
                     wsClientsMap.set(ws, data['REGISTER_CLIENT'].from);
+
+                    const siteHash = data['REGISTER_CLIENT'].message;
+                    const mappedHashSites = getMappedHashSites();
+
+                    const site = mappedHashSites[`$2a$10$${siteHash}`];
+                    const ownerId = site.ownerId;
+                    console.log('🔵 ws REGISTER_CLIENT...', site.siteName, ownerId);
                 }
             })
 

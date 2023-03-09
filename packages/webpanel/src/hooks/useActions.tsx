@@ -26,8 +26,11 @@ export const useActions = () => {
             setMngProfile(obj.message);
         },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
-            !!socket && socket.send(JSON.stringify(data));
-            console.log('🎃 iMSG.managerProfile', data);
+            if (socket) {
+                console.log('🎃 iMSG.registerClient socket..', socket)
+                socket.send(JSON.stringify(data));
+            }
+            console.log('🎃 iMSG.registerClient data..', data);
         },
         [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
             console.log('🤢 iMSG.managerIsOnline');
@@ -39,8 +42,7 @@ export const useActions = () => {
             const [ key ] = Object.keys(data) as iMSG[];
             actions[key](data);
         },
-        // eslint-disable-next-line
-    }), [updChat, setMngProfile]);
+    }), [updChat, setMngProfile, socket]);
 
 
     return ({
