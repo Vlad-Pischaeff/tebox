@@ -1,2 +1,5 @@
 require = require("esm")(module);
-module.exports = require("./client.ts");
+
+const config = require("./client.ts");
+
+module.exports = config.default;

@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const config = require('@tebox/config/server');
-const { MDB_SERVER, MDB_DATABASE } = config.default;
+const { MDB_SERVER, MDB_DATABASE } = config;
 
 const { doWebSitesHashReduce } = require('#s/helpers/index');
 
