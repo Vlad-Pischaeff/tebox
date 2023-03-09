@@ -6,9 +6,9 @@ const { MDB_SERVER, MDB_DATABASE } = config;
 
 module.exports = async () => {
     try {
-        await mongoose.set('strictQuery', true);
+        mongoose.set('strictQuery', true);
 
-        await mongoose.set('toJSON', {
+        mongoose.set('toJSON', {
             virtuals: true,
             versionKey: false
         });

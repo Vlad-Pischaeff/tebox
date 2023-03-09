@@ -11,7 +11,7 @@ type tFormInputs = {
 }
 
 export const MainChatInput = () => {
-    const { sendMessage } = useWebSocket();
+    const { SOCK } = useWebSocket();
     const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export const MainChatInput = () => {
     const onSubmit = async (formData: tFormInputs) => {
         const { message } = formData;
         if (message) {
-            sendMessage(iMSG.messageFromClient, message);
+            SOCK.sendMessage(iMSG.messageFromClient, message);
             resetField('message');
         }
     };
