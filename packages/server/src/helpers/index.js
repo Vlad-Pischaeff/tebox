@@ -40,11 +40,12 @@ const runWebSitesHashReduce = async () => {
         mappedUsers.forEach((item) => {
             if (item.sites.lenght !== 0) {
                 item.sites.forEach((site) => {
-                    let siteId = site.toString();
-                    let memberId = item.member.toString();
+                    const memberId = item.member.toString();
+
+                    const siteId = site.toString();
                     mappedSites[siteId].teamUserIds.push(memberId);
 
-                    let siteHash = mappedSites[siteId].siteHash;
+                    const siteHash = mappedSites[siteId].siteHash;
                     mappedHashSites[siteHash].teamUserIds.push(memberId);
                 })
             }
@@ -116,7 +117,7 @@ const DISPATCHER = {
             }
         };
         ws.send(JSON.stringify(MSG));
-        // console.log('🔵 ws REGISTER_CLIENT...', MSG);
+        console.log('🔹 ws REGISTER_CLIENT..');
     },
     MSG_FROM_MANAGER(ws, data) {
         // const obj = CLIENTS_MAP.getID(ws);
@@ -131,11 +132,20 @@ const DISPATCHER = {
                 }
             };
             ws.send(JSON.stringify(MSG));
+            console.log('🔹 ws MSG_FROM_MANAGER..');
         }
     },
     MSG_FROM_CLIENT(ws, data) {
-        console.log('🔵 ws MSG_FROM_CLIENT..', data);
-    }
+        console.log('🔹 ws MSG_FROM_CLIENT..', data);
+    },
+    run(ws, message) {
+        let data = JSON.parse(message);
+        const [ key ] = Object.keys(data);
+
+        console.log('🧭 WS MSG DATA..', key);
+
+        DISPATCHER[key](ws, data);
+    },
 };
 
 module.exports = {

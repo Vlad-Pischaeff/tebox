@@ -14,17 +14,14 @@ module.exports = async (server) => {
 
             console.log('✅ WS connection');
 
-            ws.on('message', async message => {
-                let data = JSON.parse(message);
-                console.log('🧭 WS MSG DATA..', data);
-                const key = Object.keys(data);
-                DISPATCHER[key](ws, data);
+            ws.on('message', async (message) => {
+                DISPATCHER.run(ws, message);
             });
 
             ws.on('pong', () => {
                 ws.isAlive = true;
             });
-        })
+        });
 
         setInterval(() => {
             wss.clients.forEach(ws => {
@@ -34,7 +31,7 @@ module.exports = async (server) => {
             });
         }, 30000);
 
-    } catch (e) {
+    } catch(e) {
         console.log('❌ WS SERVER errors...', e);
     }
 };
