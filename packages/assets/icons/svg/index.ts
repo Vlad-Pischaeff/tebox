@@ -8,6 +8,8 @@ import microbe from './microbe.svg';
 import admin from './microbe.svg';
 import oldking from './oldking.svg';
 import github from './github.svg';
+import chat from './chat.svg';
+import mail from './mail.svg';
 
 export {
     lion,
@@ -19,5 +21,7 @@ export {
     microbe,
     admin,
     oldking,
-    github
+    github,
+    chat,
+    mail
 };
