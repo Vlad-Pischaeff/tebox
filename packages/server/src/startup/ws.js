@@ -10,6 +10,7 @@ module.exports = async (server) => {
 
         wss.on('connection', async (ws, req) => {
             ws.isAlive = true;
+            ws.id = 'server';
 
             console.log('✅ WS connection');
 

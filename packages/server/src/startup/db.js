@@ -16,23 +16,21 @@ const options = {
 };
 
 module.exports = async () => {
-    try {
-        mongoose.set('strictQuery', true);
+    mongoose.set('strictQuery', true);
 
-        mongoose.set('toJSON', {
-            virtuals: true,
-            versionKey: false
-        });
+    mongoose.set('toJSON', {
+        virtuals: true,
+        versionKey: false
+    });
 
-        await mongoose.connect(
-            uri,
-            options,
+    await mongoose.connect(uri,options)
+        .then(
             () => {
                 runWebSitesHashReduce();
                 console.log(`🧶 connected to -> ${uri}`);
+            },
+            err => {
+                console.log('❌ DB CONNECTION ERROR', err);
             }
         );
-    } catch(e) {
-        console.log('DB CONNECTION ERROR', e);
-    }
 };

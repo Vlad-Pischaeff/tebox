@@ -86,19 +86,16 @@ const getSiteOwnerProfile = async function(hash) {
 const CLIENTS_MAP = {
     set(ws, id) {
         const obj = { 'ID': id };
+        ws.id = id;
         mapWsToClient.set(ws, obj);
         mapClientToWs.set(obj, ws);
     },
     getID(ws) {
-        const obj = mapWsToClient.get(ws);
-        // console.log('data...', id);
-        return obj;
+        return mapWsToClient.get(ws);
     },
     getWS(id) {
         const obj = { 'ID': id };
-        const ws = mapClientToWs.get(obj);
-        // console.log('data...', ws);
-        return ws;
+        return mapClientToWs.get(obj);
     },
 };
 
@@ -109,10 +106,10 @@ const DISPATCHER = {
         const siteHash = data['REGISTER_CLIENT'].message;
         const owner = await getSiteOwnerProfile(siteHash);
 
-        const { ID } = CLIENTS_MAP.getID(ws);
+        // const { ID } = CLIENTS_MAP.getID(ws);
         const MSG = {
             'MANAGER_PROFILE': {
-                'to': ID,
+                'to': ws.id,
                 'from': owner.id,
                 'message': owner,
                 'date': Date.now()
@@ -122,12 +119,12 @@ const DISPATCHER = {
         // console.log('🔵 ws REGISTER_CLIENT...', MSG);
     },
     msg_from_manager(ws, data) {
-        const obj = CLIENTS_MAP.getID(ws);
-        if (obj) {
-            const { ID } = obj;
+        // const obj = CLIENTS_MAP.getID(ws);
+        if (ws.id !== 'server') {
+            // const { ID } = obj;
             const MSG = {
                 'MSG_FROM_MANAGER': {
-                    'to': ID,
+                    'to': ws.id,
                     'from': 'server',
                     'message': data,
                     'date': Date.now()
