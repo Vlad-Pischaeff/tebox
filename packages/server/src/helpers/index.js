@@ -7,84 +7,76 @@ let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
 const mapWsToClient = new WeakMap();
 const mapClientToWs = new WeakMap();
 
-const runWebSitesHashReduce = async () => {
-    try {
-        const websites = await Websites.find();
-        const users = await Users.find();
+const HELPER = {
+    async runWebSitesHashReduce() {
+        try {
+            const websites = await Websites.find();
+            const users = await Users.find();
 
-        mappedSites = websites.reduce((summary, item) => {   // mappedSites
-            summary[item.id.toString()] = {
-                'siteName': item.site,
-                'siteHash': item.hash,
-                'ownerId': item.user.toString(),
-                'teamUserIds': [],
-            };
-            return summary;
-        }, {});
+            mappedSites = websites.reduce((summary, item) => {   // mappedSites
+                summary[item.id.toString()] = {
+                    'siteName': item.site,
+                    'siteHash': item.hash,
+                    'ownerId': item.user.toString(),
+                    'teamUserIds': [],
+                };
+                return summary;
+            }, {});
 
-        mappedHashSites = websites.reduce((summary, item) => {   // mappedSites
-            summary[item.hash] = {
-                'siteName': item.site,
-                'siteId': item.id,
-                'ownerId': item.user.toString(),
-                'teamUserIds': [],
-            };
-            return summary;
-        }, {});
+            mappedHashSites = websites.reduce((summary, item) => {   // mappedSites
+                summary[item.hash] = {
+                    'siteName': item.site,
+                    'siteId': item.id,
+                    'ownerId': item.user.toString(),
+                    'teamUserIds': [],
+                };
+                return summary;
+            }, {});
 
-        mappedUsers = users.reduce((summary, item) => {     // mappedUsers
-            summary.push( ...item.team )
-            return summary;
-        }, []);
+            mappedUsers = users.reduce((summary, item) => {     // mappedUsers
+                summary.push( ...item.team )
+                return summary;
+            }, []);
 
-        mappedUsers.forEach((item) => {
-            if (item.sites.lenght !== 0) {
-                item.sites.forEach((site) => {
-                    const memberId = item.member.toString();
+            mappedUsers.forEach((item) => {
+                if (item.sites.lenght !== 0) {
+                    item.sites.forEach((site) => {
+                        const memberId = item.member.toString();
 
-                    const siteId = site.toString();
-                    mappedSites[siteId].teamUserIds.push(memberId);
+                        const siteId = site.toString();
+                        mappedSites[siteId].teamUserIds.push(memberId);
 
-                    const siteHash = mappedSites[siteId].siteHash;
-                    mappedHashSites[siteHash].teamUserIds.push(memberId);
-                })
-            }
-        });
+                        const siteHash = mappedSites[siteId].siteHash;
+                        mappedHashSites[siteHash].teamUserIds.push(memberId);
+                    })
+                }
+            });
+        } catch(e) {
+            console.log('runWebSitesHashReduce error ...', e);
+        }
+    },
+    getMappedSites() {
+        return mappedSites;
+    },
+    getMappedHashSites() {
+        return mappedHashSites;
+    },
+    getMappedUsers() {
+        return mappedUsers;
+    },
+    async getSiteOwnerProfile(hash) {
+        const site = mappedHashSites[`$2a$10$${hash}`];
+        const ownerId = site.ownerId;
 
-        // console.log(
-        //     '✅ mappedSites => \n', mappedSites,
-        //     '\n✅ mappedHashSites => \n', mappedHashSites,
-        //     '\n✅ mappedUsers => \n', mappedUsers
-        // );
-    } catch(e) {
-        console.log('runWebSitesHashReduce error ...', e);
-    }
-}
+        const owner = await Users.findOne({ _id: ownerId });
 
-const getMappedSites = function() {
-    return mappedSites;
+        const { id, name, alias, image, greeting } = owner;
+
+        return ({ id, name, alias, image, greeting });
+    },
 };
 
-const getMappedHashSites = function() {
-    return mappedHashSites;
-};
-
-const getMappedUsers = function() {
-    return mappedUsers;
-};
-
-const getSiteOwnerProfile = async function(hash) {
-    const site = mappedHashSites[`$2a$10$${hash}`];
-    const ownerId = site.ownerId;
-
-    const owner = await Users.findOne({ _id: ownerId });
-
-    const { id, name, alias, image, greeting } = owner;
-
-    return ({ id, name, alias, image, greeting });
-};
-
-const CLIENTS_MAP = {
+const MAPS = {
     set(ws, id) {
         const obj = { 'ID': id };
         ws.id = id;
@@ -102,36 +94,22 @@ const CLIENTS_MAP = {
 
 const DISPATCHER = {
     async REGISTER_CLIENT(ws, data) {
-        CLIENTS_MAP.set(ws, data['REGISTER_CLIENT'].from);
+        MAPS.set(ws, data['REGISTER_CLIENT'].from);
 
         const siteHash = data['REGISTER_CLIENT'].message;
-        const owner = await getSiteOwnerProfile(siteHash);
+        const owner = await HELPER.getSiteOwnerProfile(siteHash);
 
-        // const { ID } = CLIENTS_MAP.getID(ws);
-        const MSG = {
-            'MANAGER_PROFILE': {
-                'to': ws.id,
-                'from': owner.id,
-                'message': owner,
-                'date': Date.now()
-            }
-        };
-        ws.send(JSON.stringify(MSG));
+        // const { ID } = MAPS.getID(ws);
+        const MSG = DISPATCHER.msg('MANAGER_PROFILE', ws.id, owner.id, owner);
+        ws.send(MSG);
         console.log('🔹 ws REGISTER_CLIENT..');
     },
     MSG_FROM_MANAGER(ws, data) {
-        // const obj = CLIENTS_MAP.getID(ws);
+        // const obj = MAPS.getID(ws);
         if (ws.id !== 'server') {
             // const { ID } = obj;
-            const MSG = {
-                'MSG_FROM_MANAGER': {
-                    'to': ws.id,
-                    'from': 'server',
-                    'message': data,
-                    'date': Date.now()
-                }
-            };
-            ws.send(JSON.stringify(MSG));
+            const MSG = DISPATCHER.msg('MSG_FROM_MANAGER', ws.id, 'server', data);
+            ws.send(MSG);
             console.log('🔹 ws MSG_FROM_MANAGER..');
         }
     },
@@ -142,13 +120,24 @@ const DISPATCHER = {
         let data = JSON.parse(message);
         const [ key ] = Object.keys(data);
 
-        console.log('🧭 WS MSG DATA..', key);
+        console.log('🧭 WS KEY..', key);
 
         DISPATCHER[key](ws, data);
+    },
+    msg(type, to, from, message) {
+        const MSG = {
+            [type]: {
+                to,
+                from,
+                message,
+                'date': Date.now()
+            }
+        };
+        return JSON.stringify(MSG);
     },
 };
 
 module.exports = {
-    runWebSitesHashReduce,
-    DISPATCHER
+    DISPATCHER,
+    HELPER
 };

@@ -12,7 +12,7 @@ const {
     fillTodosTemplates,
     // fillWebTemplates         // use for development
 } = require('#s/templates/index');
-const { runWebSitesHashReduce } = require('#s/helpers/index');
+const { HELPER } = require('#s/helpers/index');
 
 const usersController = () => {
     /** ******************************************
@@ -56,7 +56,7 @@ const usersController = () => {
             const { refreshToken, accessToken, id } = userData;
 
             // await fillWebTemplates(id);          // use for development
-            await runWebSitesHashReduce();
+            await HELPER.runWebSitesHashReduce();
 
             res.cookie('refreshToken', refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
             res.status(201).json({ accessToken, id });
@@ -88,7 +88,7 @@ const usersController = () => {
             await Users.findByIdAndUpdate(id, req.body);
             const newUser = await Users.findOne({ _id: id });
 
-            await runWebSitesHashReduce();
+            await HELPER.runWebSitesHashReduce();
 
             res.status(201).json(newUser);
         } catch (e) {
@@ -111,7 +111,7 @@ const usersController = () => {
                 throw new Error(updatedUser.checkError);
             }
 
-            await runWebSitesHashReduce();
+            await HELPER.runWebSitesHashReduce();
 
             res.status(201).json(updatedUser);
         } catch (e) {
@@ -136,7 +136,7 @@ const usersController = () => {
                 }
             );
 
-            await runWebSitesHashReduce();
+            await HELPER.runWebSitesHashReduce();
 
             const owner = await Users.findOne({ _id: userID });
 
@@ -161,7 +161,7 @@ const usersController = () => {
                 }
             );
 
-            await runWebSitesHashReduce();
+            await HELPER.runWebSitesHashReduce();
 
             const newUser = await Users.findOne({ _id: userID });
 
