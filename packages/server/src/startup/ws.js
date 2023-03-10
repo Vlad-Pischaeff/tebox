@@ -17,30 +17,24 @@ module.exports = async (server) => {
             ws.on('message', async message => {
                 let data = JSON.parse(message);
                 console.log('🧭 WS MSG DATA..', data);
-                if ('REGISTER_CLIENT' in data) {
-                    DISPATCHER.register_client(ws, data);
-                }
-            })
+                const key = Object.keys(data);
+                DISPATCHER[key](ws, data);
+            });
 
             ws.on('pong', () => {
                 ws.isAlive = true;
-            })
-
-            // ws.on('close', () => {
-            //     console.log('ws Close...', tradeWeakMap.get(ws));
-            // })
+            });
         })
 
         setInterval(() => {
             wss.clients.forEach(ws => {
                 ws.isAlive = false;
                 ws.ping();
-
-                DISPATCHER.msg_from_manager(ws, 'test message');
+                DISPATCHER.MSG_FROM_MANAGER(ws, 'test message');
             });
         }, 30000);
 
     } catch (e) {
-        console.log('WS SERVER errors...', e);
+        console.log('❌ WS SERVER errors...', e);
     }
 };

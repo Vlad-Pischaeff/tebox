@@ -100,7 +100,7 @@ const CLIENTS_MAP = {
 };
 
 const DISPATCHER = {
-    async register_client(ws, data) {
+    async REGISTER_CLIENT(ws, data) {
         CLIENTS_MAP.set(ws, data['REGISTER_CLIENT'].from);
 
         const siteHash = data['REGISTER_CLIENT'].message;
@@ -118,7 +118,7 @@ const DISPATCHER = {
         ws.send(JSON.stringify(MSG));
         // console.log('🔵 ws REGISTER_CLIENT...', MSG);
     },
-    msg_from_manager(ws, data) {
+    MSG_FROM_MANAGER(ws, data) {
         // const obj = CLIENTS_MAP.getID(ws);
         if (ws.id !== 'server') {
             // const { ID } = obj;
@@ -133,6 +133,9 @@ const DISPATCHER = {
             ws.send(JSON.stringify(MSG));
         }
     },
+    MSG_FROM_CLIENT(ws, data) {
+        console.log('🔵 ws MSG_FROM_CLIENT..', data);
+    }
 };
 
 module.exports = {
