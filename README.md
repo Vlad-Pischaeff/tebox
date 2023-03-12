@@ -3,14 +3,14 @@
 ## To run
 
 - before starting the program, make sure that you have installed lerna and yarn
-```
+```sh
 npm i -g lerna
 ```
 - в каталоге программы выполните команды
+```sh
+npm run install
 ```
- npm run install
-```
-- создайте файл .env в корне проекта
+- создайте файл `.env` в корне проекта
 ```
 ACCESS_JWT_SECRET='jwtAccessSecretKey'
 ACCESS_JWT_LIFETIME='5m'
@@ -26,11 +26,10 @@ REACT_APP_SERVER_ADDR='localhost'
 REACT_APP_SERVER_PORT='5000'
 REACT_APP_SERVER_PROTO='http'
 ```
-где:  - MDB_SERVER   - адрес сервера MongoDB, 
-      - MDB_DATABASE - имя базы данных на этом сервере
+> где:  `MDB_SERVER` - адрес сервера MongoDB, `MDB_DATABASE` - имя базы данных на этом сервере
 
 - запустите все в режиме разработки
-```
- npm run dev
+```sh
+npm run dev
 ```
 - подключитесь к [приложению](http://localhost:3000)
