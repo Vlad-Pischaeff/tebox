@@ -51,6 +51,9 @@ const HELPER = {
                     })
                 }
             });
+            // console.log('✅ mappedUsers..', mappedUsers)
+            // console.log('✅ mappedSites..', mappedSites)
+            // console.log('✅ mappedHashSites..', mappedHashSites)
         } catch(e) {
             console.log('runWebSitesHashReduce error ...', e);
         }
@@ -96,10 +99,11 @@ const DISPATCHER = {
     async REGISTER_CLIENT(ws, data) {
         MAPS.set(ws, data['REGISTER_CLIENT'].from);
 
-        const siteHash = data['REGISTER_CLIENT'].message;
+        const siteHash = data['REGISTER_CLIENT'].to;
         const owner = await HELPER.getSiteOwnerProfile(siteHash);
 
         // const { ID } = MAPS.getID(ws);
+        // send owner profile to new client;
         const MSG = DISPATCHER.msg('MANAGER_PROFILE', ws.id, owner.id, owner);
         ws.send(MSG);
         console.log('🔹 ws REGISTER_CLIENT..');

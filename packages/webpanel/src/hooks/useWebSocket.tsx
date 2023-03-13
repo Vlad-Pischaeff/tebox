@@ -38,11 +38,11 @@ export const useWebSocket = () => {
     useEffect(() => {
         if (socket) {
             socket.onopen = () => {
-                console.log('🔷 tebox panel socket opened.. ', socket);
+                // console.log('🔷 tebox panel socket opened.. ', socket);
                 SOCK.sendMessage(iMSG.registerClient, '7ra/HQmh1y9wZ3WPUsAZiOKoynPQ7xDZ2v8NFEav9zpJPW.3ziQL6');
             }
             socket.onmessage = (e: MessageEvent) => {
-                console.log('🔷 tebox panel socket get message.. ', e.data);
+                // console.log('🔷 tebox panel socket get message.. ', e.data);
                 SOCK.getMessage(e);
             };
         }

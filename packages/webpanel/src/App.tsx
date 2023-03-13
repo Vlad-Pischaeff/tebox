@@ -3,6 +3,7 @@ import { MainChat, MainChatInput, ManagerProfile } from 'components';
 import 'styles/App.sass';
 
 function App() {
+
     return (
         <div className="App">
             <header className="App-header">
@@ -13,9 +14,9 @@ function App() {
                 </div>
                 <div className="App-profile">
                     <ManagerProfile />
-                    {/* <div className="App-service">
-                        service menu
-                    </div> */}
+                </div>
+                <div>
+                    <span></span>
                 </div>
             </header>
 

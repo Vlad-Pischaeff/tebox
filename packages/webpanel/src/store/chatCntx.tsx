@@ -25,7 +25,7 @@ export const useChat = () => {
         mngProfile,
         setMngProfile,
         userId,
-        serverId,
+        serverId
     };
 
     return context;

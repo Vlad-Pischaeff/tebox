@@ -22,6 +22,7 @@ export enum iMSG {
     'managerIsOnline' = 'MANAGER_IS_ONLINE',
     'managerProfile' = 'MANAGER_PROFILE',
     'clientIsOnline' = 'CLIENT_IS_ONLINE',
+    'initWebSocket' = 'INIT_WS',
 }
 
 export interface iMngProfile {

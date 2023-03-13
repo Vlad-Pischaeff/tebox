@@ -19,7 +19,7 @@ export const useActions = () => {
         },
         [iMSG.messageFromClient]: (data: iWebSocketMessage) => {
             if (socket) {
-                console.log(`🎃 iMSG.messageFromClient socket defined..${!!socket}`)
+                // console.log(`🎃 iMSG.messageFromClient socket defined..${!!socket}`)
                 socket.send(JSON.stringify(data));
             }
             updChat(data[iMSG.messageFromClient]);
@@ -33,16 +33,19 @@ export const useActions = () => {
         },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
             if (socket) {
-                console.log(`🎃 iMSG.registerClient socket defined..${!!socket}`)
+                // console.log(`🎃 iMSG.registerClient socket defined..${!!socket}`)
                 socket.send(JSON.stringify(data));
             }
-            console.log('🎃 iMSG.registerClient message..', data);
+            // console.log('🎃 iMSG.registerClient message..', data);
         },
         [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
             console.log('🤢 iMSG.managerIsOnline');
         },
         [iMSG.clientIsOnline]: (data: iWebSocketMessage) => {
             console.log('🥴 iMSG.clientIsOnline');
+        },
+        [iMSG.initWebSocket]: (data: iWebSocketMessage) => {
+            console.log('🥴 iMSG.initWebSocket');
         },
         'run': (data: iWebSocketMessage) => {
             const [ key ] = Object.keys(data) as iMSG[];

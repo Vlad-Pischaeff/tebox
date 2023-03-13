@@ -12,7 +12,7 @@ export const USER_ID = () => {
     return userId;
 }
 
-export const SERVER_ID = randomstring.generate();
+export const SERVER_ID = '7ra/HQmh1y9wZ3WPUsAZiOKoynPQ7xDZ2v8NFEav9zpJPW.3ziQL6';
 
 export const chatMock: iChat = [
     {
