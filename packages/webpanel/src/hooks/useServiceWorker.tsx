@@ -1,6 +1,7 @@
 // eslint-disable-next-line
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useChatContext } from 'store';
+import { useActions } from './useActions';
 import { iMSG } from 'types/types.context';
 import config from '@tebox/config/client';
 
@@ -12,6 +13,7 @@ type eSendMsgType = Extract<
 
 export const useServiceWorker = () => {
     const { userId, serverId } = useChatContext();
+    const { actions } = useActions();
     const [ BC, setBC ] = useState<BroadcastChannel>();
 
     useEffect(() => {
@@ -24,11 +26,12 @@ export const useServiceWorker = () => {
             initServiceWorker();
 
             BC.onmessage = (e: MessageEvent) => {
+                actions.run(e.data);
                 console.log('✈️ BroadcastChannel received..', e.data);
             };
         }
         // eslint-disable-next-line
-    }, [BC]);
+    }, [BC, actions]);
 
     const SOCK = {
         prepareMessage(type: iMSG, message = '') {
@@ -43,13 +46,9 @@ export const useServiceWorker = () => {
         },
         sendMessage(type: eSendMsgType, message: string ) {
             const msg = SOCK.prepareMessage(type, message);
+            actions.run(msg);
             BC?.postMessage(msg);
         },
-        getMessage(e: MessageEvent) {
-            const msg = JSON.parse(e.data);
-            // actions.run(msg);
-        },
-        // eslint-disable-next-line
     };
 
     const initServiceWorker = () => {
@@ -91,6 +90,7 @@ export const useServiceWorker = () => {
     };
 
     return ({
-        BC
+        BC,
+        SOCK
     })
 }

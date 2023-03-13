@@ -1,27 +1,16 @@
 // eslint-disable-next-line
-import React, { useState, useEffect, useMemo } from "react";
-import config from '@tebox/config/client';
+import React, { useMemo } from "react";
 import { useChatContext } from 'store';
 import { iMSG, iWebSocketMessage, isMngProfile } from 'types/types.context';
 
 export const useActions = () => {
     const { updChat, setMngProfile } = useChatContext();
-    const [ socket, setSocket ] = useState<WebSocket>();
-
-    useEffect(() => {
-        const s = new WebSocket(config.WEBSOCKET_ADDR);
-        setSocket(s);
-    }, [])
 
     const actions = useMemo(() => ({
         [iMSG.messageFromManager]: (data: iWebSocketMessage) => {
             updChat(data[iMSG.messageFromManager]);
         },
         [iMSG.messageFromClient]: (data: iWebSocketMessage) => {
-            if (socket) {
-                // console.log(`🎃 iMSG.messageFromClient socket defined..${!!socket}`)
-                socket.send(JSON.stringify(data));
-            }
             updChat(data[iMSG.messageFromClient]);
         },
         [iMSG.managerProfile]: (data: iWebSocketMessage) => {
@@ -32,11 +21,7 @@ export const useActions = () => {
             }
         },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
-            if (socket) {
-                // console.log(`🎃 iMSG.registerClient socket defined..${!!socket}`)
-                socket.send(JSON.stringify(data));
-            }
-            // console.log('🎃 iMSG.registerClient message..', data);
+            console.log('🎃 iMSG.registerClient message..', data);
         },
         [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
             console.log('🤢 iMSG.managerIsOnline');
@@ -51,11 +36,10 @@ export const useActions = () => {
             const [ key ] = Object.keys(data) as iMSG[];
             actions[key](data);
         },
-    }), [updChat, setMngProfile, socket]);
+    }), [updChat, setMngProfile]);
 
 
     return ({
-        socket,
         actions,
     });
 }

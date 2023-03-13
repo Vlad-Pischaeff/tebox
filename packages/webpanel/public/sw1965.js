@@ -11,6 +11,9 @@ BC.addEventListener('message', e => {
         serverId = to;
         wsConnect(url);
     }
+    if ('MSG_FROM_CLIENT' in e.data) {
+        ws.send(JSON.stringify(e.data));
+    }
 });
 
 function wsConnect(url) {
@@ -18,7 +21,8 @@ function wsConnect(url) {
     console.log('🌏 WebSocket initialized..', url, userId, serverId);
 
     ws.onmessage = (event) => {
-        // BC.postMessage(event.data);
+        const msg = JSON.parse(event.data)
+        BC.postMessage(msg);
         console.log('--ws onmessage..', event.data);
     };
 
@@ -34,8 +38,8 @@ function wsConnect(url) {
     // }
 
     ws.onclose = () => {
-      // console.log('--ws закрыт...');
-      // try to reconnect
+        // console.log('--ws закрыт...');
+        // try to reconnect
         timerId = setTimeout(() => wsConnect(url), timeInterval);
     };
 };
