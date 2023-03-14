@@ -7,6 +7,9 @@ if (typeof self.skipWaiting === 'function') {
       // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-global-scope-skipwaiting
         e.waitUntil(self.skipWaiting());
     });
+    self.addEventListener('message', function(e) {
+        e.waitUntil(self.skipWaiting());
+    });
 } else {
     console.log('self.skipWaiting() is not supported.');
 }
@@ -23,13 +26,9 @@ if (self.clients && (typeof self.clients.claim === 'function')) {
 
 //-------------------------------------------
 self.addEventListener('fetch', event => {
-    console.log('--fetch', Date.now());
+    console.log('--fetch');
 });
 //--------------------------------------------
-
-self.addEventListener('message', event => {
-    event.waitUntil(self.skipWaiting());
-});
 
 BC.addEventListener('message', e => {
     // console.log('✈️ message..', e.data);
@@ -59,7 +58,7 @@ function wsConnect(url) {
 
         ws.onopen = () => {
             clearTimeout(timerId);
-            // 2 step. On socket opened send registration message
+            // 2 step. Send registration message on socket opened
             const msg = BC.prepareMessage('REGISTER_CLIENT', 'null');
             ws.send(JSON.stringify(msg));
             console.log('--ws onopen msg..', msg);
