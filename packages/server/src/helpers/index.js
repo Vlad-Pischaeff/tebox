@@ -102,8 +102,7 @@ const DISPATCHER = {
         const siteHash = data['REGISTER_CLIENT'].to;
         const owner = await HELPER.getSiteOwnerProfile(siteHash);
 
-        // const { ID } = MAPS.getID(ws);
-        // send owner profile to new client;
+        // 3 step. after register client send site owner profile to client
         const MSG = DISPATCHER.msg('MANAGER_PROFILE', ws.id, owner.id, owner);
         ws.send(MSG);
         console.log('🔹 ws REGISTER_CLIENT..');

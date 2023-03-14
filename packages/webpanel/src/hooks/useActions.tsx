@@ -21,16 +21,16 @@ export const useActions = () => {
             }
         },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
-            console.log('🎃 iMSG.registerClient message..', data);
+            console.log('2️⃣ iMSG.registerClient message..', data);
         },
         [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
-            console.log('🤢 iMSG.managerIsOnline');
+            console.log('1️⃣ iMSG.managerIsOnline');
         },
         [iMSG.clientIsOnline]: (data: iWebSocketMessage) => {
-            console.log('🥴 iMSG.clientIsOnline');
+            console.log('0️⃣ iMSG.clientIsOnline');
         },
         [iMSG.initWebSocket]: (data: iWebSocketMessage) => {
-            console.log('🥴 iMSG.initWebSocket');
+            console.log('3️⃣ iMSG.initWebSocket');
         },
         'run': (data: iWebSocketMessage) => {
             const [ key ] = Object.keys(data) as iMSG[];

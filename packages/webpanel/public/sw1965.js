@@ -1,6 +1,36 @@
 let ws, userId, serverId, timeInterval = 5000, timerId;
 const BC = new BroadcastChannel('swListener');
 
+if (typeof self.skipWaiting === 'function') {
+    console.log('self.skipWaiting() is supported.');
+    self.addEventListener('install', function(e) {
+      // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-global-scope-skipwaiting
+        e.waitUntil(self.skipWaiting());
+    });
+} else {
+    console.log('self.skipWaiting() is not supported.');
+}
+
+if (self.clients && (typeof self.clients.claim === 'function')) {
+    console.log('self.clients.claim() is supported.');
+    self.addEventListener('activate', function(e) {
+      // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#clients-claim-method
+        e.waitUntil(self.clients.claim());
+    });
+} else {
+    console.log('self.clients.claim() is not supported.');
+}
+
+//-------------------------------------------
+self.addEventListener('fetch', event => {
+    console.log('--fetch', Date.now());
+});
+//--------------------------------------------
+
+self.addEventListener('message', event => {
+    event.waitUntil(self.skipWaiting());
+});
+
 BC.addEventListener('message', e => {
     // console.log('✈️ message..', e.data);
     if ('INIT_WS' in e.data) {
@@ -17,31 +47,34 @@ BC.addEventListener('message', e => {
 });
 
 function wsConnect(url) {
-    ws = new WebSocket(url);
-    console.log('🌏 WebSocket initialized..', url, userId, serverId);
+    if (!ws) {
+        ws = new WebSocket(url);
+        console.log('🌏 WebSocket initialized..', url, userId, serverId);
 
-    ws.onmessage = (event) => {
-        const msg = JSON.parse(event.data)
-        BC.postMessage(msg);
-        console.log('--ws onmessage..', event.data);
-    };
+        ws.onmessage = (event) => {
+            const msg = JSON.parse(event.data)
+            BC.postMessage(msg);
+            console.log('--ws onmessage..', event.data);
+        };
 
-    ws.onopen = () => {
-        clearTimeout(timerId);
-        const msg = BC.prepareMessage('REGISTER_CLIENT', 'null');
-        ws.send(JSON.stringify(msg));
-        console.log('--ws onopen msg..', msg);
-    };
+        ws.onopen = () => {
+            clearTimeout(timerId);
+            // 2 step. On socket opened send registration message
+            const msg = BC.prepareMessage('REGISTER_CLIENT', 'null');
+            ws.send(JSON.stringify(msg));
+            console.log('--ws onopen msg..', msg);
+        };
 
-    // ws.onerror = () => {
-    //   console.log('--ws ошибка...');
-    // }
+        // ws.onerror = () => {
+        //   console.log('--ws ошибка...');
+        // }
 
-    ws.onclose = () => {
-        // console.log('--ws закрыт...');
-        // try to reconnect
-        timerId = setTimeout(() => wsConnect(url), timeInterval);
-    };
+        ws.onclose = () => {
+            // console.log('--ws закрыт...');
+            // try to reconnect
+            timerId = setTimeout(() => wsConnect(url), timeInterval);
+        };
+    }
 };
 
 BC.prepareMessage = function(type, msg = '') {

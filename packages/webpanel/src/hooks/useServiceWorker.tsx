@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useChatContext } from 'store';
 import { useActions } from './useActions';
+import { useBroadcastChannel } from './useBroadcastChannel';
 import { iMSG } from 'types/types.context';
 import config from '@tebox/config/client';
 
-let SW: ServiceWorker;
 type eSendMsgType = Extract<
     iMSG,
     iMSG.messageFromClient | iMSG.clientIsOnline | iMSG.registerClient | iMSG.initWebSocket
@@ -13,25 +13,31 @@ type eSendMsgType = Extract<
 
 export const useServiceWorker = () => {
     const { userId, serverId } = useChatContext();
+    const { BC } = useBroadcastChannel();
     const { actions } = useActions();
-    const [ BC, setBC ] = useState<BroadcastChannel>();
+    const [ SW, setSW ] = useState<ServiceWorker>();
 
     useEffect(() => {
-        const bc = new BroadcastChannel('swListener');
-        setBC(bc);
-    }, []);
+        !!BC && initServiceWorker();
+        // eslint-disable-next-line
+    }, [BC]);
 
     useEffect(() => {
-        if (BC) {
-            initServiceWorker();
-
-            BC.onmessage = (e: MessageEvent) => {
-                actions.run(e.data);
-                console.log('✈️ BroadcastChannel received..', e.data);
+        if (SW) {
+            // console.log('☘️ SW.state', SW.state);
+            SW.onstatechange = (e: Event) => {
+                if (e.target &&
+                    'state' in e.target &&
+                    e.target.state === 'activated') {
+                        console.log('🌞 e.target.state', e.target.state);
+                        // 1 step. Initialize WebSocket
+                        SOCK.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
+                        console.log('✈️ BroadcastChannel send..', config.WEBSOCKET_ADDR, userId, serverId);
+                }
             };
         }
         // eslint-disable-next-line
-    }, [BC, actions]);
+    }, [SW]);
 
     const SOCK = {
         prepareMessage(type: iMSG, message = '') {
@@ -58,27 +64,15 @@ export const useServiceWorker = () => {
                     console.log('🚦 registration..');
 
                     if (registration.installing) {
-                        SW = registration.installing;
-                        // console.log('🔨 installing');
+                        setSW(registration.installing);
+                        console.log('🔨 installing');
                     } else if (registration.waiting) {
-                        SW = registration.waiting;
-                        // console.log('⏳ waiting');
+                        setSW(registration.waiting);
+                        console.log('⏳ waiting');
                     } else if (registration.active) {
-                        SW = registration.active;
-                        // console.log('💚 active');
-                    }
-
-                    if (SW) {
-                        // console.log('☘️ SW.state', SW.state);
-                        SW.addEventListener('statechange', (e) => {
-                            if (e.target && 'state' in e.target) {
-                                console.log('🌞 e.target.state', e.target.state);
-                                if (e.target.state === 'activated') {
-                                    SOCK.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
-                                    console.log('✈️ BroadcastChannel send..', config.WEBSOCKET_ADDR, userId, serverId);
-                                }
-                            }
-                        });
+                        setSW(registration.active);
+                        SOCK.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
+                        console.log('💚 active');
                     }
                 })
                 .catch((error) => {
@@ -90,7 +84,6 @@ export const useServiceWorker = () => {
     };
 
     return ({
-        BC,
         SOCK
     })
 }

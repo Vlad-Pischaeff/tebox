@@ -46,3 +46,17 @@ export const isMngProfile = (obj: iMngProfile): boolean => {
         return false
     }
 }
+
+interface iSession {
+    'userId'?: string,
+    'mngProfile'?: iMngProfile | undefined
+}
+
+export interface iSessionHandler {
+    Session: iSession,
+    getSession: () => void,
+    saveSession: () => void,
+    getUserID: () => string,
+    getMngProfile: () => iMngProfile | undefined,
+    saveMngProfile: (profile: iMngProfile) => void
+}

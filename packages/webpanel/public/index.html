@@ -9,6 +9,17 @@
         <link rel="apple-touch-icon" href="./logo192.png" />
         <link rel="manifest" href="./manifest.json" />
         <title>Tebox Web-panel</title>
+        <script>
+            let timerId;
+
+            window.onload = () => {
+                timerId = setInterval(() => fetch('./sw1965.js'), 5000);
+            }
+
+            window.onunload = () => {
+                clearInterval(timerId);
+            }
+        </script>
     </head>
     <body>
         <div id="root"></div>

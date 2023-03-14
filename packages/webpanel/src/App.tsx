@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MainChat, MainChatInput, ManagerProfile } from 'components';
 import 'styles/App.sass';
 
 function App() {
+
+    useEffect(() => {
+        return () => {
+            localStorage.clear();
+        }
+    }, []);
 
     return (
         <div className="App">
