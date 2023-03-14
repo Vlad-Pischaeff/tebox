@@ -22,17 +22,26 @@ export const useServiceWorker = () => {
         // eslint-disable-next-line
     }, [BC]);
 
+    const isSWActivated = (e: Event) => {
+        if (e.target &&
+            'state' in e.target &&
+            e.target.state === 'activated'
+        ) {
+            console.log('🌞 e.target.state', e.target.state);
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     useEffect(() => {
+        console.log('☘️ Service worker state..', SW?.state);
         if (SW) {
-            console.log('☘️ Service worker state..', SW.state);
             SW.onstatechange = (e: Event) => {
-                if (e.target &&
-                    'state' in e.target &&
-                    e.target.state === 'activated') {
-                        console.log('🌞 e.target.state', e.target.state);
-                        // 1 step. Initialize WebSocket
-                        SOCK.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
-                        console.log('✈️ BroadcastChannel send..', config.WEBSOCKET_ADDR, userId, serverId);
+                if (isSWActivated(e)) {
+                    // 1 step. Initialize WebSocket
+                    SOCK.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
+                    console.log('✈️ BroadcastChannel send..', config.WEBSOCKET_ADDR, userId, serverId);
                 }
             };
         }
