@@ -24,7 +24,7 @@ export const useServiceWorker = () => {
 
     useEffect(() => {
         if (SW) {
-            // console.log('☘️ SW.state', SW.state);
+            console.log('☘️ Service worker state..', SW.state);
             SW.onstatechange = (e: Event) => {
                 if (e.target &&
                     'state' in e.target &&
@@ -65,14 +65,14 @@ export const useServiceWorker = () => {
 
                     if (registration.installing) {
                         setSW(registration.installing);
-                        console.log('🔨 installing');
+                        // console.log('🔨 installing');
                     } else if (registration.waiting) {
                         setSW(registration.waiting);
-                        console.log('⏳ waiting');
+                        // console.log('⏳ waiting');
                     } else if (registration.active) {
                         setSW(registration.active);
                         SOCK.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
-                        console.log('💚 active');
+                        // console.log('💚 active');
                     }
                 })
                 .catch((error) => {
@@ -85,5 +85,5 @@ export const useServiceWorker = () => {
 
     return ({
         SOCK
-    })
-}
+    });
+};

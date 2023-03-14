@@ -18,10 +18,9 @@ export const useBroadcastChannel = () => {
                 console.log('✈️ BroadcastChannel onmessage..', e.data);
             };
         }
-        // eslint-disable-next-line
     }, [BC, actions]);
 
     return ({
         BC
-    })
-}
+    });
+};

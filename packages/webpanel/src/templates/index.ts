@@ -32,7 +32,7 @@ export const SS: iSessionHandler = {
         SS.Session.mngProfile = profile;
         SS.saveSession();
     }
-}
+};
 
 export const USER_ID = SS.getUserID();
 export const SERVER_ID = '7ra/HQmh1y9wZ3WPUsAZiOKoynPQ7xDZ2v8NFEav9zpJPW.3ziQL6';

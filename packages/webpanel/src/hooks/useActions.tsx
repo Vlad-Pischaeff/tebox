@@ -42,4 +42,4 @@ export const useActions = () => {
     return ({
         actions,
     });
-}
+};
