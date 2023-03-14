@@ -16,13 +16,23 @@
     background: tomato
     border-radius: 8px
     padding: 4px
+    margin: 0 8px
 .menu
     flex: 0 0 auto
     width: 3.5rem
     height: 3.5rem
-    background: brown
+    border: 1px solid var(--C6)
     border-radius: 8px
     padding: 4px
     margin-right: 1rem
+    display: grid
+    place-items: center
+.menuItem
+    & > img
+        object-fit: cover
+        height: 100%
+        width: 100%
+        &:hover
+            cursor: pointer
 .loader
     margin-left: 1rem
