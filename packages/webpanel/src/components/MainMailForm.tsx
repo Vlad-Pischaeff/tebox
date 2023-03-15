@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form';
 import { useMessageObject } from 'hooks/useMessageObject';
 import { ButtonSendMessage } from './ButtonSendMessage';
 import { iMSG } from 'types/types.context';
-import s from 'styles/MainChatInput.module.sass';
+import s from 'styles/MainMailForm.module.sass';
 
 type tFormInputs = {
-    message: string;
+    mailFrom: string,
+    message: string
 }
 
-export const MainChatInput = () => {
+export const MainMailForm = () => {
     const { MSG } = useMessageObject();
     const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
@@ -19,22 +20,29 @@ export const MainChatInput = () => {
     }, [setFocus]);
 
     const onSubmit = (formData: tFormInputs) => {
-        const { message } = formData;
-        if (message) {
-            MSG.sendMessage(iMSG.messageFromClient, message);
+        const { message, mailFrom } = formData;
+        const data = JSON.stringify({ message, mailFrom });
+
+        if (message && mailFrom) {
+            MSG.sendMessage(iMSG.mailFromClient, data);
             resetField('message');
+            resetField('mailFrom');
         }
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.Form}>
             <div>
-                <input
+                <textarea
                     { ...register("message") }
                     className={s.FormInput}
                     placeholder="type your message here..." />
             </div>
             <div className={s.FormButtons}>
+                <input
+                    { ...register("mailFrom") }
+                    className={s.FormInput}
+                    placeholder="your email address..." />
                 <ButtonSendMessage />
             </div>
         </form>

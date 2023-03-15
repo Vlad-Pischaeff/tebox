@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { MainChat, MainChatInput, ManagerProfile } from 'components';
+import { MainChat, MainChatInput, ManagerProfile, MainMailForm } from 'components';
+import { useChatContext } from 'store';
 import 'styles/App.sass';
 
 function App() {
+    const { isMail } = useChatContext();
 
     useEffect(() => {
         return () => {
@@ -27,12 +29,16 @@ function App() {
             </header>
 
             <main className="App-main">
-                <MainChat />
+                <div className={isMail ? 'full' : 'hidden'}>
+                    <MainMailForm />
+                </div>
+                <div className={isMail ? 'hidden' : 'full'}>
+                    <MainChat />
+                </div>
             </main>
-
-            <footer className="App-footer">
-                <MainChatInput />
-            </footer>
+                <footer className={isMail ? 'hidden' : 'App-footer'}>
+                    <MainChatInput />
+                </footer>
         </div>
     );
 }

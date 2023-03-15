@@ -119,6 +119,9 @@ const DISPATCHER = {
     MSG_FROM_CLIENT(ws, data) {
         console.log('🔹 ws MSG_FROM_CLIENT..', data);
     },
+    MAIL_FROM_CLIENT(ws, data) {
+        console.log('🔹 ws MAIL_FROM_CLIENT..', data);
+    },
     run(ws, message) {
         let data = JSON.parse(message);
         const [ key ] = Object.keys(data);

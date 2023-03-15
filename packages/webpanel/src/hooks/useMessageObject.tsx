@@ -8,7 +8,11 @@ import config from '@tebox/config/client';
 
 type eSendMsgType = Extract<
     iMSG,
-    iMSG.messageFromClient | iMSG.clientIsOnline | iMSG.registerClient | iMSG.initWebSocket
+    iMSG.messageFromClient |
+    iMSG.mailFromClient |
+    iMSG.clientIsOnline |
+    iMSG.registerClient |
+    iMSG.initWebSocket
 >;
 
 export const useMessageObject = () => {

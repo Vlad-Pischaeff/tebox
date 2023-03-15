@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useMemo } from "react";
 import { useChatContext } from 'store';
-import { iMSG, iWebSocketMessage, isMngProfile } from 'types/types.context';
+import { iMSG, iWebSocketMessage, isMngProfile, iMngProfile } from 'types/types.context';
 
 export const useActions = () => {
     const { updChat, setMngProfile } = useChatContext();
@@ -11,23 +11,27 @@ export const useActions = () => {
             updChat(data[iMSG.messageFromManager]);
         },
         [iMSG.messageFromClient]: (data: iWebSocketMessage) => {
+            console.log('5️⃣ iMSG.messageFromClient..', data);
             updChat(data[iMSG.messageFromClient]);
         },
         [iMSG.managerProfile]: (data: iWebSocketMessage) => {
             const { message } = data[iMSG.managerProfile];
 
             if (typeof message !== 'string' && isMngProfile(message)) {
-                setMngProfile(message);
+                setMngProfile(message as iMngProfile);
             }
         },
+        [iMSG.mailFromClient]: (data: iWebSocketMessage) => {
+            console.log('4️⃣ iMSG.mailFromClient..', data);
+        },
         [iMSG.registerClient]: (data: iWebSocketMessage) => {
-            console.log('2️⃣ iMSG.registerClient message..', data);
+            console.log('2️⃣ iMSG.registerClient..', data);
         },
         [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
-            console.log('1️⃣ iMSG.managerIsOnline');
+            console.log('1️⃣ iMSG.managerIsOnline..');
         },
         [iMSG.clientIsOnline]: (data: iWebSocketMessage) => {
-            console.log('0️⃣ iMSG.clientIsOnline');
+            console.log('0️⃣ iMSG.clientIsOnline..');
         },
         [iMSG.initWebSocket]: (data: iWebSocketMessage) => {
             console.log('3️⃣ iMSG.initWebSocket');

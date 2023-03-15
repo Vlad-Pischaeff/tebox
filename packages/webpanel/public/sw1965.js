@@ -43,6 +43,9 @@ BC.addEventListener('message', e => {
     if ('MSG_FROM_CLIENT' in e.data) {
         ws.send(JSON.stringify(e.data));
     }
+    if ('MAIL_FROM_CLIENT' in e.data) {
+        ws.send(JSON.stringify(e.data));
+    }
 });
 
 function wsConnect(url) {

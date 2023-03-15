@@ -1,7 +1,7 @@
 export interface iMessage {
     'from': string,
     'to': string,
-    'message': string | iMngProfile,
+    'message': string | iMngProfile | iMail,
     'date': number
 }
 
@@ -18,11 +18,17 @@ export interface iWebSocketMessage {
 export enum iMSG {
     'registerClient' = 'REGISTER_CLIENT',
     'messageFromClient' = 'MSG_FROM_CLIENT',
+    'mailFromClient' = 'MAIL_FROM_CLIENT',
     'messageFromManager' = 'MSG_FROM_MANAGER',
     'managerIsOnline' = 'MANAGER_IS_ONLINE',
     'managerProfile' = 'MANAGER_PROFILE',
     'clientIsOnline' = 'CLIENT_IS_ONLINE',
     'initWebSocket' = 'INIT_WS',
+}
+
+export interface iMail {
+    mailFrom: string,
+    message: string
 }
 
 export interface iMngProfile {
@@ -33,13 +39,13 @@ export interface iMngProfile {
     greeting: string
 }
 
-export const isMngProfile = (obj: iMngProfile): boolean => {
+export const isMngProfile = (obj: object): boolean => {
     if (
-        obj.id !== undefined &&
-        obj.name !== undefined &&
-        obj.alias !== undefined &&
-        obj.image !== undefined &&
-        obj.greeting !== undefined
+        ('id' in obj)       &&
+        ('name' in obj)     &&
+        ('alias' in obj)    &&
+        ('image' in obj)    &&
+        ('greeting' in obj)
     ) {
         return true
     } else {
