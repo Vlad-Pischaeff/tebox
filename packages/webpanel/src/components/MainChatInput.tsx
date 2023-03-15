@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useServiceWorker } from 'hooks/useServiceWorker';
+import { useMessageObject } from 'hooks/useMessageObject';
 import { ButtonSendMessage } from './ButtonSendMessage';
 import { iMSG } from 'types/types.context';
 import s from 'styles/MainChatInput.module.sass';
@@ -11,7 +11,7 @@ type tFormInputs = {
 }
 
 export const MainChatInput = () => {
-    const { SOCK } = useServiceWorker();
+    const { MSG } = useMessageObject();
     const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export const MainChatInput = () => {
     const onSubmit = async (formData: tFormInputs) => {
         const { message } = formData;
         if (message) {
-            SOCK.sendMessage(iMSG.messageFromClient, message);
+            MSG.sendMessage(iMSG.messageFromClient, message);
             resetField('message');
         }
     };
