@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useChatContext } from 'store';
 import { useActions } from './useActions';
 import { useBroadcastChannel } from './useBroadcastChannel';
+import { isServiceWorkerEnabled, isServiceWorkerActivated } from 'utils';
 import { iMSG } from 'types/types.context';
 import config from '@tebox/config/client';
 
@@ -22,23 +23,11 @@ export const useServiceWorker = () => {
         // eslint-disable-next-line
     }, [BC]);
 
-    const isSWActivated = (e: Event) => {
-        if (e.target &&
-            'state' in e.target &&
-            e.target.state === 'activated'
-        ) {
-            console.log('🌞 e.target.state', e.target.state);
-            return true;
-        } else {
-            return false;
-        }
-    };
-
     useEffect(() => {
         console.log('☘️ Service worker state..', SW?.state);
         if (SW) {
             SW.onstatechange = (e: Event) => {
-                if (isSWActivated(e)) {
+                if (isServiceWorkerActivated(e)) {
                     // 1 step. Initialize WebSocket
                     SOCK.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
                     console.log('✈️ BroadcastChannel send..', config.WEBSOCKET_ADDR, userId, serverId);
@@ -67,7 +56,7 @@ export const useServiceWorker = () => {
     };
 
     const initServiceWorker = () => {
-        if ('serviceWorker' in navigator) {
+        if (isServiceWorkerEnabled()) {
             navigator.serviceWorker.register('sw1965.js', {scope: './'})
                 .then((registration) => {
                     console.log('🚦 registration..');
@@ -87,8 +76,6 @@ export const useServiceWorker = () => {
                 .catch((error) => {
                     console.log('💥 failed: ', error);
                 });
-        } else {
-            console.log('💥 The current browser doesn\'t support service workers');
         }
     };
 

@@ -25,7 +25,7 @@ module.exports = async (server) => {
 
         setInterval(() => {
             wss.clients.forEach(ws => {
-                console.log('🔹 ws MSG_FROM_MANAGER..', ws.id);
+                console.log('🔹 ws heartbeat..', ws.id);
                 ws.isAlive = false;
                 ws.ping();
                 DISPATCHER.MSG_FROM_MANAGER(ws, 'test message');
