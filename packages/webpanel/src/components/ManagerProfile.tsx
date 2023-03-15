@@ -35,7 +35,19 @@ export const ManagerProfile = () => {
         )
     } else {
         return (
-            <div className={s.loader}>Loading manager profile...</div>
+            <>
+                <div className={s.loader}>Loading manager profile...</div>
+                <div className={s.menu}>
+                    { isMail
+                        ?   <div id="chat" className={s.menuItem} onClick={Toggler}>
+                                <img src={UserIcons.SVG.chat} alt="chat" />
+                            </div>
+                        :   <div id="mail" className={s.menuItem} onClick={Toggler}>
+                                <img src={UserIcons.SVG.mail} alt="mail" />
+                            </div>
+                    }
+                </div>
+            </>
         )
     }
 };

@@ -35,8 +35,8 @@ export const SS: iSessionHandler = {
 };
 
 export const USER_ID = SS.getUserID();
-export const SERVER_ID = '7ra/HQmh1y9wZ3WPUsAZiOKoynPQ7xDZ2v8NFEav9zpJPW.3ziQL6';
-
+// export const SERVER_ID = '7ra/HQmh1y9wZ3WPUsAZiOKoynPQ7xDZ2v8NFEav9zpJPW.3ziQL6';
+export const SERVER_ID = 'yYtD3RH9VqUANPeZd2TPa.GLYAtU4JngX04uH4Ob0UAynufikmUhm';
 export const chatMock: iChat = [
     {
         'from': USER_ID,

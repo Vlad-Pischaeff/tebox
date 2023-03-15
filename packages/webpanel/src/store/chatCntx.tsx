@@ -1,8 +1,19 @@
 // eslint-disable-next-line
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { iMessage, iChat, iMngProfile } from 'types/types.context';
+import { iMSG, iWebSocketMessage, isMngProfile } from 'types/types.context';
 import { isServiceWorkerEnabled, isServiceWorkerActivated } from 'utils';
 import { chatMock, USER_ID, SERVER_ID, SS } from 'templates';
+import config from '@tebox/config/client';
+
+type eSendMsgType = Extract<
+    iMSG,
+    iMSG.messageFromClient |
+    iMSG.mailFromClient |
+    iMSG.clientIsOnline |
+    iMSG.registerClient |
+    iMSG.initWebSocket
+>;
 
 export const useChat = () => {
     const [ chat, setChat ] = useState<iChat>(chatMock);
@@ -14,6 +25,12 @@ export const useChat = () => {
     const [ userId, setUserId ] = useState(USER_ID);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState(SERVER_ID);
+    const [ BC, setBC ] = useState<BroadcastChannel>();
+
+    useEffect(() => {
+        const bc = new BroadcastChannel('swListener');
+        setBC(bc);
+    }, []);
 
     useEffect(() => {
         initServiceWorker();
@@ -48,12 +65,20 @@ export const useChat = () => {
         }
     }, [mngProfile]);
 
-    const updChat = (message: iMessage) => {
+    useEffect(() => {
+        if (isSWReady) {
+            // 1 step. Initialize WebSocket when Service Worker activated
+            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
+        }
+        // eslint-disable-next-line
+    }, [isSWReady]);
+
+    const updChat = useCallback((message: iMessage) => {
         const chatCopy = JSON.parse(JSON.stringify(chat));
         chatCopy.push(message);
         setChat(chatCopy);
         console.log('🔔 updChat..', chat)
-    };
+    }, [setChat, chat]);
 
     const initServiceWorker = () => {
         if (isServiceWorkerEnabled()) {
@@ -75,6 +100,69 @@ export const useChat = () => {
         }
     };
 
+    const actions = useMemo(() => ({
+        [iMSG.messageFromManager]: (data: iWebSocketMessage) => {
+            updChat(data[iMSG.messageFromManager]);
+        },
+        [iMSG.messageFromClient]: (data: iWebSocketMessage) => {
+            console.log('5️⃣ iMSG.messageFromClient..', data);
+            updChat(data[iMSG.messageFromClient]);
+        },
+        [iMSG.managerProfile]: (data: iWebSocketMessage) => {
+            const { message } = data[iMSG.managerProfile];
+
+            if (typeof message !== 'string' && isMngProfile(message)) {
+                setMngProfile(message as iMngProfile);
+            }
+        },
+        [iMSG.mailFromClient]: (data: iWebSocketMessage) => {
+            console.log('4️⃣ iMSG.mailFromClient..', data);
+        },
+        [iMSG.registerClient]: (data: iWebSocketMessage) => {
+            console.log('2️⃣ iMSG.registerClient..', data);
+        },
+        [iMSG.managerIsOnline]: (data: iWebSocketMessage) => {
+            console.log('1️⃣ iMSG.managerIsOnline..');
+        },
+        [iMSG.clientIsOnline]: (data: iWebSocketMessage) => {
+            console.log('0️⃣ iMSG.clientIsOnline..');
+        },
+        [iMSG.initWebSocket]: (data: iWebSocketMessage) => {
+            console.log('3️⃣ iMSG.initWebSocket');
+        },
+        'run': (data: iWebSocketMessage) => {
+            const [ key ] = Object.keys(data) as iMSG[];
+            actions[key](data);
+        },
+    }), [updChat, setMngProfile]);
+
+    useEffect(() => {
+        if (BC) {
+            BC.onmessage = (e: MessageEvent) => {
+                actions.run(e.data);
+                console.log('✈️ BroadcastChannel onmessage..', e.data);
+            };
+        }
+    }, [BC, actions]);
+
+    const MSG = {
+        prepareMessage(type: iMSG, message = '') {
+            return {
+                [type]: {
+                    'from': userId,
+                    'to': serverId,
+                    'message': message,
+                    'date': Date.now(),
+                }
+            }
+        },
+        sendMessage(type: eSendMsgType, message: string ) {
+            const msg = MSG.prepareMessage(type, message);
+            actions.run(msg);
+            BC?.postMessage(msg);
+        },
+    };
+
     const context = {
         chat,
         updChat,
@@ -85,7 +173,9 @@ export const useChat = () => {
         SW,
         isSWReady,
         isMail,
-        setIsMail
+        setIsMail,
+        actions,
+        MSG
     };
 
     return context;

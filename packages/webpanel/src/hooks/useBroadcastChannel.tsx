@@ -1,9 +1,9 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from "react";
-import { useActions } from './useActions';
+import { useChatContext } from 'store';
 
 export const useBroadcastChannel = () => {
-    const { actions } = useActions();
+    const { actions } = useChatContext();
     const [ BC, setBC ] = useState<BroadcastChannel>();
 
     useEffect(() => {
