@@ -1,7 +1,10 @@
 import React from 'react';
 import s from 'styles/ButtonSendMessage.module.sass';
 
-export const ButtonSendMessage = () => {
+export const ButtonSendMessage = React.memo(() => {
+
+    ButtonSendMessage.displayName = 'ButtonSendMessage';
+
     return (
         <button className={s.Button} type="submit" value="OK" >
             <svg className={s.svg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" >
@@ -14,4 +17,4 @@ export const ButtonSendMessage = () => {
             </svg>
         </button>
     );
-};
+});

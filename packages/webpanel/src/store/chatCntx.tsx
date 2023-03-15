@@ -27,6 +27,9 @@ export const useChat = () => {
 
     useEffect(() => {
         if (SW) {
+            if (SW?.state === 'activated') {
+                setSWReady(true);
+            }
             SW.onstatechange = (e: Event) => {
                 if (isServiceWorkerActivated(e)) {
                     // 1 step. Initialize WebSocket

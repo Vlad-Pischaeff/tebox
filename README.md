@@ -1,8 +1,8 @@
-# Websites online helper based on redux-toolkit, rtk-query, react-hook-form, with automatic renewal jwt
+# Websites online helper based on redux-toolkit, rtk-query, react-hook-form, with automatic renewal jwt, Service Worker with WebSocket supply on client side.
 
 ## To run
 
-- before starting the program, make sure that you have installed lerna and yarn
+- before starting the program, make sure that you have installed lerna
 ```sh
 npm i -g lerna
 ```
