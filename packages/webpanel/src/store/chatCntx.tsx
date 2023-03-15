@@ -6,8 +6,9 @@ import { chatMock, USER_ID, SERVER_ID, SS } from 'templates';
 
 export const useChat = () => {
     const [ chat, setChat ] = useState<iChat>(chatMock);
-    const [ SW, setSW ] = useState<ServiceWorker>();
-    const [ isSWReady, setSWReady] = useState(false);
+    const [ SW, setSW ] = useState<ServiceWorker>();    // Service Worker object
+    const [ isSWReady, setSWReady] = useState(false);   // "true" when Service Worker activated
+    const [ msgType, setMsgType ] = useState('chat');   // "chat" or "mail"
     const [ mngProfile, setMngProfile ] = useState<iMngProfile>();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ userId, setUserId ] = useState(USER_ID);
@@ -78,7 +79,9 @@ export const useChat = () => {
         userId,
         serverId,
         SW,
-        isSWReady
+        isSWReady,
+        msgType,
+        setMsgType
     };
 
     return context;

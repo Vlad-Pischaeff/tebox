@@ -3,30 +3,29 @@
     width: 3.5rem
     height: 3.5rem
     margin-left: 1rem
-    & img
+    & > img
         object-fit: cover
         height: 100%
         width: 100%
         border-radius: 8px
         border: 2px solid var(--C7)
-
+.menu,
+.description
+    display: grid
+    place-items: center
+    border-radius: 8px
+    padding: 4px
 .description
     flex: 1 1 auto
     height: 3.5rem
     background: tomato
-    border-radius: 8px
-    padding: 4px
     margin: 0 8px
 .menu
     flex: 0 0 auto
     width: 3.5rem
     height: 3.5rem
-    border: 1px solid var(--C6)
-    border-radius: 8px
-    padding: 4px
+    background: powderblue
     margin-right: 1rem
-    display: grid
-    place-items: center
 .menuItem
     & > img
         object-fit: cover
