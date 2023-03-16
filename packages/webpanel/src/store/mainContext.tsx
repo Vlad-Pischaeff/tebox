@@ -1,37 +1,16 @@
 // eslint-disable-next-line
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
-import { useServiceWorker } from 'hooks/useServiceWorker';
+import React, { useEffect, useMemo, useCallback } from "react";
 import { useManagerProfile } from 'hooks/useManagerProfile';
 import { useChatMessages } from 'hooks/useChatMessages';
+import { useMessageObject } from 'hooks/useMessageObject';
 import { iMngProfile } from 'types/types.context';
 import { iMSG, iWebSocketMessage, isMngProfile } from 'types/types.context';
-import { USER_ID, SERVER_ID } from 'templates';
 import { emitter } from 'utils';
-import config from '@tebox/config/client';
-
-type eSendMsgType = Exclude<
-    iMSG,
-    iMSG.managerProfile | iMSG.messageFromManager | iMSG.managerIsOnline
->;
 
 export const useChat = () => {
-    const { BC } = useBroadcastChannel();
-    const { SW, isSWReady } = useServiceWorker();
     const { mngProfile, setMngProfile } = useManagerProfile();
     const { chat, updChat, isMail, setIsMail } = useChatMessages();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [ userId, setUserId ] = useState(USER_ID);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [ serverId, setServerId ] = useState(SERVER_ID);
-
-    useEffect(() => {
-        if (isSWReady) {
-            // 1 step. Initialize WebSocket when Service Worker activated
-            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
-        }
-        // eslint-disable-next-line
-    }, [isSWReady]);
+    const { userId, serverId, SW, isSWReady, MSG } = useMessageObject();
 
     const actions = useMemo(() => ({
         [iMSG.messageFromManager]: (data: iWebSocketMessage) => {
@@ -82,26 +61,7 @@ export const useChat = () => {
         }
     }, [runAction]);
 
-    const MSG = {
-        prepareMessage(type: iMSG, message = '') {
-            return {
-                [type]: {
-                    'from': userId,
-                    'to': serverId,
-                    'message': message,
-                    'date': Date.now(),
-                }
-            }
-        },
-        sendMessage(type: eSendMsgType, message: string ) {
-            const msg = MSG.prepareMessage(type, message);
-            emitter.emit('RUN_ACTION', msg)
-            // actions.run(msg);
-            BC?.postMessage(msg);
-        },
-    };
-
-    const context = {
+    return ({
         chat,
         updChat,
         mngProfile,
@@ -113,7 +73,5 @@ export const useChat = () => {
         isMail,
         setIsMail,
         MSG
-    };
-
-    return context;
-}
+    });
+};
