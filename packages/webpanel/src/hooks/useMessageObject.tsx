@@ -2,15 +2,10 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useServiceWorker } from 'hooks/useServiceWorker';
-import { iMSG } from 'types/types.context';
+import { iMSG, iSendMsgType } from 'types/types.context';
 import { USER_ID, SERVER_ID } from 'templates';
 import { emitter } from 'utils';
 import config from '@tebox/config/client';
-
-type eSendMsgType = Exclude<
-    iMSG,
-    iMSG.managerProfile | iMSG.messageFromManager | iMSG.managerIsOnline
->;
 
 export const useMessageObject = () => {
     const { BC } = useBroadcastChannel();
@@ -31,7 +26,7 @@ export const useMessageObject = () => {
                 }
             }
         },
-        sendMessage(type: eSendMsgType, message: string ) {
+        sendMessage(type: iSendMsgType, message: string ) {
             const msg = MSG.prepareMessage(type, message);
             emitter.emit('RUN_ACTION', msg)
             BC?.postMessage(msg);

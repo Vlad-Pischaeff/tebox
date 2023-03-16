@@ -26,6 +26,11 @@ export enum iMSG {
     'initWebSocket' = 'INIT_WS',
 }
 
+export type iSendMsgType = Exclude<
+    iMSG,
+    iMSG.managerProfile | iMSG.messageFromManager | iMSG.managerIsOnline
+>
+
 export interface iMail {
     mailFrom: string,
     message: string
