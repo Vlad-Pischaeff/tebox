@@ -34,7 +34,7 @@ export const MainChatInput = () => {
                     className={s.FormInput}
                     placeholder="type your message here..." />
             </div>
-            <div className={s.FormButtons}>
+            <div className={s.FormButtonWrap}>
                 <ButtonSendMessage />
             </div>
         </form>

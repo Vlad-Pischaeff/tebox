@@ -43,7 +43,9 @@ export const MainMailForm = () => {
                     { ...register("mailFrom") }
                     className={s.FormInput}
                     placeholder="your email address..." />
-                <ButtonSendMessage />
+                <div className={s.FormButtonWrap}>
+                    <ButtonSendMessage />
+                </div>
             </div>
         </form>
     );
