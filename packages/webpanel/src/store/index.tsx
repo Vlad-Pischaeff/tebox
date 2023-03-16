@@ -1,5 +1,5 @@
 import React from "react";
-import { useChat } from './chatCntx';
+import { useChat } from './mainContext';
 import { iPropsWithChildren } from 'types/types.context';
 
 const ChatContext = React.createContext({} as ReturnType<typeof useChat>)

@@ -17,7 +17,7 @@ export const MainMailForm = () => {
 
     useEffect(() => {
         setFocus('message', { shouldSelect: false });
-    }, [setFocus]);
+    });
 
     const onSubmit = (formData: tFormInputs) => {
         const { message, mailFrom } = formData;
@@ -32,7 +32,7 @@ export const MainMailForm = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.Form}>
-            <div>
+            <div className={s.FormMessage}>
                 <textarea
                     { ...register("message") }
                     className={s.FormInput}

@@ -1,9 +1,8 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from "react";
-import { useChatContext } from 'store';
+import { emitter } from 'utils';
 
 export const useBroadcastChannel = () => {
-    const { actions } = useChatContext();
     const [ BC, setBC ] = useState<BroadcastChannel>();
 
     useEffect(() => {
@@ -14,11 +13,11 @@ export const useBroadcastChannel = () => {
     useEffect(() => {
         if (BC) {
             BC.onmessage = (e: MessageEvent) => {
-                actions.run(e.data);
+                emitter.emit('RUN_ACTION', e.data)
                 console.log('✈️ BroadcastChannel onmessage..', e.data);
             };
         }
-    }, [BC, actions]);
+    }, [BC]);
 
     return ({
         BC

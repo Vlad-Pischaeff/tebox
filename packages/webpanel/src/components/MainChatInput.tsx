@@ -16,7 +16,7 @@ export const MainChatInput = () => {
 
     useEffect(() => {
         setFocus('message', { shouldSelect: false });
-    }, [setFocus]);
+    });
 
     const onSubmit = (formData: tFormInputs) => {
         const { message } = formData;
