@@ -68,10 +68,10 @@ export const useChat = () => {
         setMngProfile,
         userId,
         serverId,
-        SW,
-        isSWReady,
         isMail,
         setIsMail,
+        SW,
+        isSWReady,
         MSG
     });
 };

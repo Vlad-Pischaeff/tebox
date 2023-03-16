@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useServiceWorker } from 'hooks/useServiceWorker';
 import { iMSG } from 'types/types.context';
@@ -20,15 +20,7 @@ export const useMessageObject = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState(SERVER_ID);
 
-    useEffect(() => {
-        if (isSWReady) {
-            // 1 step. Initialize WebSocket when Service Worker activated
-            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
-        }
-        // eslint-disable-next-line
-    }, [isSWReady]);
-
-    const MSG = {
+    const MSG = useMemo(() => ({
         prepareMessage(type: iMSG, message = '') {
             return {
                 [type]: {
@@ -42,10 +34,16 @@ export const useMessageObject = () => {
         sendMessage(type: eSendMsgType, message: string ) {
             const msg = MSG.prepareMessage(type, message);
             emitter.emit('RUN_ACTION', msg)
-            // actions.run(msg);
             BC?.postMessage(msg);
         },
-    };
+    }), [BC, userId, serverId]);
+
+    useEffect(() => {
+        if (isSWReady) {
+            // 1 step. Initialize WebSocket when Service Worker activated
+            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
+        }
+    }, [isSWReady, MSG]);
 
     return ({
         userId,
