@@ -12,7 +12,7 @@ export const useChat = () => {
     const { chat, updChat, isMail, setIsMail } = useChatMessages();
     const { userId, serverId, SW, isSWReady, MSG } = useMessageObject();
 
-    const actions = useMemo(() => ({
+    const ACT = useMemo(() => ({
         [iMSG.messageFromManager]: (data: iWebSocketMessage) => {
             updChat(data[iMSG.messageFromManager]);
         },
@@ -44,15 +44,15 @@ export const useChat = () => {
         },
         'run': (data: iWebSocketMessage) => {
             const [ key ] = Object.keys(data) as iMSG[];
-            actions[key](data);
+            ACT[key](data);
         },
     }), [updChat, setMngProfile]);
 
     const runAction = useCallback((data: object) => {
         if ('detail' in data) {
-            actions.run(data?.detail as iWebSocketMessage);
+            ACT.run(data?.detail as iWebSocketMessage);
         }
-    }, [actions]);
+    }, [ACT]);
 
     useEffect(() => {
         emitter.on('RUN_ACTION', runAction);
