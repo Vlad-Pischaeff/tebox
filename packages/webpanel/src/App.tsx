@@ -23,9 +23,6 @@ function App() {
                 <div className="App-profile">
                     <ManagerProfile />
                 </div>
-                <div>
-                    <span></span>
-                </div>
             </header>
 
             <main className="App-main">
