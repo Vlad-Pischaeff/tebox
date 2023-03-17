@@ -4,7 +4,7 @@ const BC = new BroadcastChannel('swListener');
 if (typeof self.skipWaiting === 'function') {
     console.log('self.skipWaiting() is supported.');
     self.addEventListener('install', function(e) {
-      // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-global-scope-skipwaiting
+        // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-global-scope-skipwaiting
         e.waitUntil(self.skipWaiting());
     });
     self.addEventListener('message', function(e) {
@@ -17,7 +17,7 @@ if (typeof self.skipWaiting === 'function') {
 if (self.clients && (typeof self.clients.claim === 'function')) {
     console.log('self.clients.claim() is supported.');
     self.addEventListener('activate', function(e) {
-      // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#clients-claim-method
+        // See https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#clients-claim-method
         e.waitUntil(self.clients.claim());
     });
 } else {
@@ -31,7 +31,6 @@ self.addEventListener('fetch', event => {
 //--------------------------------------------
 
 BC.addEventListener('message', e => {
-    // console.log('✈️ message..', e.data);
     if ('INIT_WS' in e.data) {
         console.log('✈️ INIT WebSocket..', e.data['INIT_WS']);
         const { message, from, to } = e.data['INIT_WS'];
