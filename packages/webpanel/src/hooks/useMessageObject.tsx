@@ -28,7 +28,7 @@ export const useMessageObject = () => {
         },
         sendMessage(type: iSendMsgType, message: string ) {
             const msg = MSG.prepareMessage(type, message);
-            emitter.emit('RUN_ACTION', msg)
+            emitter.emit('RUN_ACTION', msg);
             BC?.postMessage(msg);
         },
     }), [BC, userId, serverId]);
@@ -36,7 +36,7 @@ export const useMessageObject = () => {
     useEffect(() => {
         if (isSWReady) {
             // 1 step. Initialize WebSocket when Service Worker activated
-            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR );
+            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR);
         }
     }, [isSWReady, MSG]);
 

@@ -13,7 +13,7 @@ export const useBroadcastChannel = () => {
     useEffect(() => {
         if (BC) {
             BC.onmessage = (e: MessageEvent) => {
-                emitter.emit('RUN_ACTION', e.data)
+                emitter.emit('RUN_ACTION', e.data);
                 console.log('✈️ BroadcastChannel onmessage..', e.data);
             };
         }

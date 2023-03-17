@@ -11,7 +11,7 @@ export const useChatMessages = () => {
         const chatCopy = JSON.parse(JSON.stringify(chat));
         chatCopy.push(message);
         setChat(chatCopy);
-        console.log('🔔 updChat..', chat)
+        console.log('🔔 updChat..', chat);
     };
 
     return ({
