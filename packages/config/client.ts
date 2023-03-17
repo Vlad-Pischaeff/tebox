@@ -1,6 +1,7 @@
 const config = {
     SERVER_PORT:        process.env.REACT_APP_SERVER_PORT,
     SERVER_ADDR:        process.env.REACT_APP_SERVER_ADDR,
+    SERVER_PROTO:       process.env.REACT_APP_SERVER_PROTO,
     WEBSOCKET_PROTO:    process.env.REACT_APP_SERVER_PROTO === 'https'
                             ? 'wss:'
                             : 'ws:',

@@ -8,6 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = app => {
     app.use('/upload', express.static(path.join(__dirname, '..', '/public/upload')));
+    app.use('/fonts', express.static(path.join(__dirname, '..', '/public/fonts' )));
 
     // iframe Web-panel
     app.use('/client', express.static(path.join(__dirname, '../../..', 'webpanel', 'build' )));
