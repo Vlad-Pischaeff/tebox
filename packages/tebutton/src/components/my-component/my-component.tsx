@@ -23,17 +23,16 @@ import { Component, Prop, State, h } from '@stencil/core';
                         src="http://localhost:5000/client"
                         frameborder="0"
                         scrolling="no"
-                    />
+                        id={this.HOST_KEY}></iframe>
                     <div
                         class="tbx_panel-close"
-                        onClick={() => this.onClickHandler()}
-                    />
+                        onClick={() => this.onClickHandler()}></div>
                 </div>
                 <div
                     class={this.show ? "tbx_icon none" : "tbx_icon" }
                     onClick={() => this.onClickHandler()}
                 >
-                    <div class="tbx_icon-ring" />
+                    <div class="tbx_icon-ring"></div>
                     <div class="tbx_icon-button">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" viewBox="0,0,64,64">
                             <g fill="orange" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none">
