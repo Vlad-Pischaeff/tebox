@@ -1,6 +1,6 @@
 {
     "name": "@tebox/webpanel",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "tebox client panel",
     "main": "src/index.tsx",
     "private": true,
