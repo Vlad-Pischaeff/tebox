@@ -1,6 +1,6 @@
 /**
  * panel styles
- * **/
+ */
 .tbx {
     position: fixed;
     bottom: 2rem;
@@ -23,8 +23,8 @@
     border-radius: 1rem;
 }
 /**
-* panel close button styles
-* **/
+ * panel close button styles
+ */
 .tbx_panel-close {
     position: absolute;
     right: -1px;
@@ -56,8 +56,8 @@
     background: orangered;
 }
 /**
-* button styles
-* **/
+ * button styles
+ */
 .tbx_icon {
     position: absolute;
     bottom: 0;
@@ -98,14 +98,14 @@
     }
 }
 /**
-* other styles
-* **/
+ * other styles
+ */
 .none {
     display: none;
 }
 /**
-* animation styles
-* **/
+ * animation styles
+ */
 .fade-in {
     animation: fade-in 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
