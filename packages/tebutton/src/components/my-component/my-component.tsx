@@ -1,5 +1,4 @@
 import { Component, Prop, State, h } from '@stencil/core';
-// import { format } from '../../utils/utils';
 
 @Component({
         tag: 'my-component',
@@ -7,33 +6,24 @@ import { Component, Prop, State, h } from '@stencil/core';
         shadow: true,
     })
     export class MyComponent {
-    /**
-     * The first name
-     */
-    @Prop() first: string;
 
-    /**
-     * The middle name
-     */
-    @Prop() middle: string;
-
-    /**
-     * The last name
-     */
-    @Prop() last: string;
+    @Prop() HOST_KEY: string;
 
     @State() show: boolean = false;
 
     private onClickHandler() {
         this.show = !this.show;
-        console.log('click...', this.show)
     }
 
     render() {
         return (
             <div class="tbx">
                 <div class={this.show ? "tbx_panel fade-in" : "tbx_panel none" }>
-                    <iframe src="http://localhost:5000/client" frameborder="0" scrolling="no"> </iframe>
+                    <iframe
+                        src="http://localhost:5000/client"
+                        frameborder="0"
+                        scrolling="no"
+                    />
                     <div
                         class="tbx_panel-close"
                         onClick={() => this.onClickHandler()}
