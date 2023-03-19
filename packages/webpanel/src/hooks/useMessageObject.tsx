@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useServiceWorker } from 'hooks/useServiceWorker';
 import { iMSG, iSendMsgType } from 'types/types.context';
@@ -15,7 +15,7 @@ export const useMessageObject = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState(SERVER_ID);
 
-    const MSG = useMemo(() => ({
+    const MSG = {
         prepareMessage(type: iMSG, message = '') {
             return {
                 [type]: {
@@ -31,7 +31,7 @@ export const useMessageObject = () => {
             emitter.emit('RUN_ACTION', msg);
             BC?.postMessage(msg);
         },
-    }), [BC, userId, serverId]);
+    };
 
     useEffect(() => {
         if (isSWReady) {

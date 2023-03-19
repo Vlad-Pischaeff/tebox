@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import React, { useEffect, useMemo, useCallback } from "react";
+import React, { useEffect } from "react";
 import { useManagerProfile } from 'hooks/useManagerProfile';
 import { useChatMessages } from 'hooks/useChatMessages';
 import { useMessageObject } from 'hooks/useMessageObject';
@@ -12,7 +12,7 @@ export const useChat = () => {
     const { chat, updChat, isMail, setIsMail } = useChatMessages();
     const { userId, serverId, SW, isSWReady, MSG } = useMessageObject();
 
-    const ACT = useMemo(() => ({
+    const ACT = {
         [iMSG.messageFromManager]: (data: iWebSocketMessage) => {
             updChat(data[iMSG.messageFromManager]);
         },
@@ -46,13 +46,13 @@ export const useChat = () => {
             const [ key ] = Object.keys(data) as iMSG[];
             ACT[key](data);
         },
-    }), [updChat, setMngProfile]);
+    };
 
-    const runAction = useCallback((data: object) => {
+    const runAction = (data: object) => {
         if ('detail' in data) {
             ACT.run(data?.detail as iWebSocketMessage);
         }
-    }, [ACT]);
+    };
 
     useEffect(() => {
         emitter.on('RUN_ACTION', runAction);
