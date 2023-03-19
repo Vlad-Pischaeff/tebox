@@ -27,12 +27,13 @@
  */
 .tbx_panel-close {
     position: absolute;
-    right: -1px;
-    top: -1px;
+    right: -1rem;
+    top: -2rem;
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    background: black;
+    border: 1px solid orangered;
+    background: #0c5679;
 }
 .tbx_panel-close::before,
 .tbx_panel-close::after {

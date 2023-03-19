@@ -6,34 +6,36 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
-        "HOST_KEY": string;
+    interface TeButton {
+        "host_key": string;
+        "url": string;
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLTeButtonElement extends Components.TeButton, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLTeButtonElement: {
+        prototype: HTMLTeButtonElement;
+        new (): HTMLTeButtonElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "te-button": HTMLTeButtonElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        "HOST_KEY"?: string;
+    interface TeButton {
+        "host_key"?: string;
+        "url"?: string;
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "te-button": TeButton;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "te-button": LocalJSX.TeButton & JSXBase.HTMLAttributes<HTMLTeButtonElement>;
         }
     }
 }

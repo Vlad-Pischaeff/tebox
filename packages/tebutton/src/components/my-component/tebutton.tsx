@@ -1,13 +1,14 @@
 import { Component, Prop, State, h } from '@stencil/core';
 
 @Component({
-        tag: 'my-component',
-        styleUrl: 'my-component.css',
+        tag: 'te-button',
+        styleUrl: 'tebutton.css',
         shadow: true,
     })
     export class MyComponent {
 
-    @Prop() HOST_KEY: string;
+    @Prop() url: string;
+    @Prop() host_key: string;
 
     @State() show: boolean = false;
 
@@ -20,10 +21,10 @@ import { Component, Prop, State, h } from '@stencil/core';
             <div class="tbx">
                 <div class={this.show ? "tbx_panel fade-in" : "tbx_panel none" }>
                     <iframe
-                        src="http://localhost:5000/client"
+                        src={this.url}
                         frameborder="0"
                         scrolling="no"
-                        id={this.HOST_KEY}></iframe>
+                        id={this.host_key}></iframe>
                     <div
                         class="tbx_panel-close"
                         onClick={() => this.onClickHandler()}></div>

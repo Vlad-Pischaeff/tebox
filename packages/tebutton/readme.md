@@ -63,6 +63,25 @@ The first step for all three of these strategies is to [publish to NPM](https://
 
 - Put a script tag similar to this `<script type='module' src='https://unpkg.com/my-component@0.0.1/dist/my-component.esm.js'></script>` in the head of your index.html
 - Then you can use the element anywhere in your template, JSX, html etc
+- for example:
+
+```
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+        <title>Tebutton Component </title>
+        <script type="module" src="http://localhost:5000/dist/tebutton.esm.js"></script>
+    </head>
+    <body>
+        <te-button
+            url="http://localhost:5000/client"
+            host_key="HostHashKey">
+        </te-button>
+    </body>
+</html>
+```
 
 ### Node Modules
 - Run `npm install my-component --save`

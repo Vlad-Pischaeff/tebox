@@ -24,6 +24,7 @@
         "dev": "cross-env NODE_ENV=development npx lerna run dev-server,dev-webpanel --stream",
         "build-webadmin": "npx lerna run build-webadmin --stream",
         "build-webpanel": "npx lerna run build-webpanel --stream",
+        "build-tebutton": "npx lerna run build-tebutton --stream",
         "dev:app": "cd packages/app && yarn dev:app && cd ../../",
         "build:android": "cd packages/app && yarn build:android && cd ../../",
         "build:ios": "cd packages/app && yarn build:ios && cd ../../",

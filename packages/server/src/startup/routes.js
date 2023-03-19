@@ -11,6 +11,9 @@ module.exports = app => {
     app.use('/fonts', express.static(path.join(__dirname, '..', '/public/fonts' )));
     app.use('/test', express.static(path.join(__dirname, '..', '/public/test' )));
 
+    // tebutton
+    app.use('/dist', express.static(path.join(__dirname, '../../..', 'tebutton', 'dist', 'tebutton' )));
+
     // iframe Web-panel
     app.use('/client', express.static(path.join(__dirname, '../../..', 'webpanel', 'build' )));
     app.use('/static', express.static(path.join(__dirname, '../../..', 'webpanel', 'build', 'static' )));
@@ -19,7 +22,7 @@ module.exports = app => {
                     '\tto ...\t', req.headers.host,
                     '\n\tfrom ...\t', req.headers.referer, req.url, req.originalUrl);
         res.sendFile(path.resolve(__dirname, '../../..', 'webpanel', 'build', 'index.html'));
-    })
+    });
 
     app.use('/api', ROUTER.usersRouter);
     app.use('/api', ROUTER.todosRouter);
