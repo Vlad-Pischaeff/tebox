@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useServiceWorker } from 'hooks/useServiceWorker';
 import { iMSG, iSendMsgType } from 'types/types.context';
-import { USER_ID, SERVER_ID } from 'templates';
+import { USER_ID } from 'templates';
 import { emitter } from 'utils';
 import config from '@tebox/config/client';
 
@@ -12,7 +12,6 @@ export const useMessageObject = () => {
     const { SW, isSWReady } = useServiceWorker();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ userId, setUserId ] = useState(USER_ID);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ serverId, setServerId ] = useState('undefined');
 
     const MSG = {
