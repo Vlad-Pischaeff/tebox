@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { MainChat, MainChatInput, ManagerProfile, MainMailForm } from 'components';
 import { useChatContext } from 'store';
+import { SERVER_ID } from 'templates';
 import 'styles/App.sass';
 
 function App() {
@@ -9,10 +10,15 @@ function App() {
     useEffect(() => {
         if (window !== window.parent) {
             getServerKey();
+        } else {
+            // for 'DEVELOPMENT' mode set as SERVER_ID
+            console.log('🔑 SERVER_ID...', SERVER_ID);
+            setServerId(SERVER_ID);
         }
         return () => {
             localStorage.clear();
         }
+        // eslint-disable-next-line
     }, []);
 
     const getServerKey = () => {

@@ -51,6 +51,7 @@ export const useChat = () => {
         },
     };
 
+    // eslint-disable-next-line
     const runAction = (data: object) => {
         if ('detail' in data) {
             ACT.run(data?.detail as iWebSocketMessage);
