@@ -13,7 +13,7 @@ export const useMessageObject = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ userId, setUserId ] = useState(USER_ID);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [ serverId, setServerId ] = useState(SERVER_ID);
+    const [ serverId, setServerId ] = useState('undefined');
 
     const MSG = {
         prepareMessage(type: iMSG, message = '') {
@@ -38,11 +38,13 @@ export const useMessageObject = () => {
             // 1 step. Initialize WebSocket when Service Worker activated
             MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR);
         }
-    }, [isSWReady, MSG]);
+        // eslint-disable-next-line
+    }, [isSWReady]);
 
     return ({
         userId,
         serverId,
+        setServerId,
         SW,
         isSWReady,
         MSG

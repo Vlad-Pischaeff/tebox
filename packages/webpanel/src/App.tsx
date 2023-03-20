@@ -4,13 +4,22 @@ import { useChatContext } from 'store';
 import 'styles/App.sass';
 
 function App() {
-    const { isMail } = useChatContext();
+    const { isMail, setServerId } = useChatContext();
 
     useEffect(() => {
+        if (window !== window.parent) {
+            getServerKey();
+        }
         return () => {
             localStorage.clear();
         }
     }, []);
+
+    const getServerKey = () => {
+        const serverKey = window.location.hash.substring(1);
+        setServerId(serverKey);
+        console.log('🔑 serverKey...', serverKey);
+    }
 
     return (
         <div className="App">

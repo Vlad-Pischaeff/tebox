@@ -19,7 +19,7 @@ export const ManagerProfile = () => {
                 </figure>
                 <div className={s.description}>
                     {mngProfile.alias ? mngProfile.alias : mngProfile.name}
-                    <div>Service Worker {SW?.state}</div>
+                    {/* <div>Service Worker {SW?.state}</div> */}
                 </div>
                 <div className={s.menu}>
                     { isMail
