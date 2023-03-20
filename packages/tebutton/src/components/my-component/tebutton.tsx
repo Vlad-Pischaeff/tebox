@@ -21,10 +21,11 @@ import { Component, Prop, State, h } from '@stencil/core';
             <div class="tbx">
                 <div class={this.show ? "tbx_panel fade-in" : "tbx_panel none" }>
                     <iframe
+                        id="tbx-frame"
                         src={this.url}
+                        data-key={this.host_key}
                         frameborder="0"
-                        scrolling="no"
-                        id={this.host_key}></iframe>
+                        scrolling="no"></iframe>
                     <div
                         class="tbx_panel-close"
                         onClick={() => this.onClickHandler()}></div>
