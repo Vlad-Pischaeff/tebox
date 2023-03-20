@@ -21,7 +21,7 @@
         "dev-webadmin": "npx lerna run dev-webadmin",
         "dev-webpanel": "npx lerna run dev-webpanel",
         "dev-tebutton": "npx lerna run dev-tebutton",
-        "dev": "cross-env NODE_ENV=development npx lerna run dev-server,dev-webpanel --stream",
+        "dev": "cross-env NODE_ENV=development npx lerna run dev-server,dev-tebutton --stream",
         "build-webadmin": "npx lerna run build-webadmin --stream",
         "build-webpanel": "npx lerna run build-webpanel --stream",
         "build-tebutton": "npx lerna run build-tebutton --stream",

@@ -33,7 +33,11 @@
     height: 2rem;
     border-radius: 50%;
     border: 1px solid orangered;
-    background: #0c5679;
+    background: white;
+}
+.tbx_panel-close:hover {
+    cursor: pointer;
+    background: orangered;
 }
 .tbx_panel-close::before,
 .tbx_panel-close::after {
@@ -44,7 +48,7 @@
     content: "";
     height: 20px;
     width: 2px;
-    background-color: white;
+    background: #0c5679;
 }
 .tbx_panel-close::before {
     transform: rotate(45deg);
@@ -52,9 +56,9 @@
 .tbx_panel-close::after {
     transform: rotate(-45deg);
 }
-.tbx_panel-close:hover {
-    cursor: pointer;
-    background: orangered;
+.tbx_panel-close:hover::before,
+.tbx_panel-close:hover::after{
+    background: white;
 }
 /**
  * button styles
