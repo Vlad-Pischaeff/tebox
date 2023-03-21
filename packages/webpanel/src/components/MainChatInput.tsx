@@ -1,36 +1,32 @@
 // eslint-disable-next-line
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useRef } from 'react';
 import { useChatContext } from 'store';
 import { ButtonSendMessage } from './ButtonSendMessage';
 import { iMSG } from 'types/types.context';
 import s from 'styles/MainChatInput.module.sass';
 
-type tFormInputs = {
-    message: string;
-}
-
 export const MainChatInput = () => {
     const { MSG } = useChatContext();
-    const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
+    const ipRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        setFocus('message', { shouldSelect: false });
+        !!ipRef.current && ipRef.current.focus();
     });
 
-    const onSubmit = (formData: tFormInputs) => {
-        const { message } = formData;
-        if (message) {
-            MSG.sendMessage(iMSG.messageFromClient, message);
-            resetField('message');
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (ipRef.current?.value) {
+            MSG.sendMessage(iMSG.messageFromClient, ipRef.current?.value);
+            ipRef.current.value = '';
+            ipRef.current.focus();
         }
-    };
+    }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={s.Form}>
+        <form className={s.Form} onSubmit={handleSubmit}>
             <div>
                 <input
-                    { ...register("message") }
+                    ref={ipRef}
                     className={s.FormInput}
                     placeholder="type your message here..." />
             </div>

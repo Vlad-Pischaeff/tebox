@@ -1,46 +1,44 @@
 // eslint-disable-next-line
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useRef } from 'react';
 import { useChatContext } from 'store';
 import { ButtonSendMessage } from './ButtonSendMessage';
 import { iMSG } from 'types/types.context';
 import s from 'styles/MainMailForm.module.sass';
 
-type tFormInputs = {
-    mailFrom: string,
-    message: string
-}
-
 export const MainMailForm = () => {
     const { MSG } = useChatContext();
-    const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
+    const ipRef = useRef<HTMLInputElement>(null);
+    const taRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
-        setFocus('message', { shouldSelect: false });
+        !!taRef.current && taRef.current.focus();
     });
 
-    const onSubmit = (formData: tFormInputs) => {
-        const { message, mailFrom } = formData;
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const message = taRef.current?.value;
+        const mailFrom = ipRef.current?.value;
         const data = JSON.stringify({ message, mailFrom });
 
         if (message && mailFrom) {
             MSG.sendMessage(iMSG.mailFromClient, data);
-            resetField('message');
-            resetField('mailFrom');
+            taRef.current.value = '';
+            ipRef.current.value = '';
+            taRef.current.focus();
         }
-    };
+    }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={s.Form}>
+        <form className={s.Form} onSubmit={handleSubmit}>
             <div className={s.FormMessage}>
                 <textarea
-                    { ...register("message") }
+                    ref={taRef}
                     className={s.FormInput}
                     placeholder="type your message here..." />
             </div>
             <div className={s.FormButtons}>
                 <input
-                    { ...register("mailFrom") }
+                    ref={ipRef}
                     className={s.FormInput}
                     placeholder="your email address..." />
                 <div className={s.FormButtonWrap}>
