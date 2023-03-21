@@ -20,7 +20,9 @@ export const ManagerProfile = () => {
                 </figure>
                 <div className={s.description}>
                     {mngProfile.alias ? mngProfile.alias : mngProfile.name}
-                    {/* <div>Service Worker {SW?.state}</div> */}
+                    {/* for testing purposes */}
+                    <div className={`${s.descriptionSw} ${isSWReady ? s.lb : s.lc}`}></div>
+                    {/* for testing purposes */}
                 </div>
                 <div className={s.menu}>
                     { isMail
