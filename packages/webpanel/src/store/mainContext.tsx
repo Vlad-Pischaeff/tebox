@@ -10,7 +10,7 @@ import { emitter } from 'utils';
 export const useChat = () => {
     const { mngProfile, setMngProfile } = useManagerProfile();
     const { chat, updChat, isMail, setIsMail } = useChatMessages();
-    const { userId, serverId, setServerId, SW, isSWReady, MSG } = useMessageObject();
+    const { userId, serverId, setServerId, isSWReady, MSG } = useMessageObject();
 
     const ACT = {
         [iMSG.messageFromManager]: (data: iWebSocketMessage) => {
@@ -75,7 +75,6 @@ export const useChat = () => {
         setServerId,
         isMail,
         setIsMail,
-        SW,
         isSWReady,
         MSG
     });

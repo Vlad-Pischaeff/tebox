@@ -9,7 +9,7 @@ import config from '@tebox/config/client';
 
 export const useMessageObject = () => {
     const { BC } = useBroadcastChannel();
-    const { SW, isSWReady } = useServiceWorker();
+    const { isSWReady } = useServiceWorker();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [ userId, setUserId ] = useState(USER_ID);
     const [ serverId, setServerId ] = useState('undefined');
@@ -44,7 +44,6 @@ export const useMessageObject = () => {
         userId,
         serverId,
         setServerId,
-        SW,
         isSWReady,
         MSG
     });

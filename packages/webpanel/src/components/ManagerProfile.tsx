@@ -4,7 +4,8 @@ import { useChatContext } from 'store';
 import s from 'styles/ManagerProfile.module.sass';
 
 export const ManagerProfile = () => {
-    const { mngProfile, isMail, setIsMail, SW } = useChatContext();
+    // eslint-disable-next-line
+    const { mngProfile, isMail, setIsMail, isSWReady } = useChatContext();
 
     const Toggler = (event: React.MouseEvent) => {
         const check = event.currentTarget.id === 'mail';
