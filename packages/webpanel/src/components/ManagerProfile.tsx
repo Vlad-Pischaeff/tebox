@@ -15,10 +15,13 @@ export const ManagerProfile = () => {
     return (
         <>
             <figure className={s.avatar}>
-                {  !!mngProfile
+                { !!mngProfile
                     ?   <img src={mngProfile.image} alt="avatar" />
-                    :   <div>Avatar</div>
+                    :   <img src={UserIcons.SVG.userfemale} alt="user" className={s.gray}/>
                 }
+                {/* for testing purpose */}
+                <div className={`${s.descriptionSw} ${isSWReady ? s.lb : s.lc}`}></div>
+                {/* for testing purpose */}
             </figure>
 
 
@@ -27,9 +30,6 @@ export const ManagerProfile = () => {
                     ?   (mngProfile.alias || mngProfile.name)
                     :   'Loading profile...'
                 }
-                {/* for testing purpose */}
-                <div className={`${s.descriptionSw} ${isSWReady ? s.lb : s.lc}`}></div>
-                {/* for testing purpose */}
             </div>
 
             <div className={s.menu}>
