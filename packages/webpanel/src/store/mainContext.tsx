@@ -28,6 +28,8 @@ export const useChat = () => {
                 // after receiving manager profile
                 // substitute serverKey by manager.id
                 setServerId((message as iMngProfile).id);
+                // add first message from manager to chat
+                addGreeting(message as iMngProfile);
             }
         },
         [iMSG.mailFromClient]: (data: iWebSocketMessage) => {
@@ -56,6 +58,16 @@ export const useChat = () => {
         if ('detail' in data) {
             ACT.run(data?.detail as iWebSocketMessage);
         }
+    };
+
+    const addGreeting = (message: iMngProfile) => {
+        const data = {
+            'to': userId,
+            'from': message.id,
+            'message': message.greeting,
+            'date': Date.now(),
+        };
+        updChat(data);
     };
 
     useEffect(() => {

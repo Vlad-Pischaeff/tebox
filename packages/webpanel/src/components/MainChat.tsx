@@ -7,6 +7,9 @@ import s from 'styles/MainChat.module.sass';
 export const MainChat = () => {
     const { chat } = useChatContext();
 
+    // console.log('✅ grouped..', GROUPED);
+    // console.log('🍀 chat..', chat);
+
     const GROUPED = chat.reduce((r: iMessage[][], o: iMessage, i: number, a: iMessage[]) => {
         if (a[i].from === (a[i - 1] && a[i - 1].from)) {
             r[r.length - 1].push(o);
@@ -15,9 +18,6 @@ export const MainChat = () => {
         }
         return r;
     }, []);
-
-    // console.log('✅ grouped..', GROUPED);
-    // console.log('🍀 chat..', chat);
 
     return (
         <div className={s.MainContainer} role="listbox" >
