@@ -44,30 +44,24 @@ export interface iMngProfile {
     greeting: string
 }
 
-export const isMngProfile = (obj: object): boolean => {
-    if (
-        ('id' in obj)       &&
-        ('name' in obj)     &&
-        ('alias' in obj)    &&
-        ('image' in obj)    &&
-        ('greeting' in obj)
-    ) {
-        return true
-    } else {
-        return false
-    }
+export const isMngProfile = (obj: object): obj is iMngProfile => {
+    return  ('id' in obj)       &&
+            ('name' in obj)     &&
+            ('alias' in obj)    &&
+            ('image' in obj)    &&
+            ('greeting' in obj);
 }
 
-interface iSession {
+export interface iSession {
     'userId'?: string,
     'mngProfile'?: iMngProfile | undefined
 }
 
-export interface iSessionHandler {
-    Session: iSession,
-    getSession: () => void,
-    saveSession: () => void,
-    getUserID: () => string,
-    getMngProfile: () => iMngProfile | undefined,
-    saveMngProfile: (profile: iMngProfile) => void
-}
+// export interface iSessionHandler {
+//     Session: iSession,
+//     getSession: () => void,
+//     saveSession: () => void,
+//     getUserID: () => string,
+//     getMngProfile: () => iMngProfile | undefined,
+//     saveMngProfile: (profile: iMngProfile) => void
+// }

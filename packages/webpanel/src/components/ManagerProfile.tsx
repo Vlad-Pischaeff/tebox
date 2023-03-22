@@ -18,9 +18,7 @@ export const ManagerProfile = () => {
                     ?   <img src={mngProfile.image} alt="avatar" />
                     :   <img src={UserIcons.SVG.userfemale} alt="user" className={s.gray}/>
                 }
-                {/* for testing purpose */}
                 <div className={`${s.descriptionSw} ${isSWReady ? s.lb : s.lc}`}></div>
-                {/* for testing purpose */}
             </figure>
 
 

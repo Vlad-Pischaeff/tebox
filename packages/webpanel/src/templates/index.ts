@@ -1,10 +1,10 @@
 import randomstring from 'randomstring';
-import { iChat, iSessionHandler, iMngProfile } from 'types/types.context';
+import { iChat, iSession, iMngProfile } from 'types/types.context';
 
-export const SS: iSessionHandler = {
+export const SS = {
     Session: {
         userId: '',
-    },
+    } as iSession,
     getSession() {
         const str = localStorage.getItem('tebox');
         if (str !== null) {
