@@ -7,9 +7,8 @@ export const ManagerProfile = () => {
     // eslint-disable-next-line
     const { mngProfile, isMail, setIsMail, isSWReady } = useChatContext();
 
-    const handleToggle = (event: React.MouseEvent) => {
-        const check = event.currentTarget.id === 'mail';
-        setIsMail(check);
+    const handleToggle = () => {
+        setIsMail(!isMail);
     }
 
     return (
@@ -32,15 +31,13 @@ export const ManagerProfile = () => {
                 }
             </div>
 
-            <div className={s.menu}>
-                { isMail
-                    ?   <div id="chat" className={s.menuItem} onClick={handleToggle}>
-                            <img src={UserIcons.SVG.chat} alt="chat" />
-                        </div>
-                    :   <div id="mail" className={s.menuItem} onClick={handleToggle}>
-                            <img src={UserIcons.SVG.mail} alt="mail" />
-                        </div>
-                }
+            <div className={s.menu} onClick={handleToggle}>
+                <div className={s.menuItem}>
+                    { isMail
+                        ?   <img src={UserIcons.SVG.chat} alt="chat" />
+                        :   <img src={UserIcons.SVG.mail} alt="mail" />
+                    }
+                </div>
             </div>
         </>
     );
