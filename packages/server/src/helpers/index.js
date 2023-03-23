@@ -51,9 +51,9 @@ const HELPER = {
                     })
                 }
             });
-            // console.log('✅ mappedUsers..', mappedUsers)
-            // console.log('✅ mappedSites..', mappedSites)
-            // console.log('✅ mappedHashSites..', mappedHashSites)
+            console.log('✅ mappedUsers..', mappedUsers, users)
+            console.log('✅ mappedSites..', mappedSites)
+            console.log('✅ mappedHashSites..', mappedHashSites)
         } catch(e) {
             console.log('runWebSitesHashReduce error ...', e);
         }

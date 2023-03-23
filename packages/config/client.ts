@@ -4,7 +4,6 @@ const config = {
     SERVER_PROTO:           process.env.REACT_APP_SERVER_PROTO,
     WEBSOCKET_PROTO:        '',
     WEBSOCKET_ADDR:         '',
-    HOST:                   'http://localhost:3000',
     LIFETIME:               '10m',
 
     SMTP_HOST:              process.env.SMTP_HOST,
@@ -27,10 +26,10 @@ const config = {
                             },
 };
 
-config.WEBSOCKET_PROTO = config.SERVER_PROTO === 'https' ? 'wss:' : 'ws:';
+config.WEBSOCKET_PROTO = config.SERVER_PROTO === 'https' ? 'wss' : 'ws';
 
 const { WEBSOCKET_PROTO, SERVER_ADDR, SERVER_PORT } = config;
 
-config.WEBSOCKET_ADDR = `${WEBSOCKET_PROTO}//${SERVER_ADDR}:${SERVER_PORT}/ws`;
+config.WEBSOCKET_ADDR = `${WEBSOCKET_PROTO}//:${SERVER_ADDR}:${SERVER_PORT}/ws`;
 
 export default config;

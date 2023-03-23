@@ -1,8 +1,14 @@
-const url = 'localhost:5000';
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
+const config = require('@tebox/config/server');
+
+const ADDR = config.SERVER_ADDR;
+const PROTO = config.SERVER_PROTO;
+const PORT = config.SERVER_PORT || 5000;
+const PROXY = `${PROTO}://${ADDR}:${PORT}`;
+
 const httpProxy = createProxyMiddleware({
-    target: `http://${url}`, 
+    target: PROXY,
     changeOrigin: true,
 });
 

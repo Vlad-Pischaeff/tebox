@@ -4,9 +4,18 @@ import type {
     FetchArgs,
     FetchBaseQueryError,
 } from '@reduxjs/toolkit/query'
+import config from '@tebox/config/client';
 import { setCredentials, logout } from 'store/slices/auth';
 import { RootState } from 'store/store';
-import { URL } from 'assets/config';
+
+const PROTO = config.SERVER_PROTO;
+const ADDR = process.env.NODE_ENV === "development"
+                ? window.location.hostname
+                : config.SERVER_ADDR;
+const PORT = process.env.NODE_ENV === "development"
+                ? 3000
+                : config.SERVER_PORT;
+const URL = `${PROTO}://${ADDR}:${PORT}`;
 
 type tData = {
     accessToken: string,

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAppDispatch } from 'store/hook';
-import { UserIcons } from '@tebox/assets';
 import { setServicesModal, eModal } from 'store/slices/ui';
 import { tUser } from 'store/api/apiTypes';
 import * as ICON from 'assets/icons';
@@ -37,12 +36,6 @@ export const ProfileDescriptions = ({ user }: iProps) => {
                 <div className={s.ItemIcon} onClick={openModalEditGreeting}>
                     <ICON.EditIcon />
                 </div>
-            </div>
-            <div>
-                <img src={UserIcons.PNG.user43} alt="" />
-            </div>
-            <div>
-                <img src={UserIcons.SVG.microbe} alt="" />
             </div>
         </div>
     );
