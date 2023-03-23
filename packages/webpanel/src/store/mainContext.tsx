@@ -31,7 +31,8 @@ export const useChat = () => {
                 // setServerId((message as iMngProfile).id);
 
                 // add first message from manager to chat
-                addGreeting(message as iMngProfile);
+                console.log('chat length...', chat);
+                chat.length === 0 && addGreeting(message as iMngProfile);
             }
         },
         [iMSG.mailFromClient]: (data: iWebSocketMessage) => {

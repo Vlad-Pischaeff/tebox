@@ -30,6 +30,6 @@ config.WEBSOCKET_PROTO = config.SERVER_PROTO === 'https' ? 'wss' : 'ws';
 
 const { WEBSOCKET_PROTO, SERVER_ADDR, SERVER_PORT } = config;
 
-config.WEBSOCKET_ADDR = `${WEBSOCKET_PROTO}//:${SERVER_ADDR}:${SERVER_PORT}/ws`;
+config.WEBSOCKET_ADDR = `${WEBSOCKET_PROTO}://${SERVER_ADDR}:${SERVER_PORT}/ws`;
 
 export default config;
