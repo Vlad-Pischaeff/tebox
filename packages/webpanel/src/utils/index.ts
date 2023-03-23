@@ -23,6 +23,10 @@ class EventEmitter {
 
 export const emitter = new EventEmitter();
 
+/**
+ *
+ * @returns {true} if Browser supports Service Worker
+ */
 export const isServiceWorkerEnabled = () => {
     if ('serviceWorker' in navigator) {
         return true;
@@ -32,14 +36,12 @@ export const isServiceWorkerEnabled = () => {
     }
 }
 
+/**
+ *
+ * @returns {true} if Service Worker activated
+ */
 export const isServiceWorkerActivated = (e: Event) => {
-    if (e.target &&
-        'state' in e.target &&
-        e.target.state === 'activated'
-    ) {
-        console.log('🌞 e.target.state -> ', e.target.state);
-        return true;
-    } else {
-        return false;
-    }
+    return  e.target &&
+            'state' in e.target &&
+            e.target.state === 'activated';
 };

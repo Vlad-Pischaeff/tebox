@@ -25,9 +25,11 @@ export const useChat = () => {
             console.log('6️⃣ iMSG.managerProfile..', message);
             if (typeof message !== 'string' && isMngProfile(message)) {
                 setMngProfile(message as iMngProfile);
+
                 // after receiving manager profile
                 // substitute serverKey by manager.id
-                setServerId((message as iMngProfile).id);
+                // setServerId((message as iMngProfile).id);
+
                 // add first message from manager to chat
                 addGreeting(message as iMngProfile);
             }
