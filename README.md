@@ -32,4 +32,5 @@ REACT_APP_SERVER_PROTO='http'
 ```sh
 npm run dev
 ```
-- подключитесь к [приложению](http://localhost:3000)
+- подключитесь к [панели управления](http://localhost:3000)
+
