@@ -122,6 +122,10 @@ const DISPATCHER = {
     MAIL_FROM_CLIENT(ws, data) {
         console.log('🔹 ws MAIL_FROM_CLIENT..', data);
     },
+    MANAGER_IS_ONLINE(ws, data) {
+        console.log('🔹 ws MANAGER_IS_ONLINE..', data);
+        MAPS.set(ws, data['MANAGER_IS_ONLINE'].from);
+    },
     run(ws, message) {
         let data = JSON.parse(message);
         const [ key ] = Object.keys(data);

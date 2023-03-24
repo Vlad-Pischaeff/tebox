@@ -1,15 +1,20 @@
 import React from 'react';
 import { Outlet, useNavigate } from "react-router-dom";
-import { useAppDispatch } from 'store/hook';
-import { logout } from 'store/slices/auth';
+import { useAppDispatch, useAppSelector } from 'store/hook';
+import { logout, selectCurrentUser } from 'store/slices/auth';
 import { useLazyUsersQuery } from 'store/api/usersApi';
+import { useGetMessagesQuery } from 'store/api/websocketApi';
 import * as UI from 'components/ui';
 import s from './DashboardLayout.module.sass';
 
 export const DashboardLayout = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const user = useAppSelector(selectCurrentUser);
+    const { data } = useGetMessagesQuery(user.id);
     const [ trigger, { isLoading } ] = useLazyUsersQuery();
+
+    console.log('Profile..data..', data);
 
     const Logout = () => {
         dispatch(logout());

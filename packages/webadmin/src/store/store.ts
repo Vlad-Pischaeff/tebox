@@ -4,6 +4,7 @@ import { todosApi } from 'store/api/todosApi';
 import { notesApi } from 'store/api/notesApi';
 import { answersApi } from 'store/api/answersApi';
 import { websitesApi } from 'store/api/websitesApi';
+import { websocketApi } from 'store/api/websocketApi';
 import authReducer from 'store/slices/auth';
 import uiReducer from 'store/slices/ui';
 
@@ -16,6 +17,7 @@ export const store = configureStore({
         [notesApi.reducerPath]: notesApi.reducer,
         [answersApi.reducerPath]: answersApi.reducer,
         [websitesApi.reducerPath]: websitesApi.reducer,
+        [websocketApi.reducerPath]: websocketApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
@@ -24,6 +26,7 @@ export const store = configureStore({
             .concat(notesApi.middleware)
             .concat(answersApi.middleware)
             .concat(websitesApi.middleware)
+            .concat(websocketApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;
