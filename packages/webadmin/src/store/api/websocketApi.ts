@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import config from '@tebox/config/client';
-// import { isMessage } from './schemaValidators'
+import { iMessage } from './apiTypes';
 
 let socket: WebSocket;
 
@@ -10,19 +10,10 @@ const getSocket = () => {
         : socket;
 };
 
-export type Channel = 'redux' | 'general'
-
-export interface Message {
-    to: string
-    from: string
-    message: string
-    date: number
-}
-
 export const websocketApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: '/' }),
     endpoints: (builder) => ({
-        getMessages: builder.query<Message[], string>({
+        getMessages: builder.query<iMessage[], string>({
             queryFn: (args, { signal, dispatch, getState }) => ({ data: [] }),
             async onCacheEntryAdded(
                 userId,
@@ -47,14 +38,14 @@ export const websocketApi = createApi({
                     };
 
                     socket.onmessage = (message) => {
-                        console.log('socket onmessage..', JSON.parse(message.data));
-                    };
+                        const msg = JSON.parse(message.data) as iMessage;
 
-                    // socket.on(ChatEvent.ReceiveMessage, (message: ChatMessage) => {
-                    //     updateCachedData((draft) => {
-                    //         draft.push(message);
-                    //     });
-                    // });
+                        updateCachedData((draft) => {
+                            draft.push(msg);
+                        });
+
+                        console.log('socket onmessage..', msg);
+                    };
 
                     await cacheEntryRemoved;
                 } catch {

@@ -49,3 +49,10 @@ export interface iWebsites {
     key: string,
     hash: string,
 }
+
+export interface iMessage {
+    to: string
+    from: string
+    message: string
+    date: number
+}
