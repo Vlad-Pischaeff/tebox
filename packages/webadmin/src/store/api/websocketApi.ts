@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import config from '@tebox/config/client';
-import { iMessage } from './apiTypes';
+import { iMessage, iWebSocketMessage } from './apiTypes';
 
 let socket: WebSocket;
 
@@ -38,10 +38,10 @@ export const websocketApi = createApi({
                     };
 
                     socket.onmessage = (message) => {
-                        const msg = JSON.parse(message.data) as iMessage;
+                        const msg = JSON.parse(message.data) as iWebSocketMessage;
 
                         updateCachedData((draft) => {
-                            draft.push(msg);
+                            draft.push(msg['MSG_FROM_MANAGER']);
                         });
 
                         console.log('socket onmessage..', msg);

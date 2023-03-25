@@ -56,3 +56,7 @@ export interface iMessage {
     message: string
     date: number
 }
+
+export interface iWebSocketMessage {
+    [x: string]: iMessage
+}

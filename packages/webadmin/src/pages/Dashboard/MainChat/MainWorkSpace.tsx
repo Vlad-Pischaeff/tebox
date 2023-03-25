@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { selectUIState, setHiddenPanelServices } from 'store/slices/ui';
 import { Services } from 'pages/Dashboard/MainChat/Services';
+import { Chat } from 'pages/Dashboard/MainChat/Chat';
 import * as ICON from 'assets/icons';
 import s from './MainWorkSpace.module.sass';
 
@@ -26,7 +27,7 @@ export const MainWorkSpace = () => {
             }
 
             <div className={s.RightWorkSpace}>
-                <p>Right workspace...</p>
+                <Chat />
             </div>
         </div>
     );
