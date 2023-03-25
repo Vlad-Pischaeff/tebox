@@ -1,13 +1,13 @@
 import React from 'react';
 import { useAppSelector } from 'store/hook';
-import { useGetMessagesQuery } from 'store/api/websocketApi';
+import { useGetMessagesQuery, useSendMessageMutation } from 'store/api/websocketApi';
 import { selectCurrentUser } from 'store/slices/auth';
 
 export const Chat = () => {
     const user = useAppSelector(selectCurrentUser);
     const { data } = useGetMessagesQuery(user.id);
 
-    console.log('Chat..data..', data);
+    console.log('Chat..data..', data, useSendMessageMutation());
 
     return (
         <>
@@ -17,7 +17,7 @@ export const Chat = () => {
                             return <div key={message.date}>
                                 <div>{message.from}</div>
                                 <div>{message.message}</div>
-                                <div>{new Date(message.date).toISOString()}</div>
+                                <div>{new Date(message.date).toLocaleString()}</div>
                             </div>
                         })
                         }

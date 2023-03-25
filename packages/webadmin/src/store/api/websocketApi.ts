@@ -13,6 +13,15 @@ const getSocket = () => {
 export const websocketApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: '/' }),
     endpoints: (builder) => ({
+        sendMessage: builder.mutation<string, string>({
+            queryFn: (chatMessageContent: string) => {
+                const socket = getSocket();
+                return new Promise(resolve => {
+                    socket.send(chatMessageContent)
+                    resolve({ data: 'OK' });
+                })
+            },
+        }),
         getMessages: builder.query<iMessage[], string>({
             queryFn: (args, { signal, dispatch, getState }) => ({ data: [] }),
             async onCacheEntryAdded(
@@ -58,5 +67,6 @@ export const websocketApi = createApi({
 })
 
 export const {
-    useGetMessagesQuery
+    useGetMessagesQuery,
+    useSendMessageMutation
 } = websocketApi;
