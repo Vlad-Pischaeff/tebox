@@ -112,8 +112,17 @@ const DISPATCHER = {
         if (ws.id !== 'server') {
             // const { ID } = obj;
             const MSG = DISPATCHER.msg('MSG_FROM_MANAGER', ws.id, 'server', data);
-            ws.send(MSG);
+            // ws.send(MSG);
             console.log('🔹 ws MSG_FROM_MANAGER..');
+        }
+    },
+    MSG_FROM_SERVER(ws, data) {
+        // const obj = MAPS.getID(ws);
+        if (ws.id !== 'server') {
+            // const { ID } = obj;
+            const MSG = DISPATCHER.msg('MSG_FROM_SERVER', ws.id, 'server', data);
+            ws.send(MSG);
+            console.log('🔹 ws MSG_FROM_SERVER..');
         }
     },
     MSG_FROM_CLIENT(ws, data) {

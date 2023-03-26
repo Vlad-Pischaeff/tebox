@@ -16,6 +16,7 @@ export const websocketApi = createApi({
         sendMessage: builder.mutation<string, string>({
             queryFn: (chatMessageContent: string) => {
                 const socket = getSocket();
+
                 return new Promise(resolve => {
                     socket.send(chatMessageContent)
                     resolve({ data: 'OK' });
@@ -30,8 +31,6 @@ export const websocketApi = createApi({
             ) {
                 try {
                     await cacheDataLoaded;
-
-                    console.log('api...', userId);
 
                     socket = getSocket();
 
@@ -50,7 +49,10 @@ export const websocketApi = createApi({
                         const msg = JSON.parse(message.data) as iWebSocketMessage;
 
                         updateCachedData((draft) => {
-                            draft.push(msg['MSG_FROM_MANAGER']);
+                            !!msg['MSG_FROM_CLIENT'] &&
+                                draft.push(msg['MSG_FROM_CLIENT']);
+                            !!msg['MSG_FROM_SERVER'] &&
+                                draft.push(msg['MSG_FROM_SERVER']);
                         });
 
                         console.log('socket onmessage..', msg);
