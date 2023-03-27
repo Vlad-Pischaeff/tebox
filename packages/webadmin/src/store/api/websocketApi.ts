@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import config from '@tebox/config/client';
-import { iMessage, iWebSocketMessage } from './apiTypes';
+import { iWebSocketMessage, iChat } from './apiTypes';
 
 let socket: WebSocket;
 
@@ -12,6 +12,7 @@ const getSocket = () => {
 
 export const websocketApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: '/' }),
+    // tagTypes: ['Post'],
     endpoints: (builder) => ({
         sendMessage: builder.mutation<string, string>({
             queryFn: (chatMessageContent: string) => {
@@ -23,8 +24,9 @@ export const websocketApi = createApi({
                 })
             },
         }),
-        getMessages: builder.query<iMessage[], string>({
-            queryFn: (args, { signal, dispatch, getState }) => ({ data: [] }),
+        getMessages: builder.query<iChat, string>({
+            queryFn: (args, { signal, dispatch, getState }) => ({ data: {} }),
+            // providesTags: ['Post'],
             async onCacheEntryAdded(
                 userId,
                 { cacheDataLoaded, cacheEntryRemoved, updateCachedData },
@@ -47,15 +49,24 @@ export const websocketApi = createApi({
 
                     socket.onmessage = (message) => {
                         const msg = JSON.parse(message.data) as iWebSocketMessage;
+                        const [ key ] = Object.keys(msg);
 
-                        updateCachedData((draft) => {
-                            !!msg['MSG_FROM_CLIENT'] &&
-                                draft.push(msg['MSG_FROM_CLIENT']);
-                            !!msg['MSG_FROM_SERVER'] &&
-                                draft.push(msg['MSG_FROM_SERVER']);
-                        });
+                        if (key === 'MSG_FROM_CLIENT' ||
+                            key === 'MSG_FROM_SERVER') {
+                            updateCachedData((draft) => {
+                                const idx = msg[key].from;
 
-                        console.log('socket onmessage..', msg);
+                                if (idx in draft) {
+                                    draft[idx].cnt++;
+                                } else {
+                                    draft[idx] = { 'msgs': [], 'cnt': 1 };
+                                }
+
+                                draft[idx].msgs.push(msg[key]);
+                            });
+                        }
+
+                        console.log('socket onmessage..', msg, key);
                     };
 
                     await cacheEntryRemoved;

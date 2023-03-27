@@ -32,12 +32,15 @@ export const ChatInput = () => {
                 }
             };
             await sendMessage(JSON.stringify(message));
+
+            const idx = message['MSG_FROM_MANAGER'].to;
+
             dispatch(
                 websocketApi.util.updateQueryData(
                     'getMessages',
                     user.id,
-                    (draftPosts) => {
-                        draftPosts.push(message['MSG_FROM_MANAGER']);
+                    (draft) => {
+                        draft[idx].msgs.push(message['MSG_FROM_MANAGER']);
                     }
                 )
             );
@@ -48,14 +51,10 @@ export const ChatInput = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.Form}>
             <div className={s.FormBody}>
-                <fieldset>
-                    <div className={s.FormInput}>
-                        <input
-                            { ...register("message") }
-                            placeholder="New message..."
-                        />
-                    </div>
-                </fieldset>
+                <input
+                    { ...register("message") }
+                    placeholder="New message..."
+                />
             </div>
             <div className={s.FormButtons}>
                 <input className={s.Button} type="submit" value="Send" />

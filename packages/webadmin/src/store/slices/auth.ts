@@ -3,15 +3,17 @@ import { usersApi } from "store/api/usersApi";
 import type { RootState } from 'store/store';
 
 export type IUser = {
-    id: string;
-    jwtToken: string;
-    isAuthenticated: boolean;   // надо подумать, а нужно ли это поле
+    id: string,
+    jwtToken: string,
+    isAuthenticated: boolean,   // надо подумать, а нужно ли это поле
+    selectedtUserID: string
 }
 
 const initialState: IUser = {
     id: '',
     jwtToken: '',
     isAuthenticated: false,
+    selectedtUserID: ''
 }
 
 const slice = createSlice({
@@ -27,6 +29,10 @@ const slice = createSlice({
             state.id = payload.id;
             state.jwtToken = payload.accessToken;
             state.isAuthenticated = payload.isAuthenticated;
+        },
+        setSelectedUserId: (state, { payload }) => {
+            console.log('setSelectedUserId..', payload)
+            state.selectedtUserID = payload.selectedtUserID;
         }
     },
     extraReducers: (builder) => {
@@ -43,8 +49,9 @@ const slice = createSlice({
     },
 });
 
-export const { logout, setCredentials } = slice.actions;
+export const { logout, setCredentials, setSelectedUserId } = slice.actions;
 
 export default slice.reducer;
 
 export const selectCurrentUser = (state: RootState) => state.auth;
+export const getSelectedUserId = (state: RootState) => state.auth.selectedtUserID;

@@ -60,3 +60,12 @@ export interface iMessage {
 export interface iWebSocketMessage {
     [x: string]: iMessage
 }
+
+export interface iChatUserMessages {
+    msgs: iMessage[]
+    cnt: number
+}
+
+export interface iChat {
+    [x: string]: iChatUserMessages
+}
