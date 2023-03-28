@@ -26,13 +26,13 @@ export const ChatMessages = () => {
 
     return (
         <div className={s.ChatMessages} role="listbox">
-            { data
+            { chat.length !== 0
                 ?   GROUPED.map((group, idx) => (
                         <div key={idx} className={s.MsgGroup} role="listbox">
                             <ChatBubbleGroup group={group} />
                         </div>
                     ))
-                :   <p>Right workspace...</p>
+                :   <p>Select user to show messages..</p>
             }
         </div>
     );

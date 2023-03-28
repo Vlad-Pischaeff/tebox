@@ -18,7 +18,7 @@ export const ChatBubbleGroup = ({ group }: iProps) => {
                 group.map((msg, i) => (
                     <div
                         key={i}
-                        className={`${msg.from === selectedUserId ? s.left : s.right}`}
+                        className={`${msg.from === selectedUserId ? s.right : s.left}`}
                         role="listitem"
                     >
                         <ChatBubble msg={msg} />

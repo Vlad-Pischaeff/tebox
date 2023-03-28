@@ -43,6 +43,7 @@ export const ChatInput = () => {
                     yourId,
                     (draft) => {
                         draft[idx].msgs.push(message['MSG_FROM_MANAGER']);
+                        draft[idx].cnt = 0;
                     }
                 )
             );
