@@ -30,7 +30,7 @@ module.exports = async (server) => {
                 ws.ping();
                 DISPATCHER.MSG_FROM_SERVER(ws, 'test message');
             });
-        }, 30000);
+        }, 29661);
 
     } catch(e) {
         console.log('❌ WS SERVER errors...', e);

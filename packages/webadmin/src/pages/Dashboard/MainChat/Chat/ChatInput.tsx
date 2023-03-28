@@ -28,7 +28,7 @@ export const ChatInput = () => {
             const message = {
                 'MSG_FROM_MANAGER': {
                     'from': yourId,
-                    'to': 'server',
+                    'to': selectedUserId,
                     'message': data.message,
                     'date': Date.now()
                 }
