@@ -3,7 +3,7 @@ import { useAppSelector } from 'store/hook';
 import { getSelectedUserId } from 'store/slices/auth';
 import { ChatBubble } from './ChatBubble';
 import { iMessage } from  'store/api/apiTypes';
-import s from './ChatMessages.module.sass';
+import s from './Chat.module.sass';
 
 interface iProps extends React.HTMLAttributes<HTMLDivElement>{
     group: iMessage[]

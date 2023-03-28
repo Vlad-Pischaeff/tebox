@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { iMessage } from  'store/api/apiTypes';
-import s from './ChatMessages.module.sass';
+import s from './Chat.module.sass';
 
 interface iProps extends React.HTMLAttributes<HTMLDivElement>{
     msg: iMessage
