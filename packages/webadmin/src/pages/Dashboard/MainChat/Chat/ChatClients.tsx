@@ -5,7 +5,6 @@ import { useGetMessagesQuery } from 'store/api/websocketApi';
 import { selectCurrentUser, setSelectedUserId, getSelectedUserId } from 'store/slices/auth';
 import { websocketApi } from 'store/api/websocketApi';
 import s from './Chat.module.sass';
-// import { ChatInput } from './ChatInput';
 let USERS: string[];
 
 export const ChatClients = () => {
@@ -14,7 +13,7 @@ export const ChatClients = () => {
     const selectedUserId = useAppSelector(getSelectedUserId);
     const { data } = useGetMessagesQuery(user.id);
 
-    // console.log('Chat..data..', data);
+    // console.log('ChatClients..data..', data);
 
     if (data) {
         USERS =  Object.keys(data);
@@ -33,7 +32,7 @@ export const ChatClients = () => {
     }
 
     return (
-        <div className={s.ChatUsers}>
+        <div className={s.ChatUsers} role="listbox">
             { !!data &&
                 USERS.map((user) => {
                     const num = data[user].msgs[0].date % 100;
@@ -45,9 +44,11 @@ export const ChatClients = () => {
                             key={user}
                             onClick={() => handlerClick(user)}
                             className={`${s.UserPictWrap} ${user === selectedUserId ? s.focus : ''}`}
+                            role="listitem"
                         >
                             <img src={pict} alt="user" className={s.UserPict} />
 
+                            {/* new messages counter */}
                             { !!data[user].cnt &&
                                 <div className={s.UserCounter}>
                                     <p>
