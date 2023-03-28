@@ -52,5 +52,6 @@ export const { logout, setCredentials, setSelectedUserId } = slice.actions;
 
 export default slice.reducer;
 
-export const selectCurrentUser = (state: RootState) => state.auth;
+// export const selectCurrentUser = (state: RootState) => state.auth;
+export const selectYourId = (state: RootState) => state.auth.id;
 export const getSelectedUserId = (state: RootState) => state.auth.selectedtUserID;

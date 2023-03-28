@@ -2,16 +2,16 @@ import React from 'react';
 import { UserIcons } from '@tebox/assets';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { useGetMessagesQuery } from 'store/api/websocketApi';
-import { selectCurrentUser, setSelectedUserId, getSelectedUserId } from 'store/slices/auth';
+import { selectYourId, setSelectedUserId, getSelectedUserId } from 'store/slices/auth';
 import { websocketApi } from 'store/api/websocketApi';
 import s from './Chat.module.sass';
 let USERS: string[];
 
 export const ChatClients = () => {
     const dispatch = useAppDispatch();
-    const user = useAppSelector(selectCurrentUser);
+    const yourId = useAppSelector(selectYourId);
     const selectedUserId = useAppSelector(getSelectedUserId);
-    const { data } = useGetMessagesQuery(user.id);
+    const { data } = useGetMessagesQuery(yourId);
 
     // console.log('ChatClients..data..', data);
 
@@ -25,7 +25,7 @@ export const ChatClients = () => {
         dispatch(
             websocketApi.util.updateQueryData(
                 'getMessages',
-                user.id,
+                yourId,
                 (draft) => { draft[client].cnt = 0; }
             )
         );

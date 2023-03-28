@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'store/hook';
-import { selectCurrentUser } from 'store/slices/auth';
+import { selectYourId } from 'store/slices/auth';
 import { setServicesModal, eModal } from 'store/slices/ui';
 import { useUpdateUserMutation, useGetUserQuery } from 'store/api/usersApi';
 import { withInjectPropertyModalBG } from 'components/HOC';
@@ -13,8 +13,8 @@ type tFormInputs = {
 
 const Form = ({ userProperty }: { userProperty: 'greeting' | 'alias'}) => {
     const dispatch = useAppDispatch();
-    const user = useAppSelector(selectCurrentUser);
-    const { data } = useGetUserQuery(user.id, { skip: !user.id });
+    const yourId = useAppSelector(selectYourId);
+    const { data } = useGetUserQuery(yourId, { skip: !yourId });
     const [ updateUser ] = useUpdateUserMutation();
     const { setFocus, setValue, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
@@ -26,7 +26,7 @@ const Form = ({ userProperty }: { userProperty: 'greeting' | 'alias'}) => {
     const onSubmit = async (formData: tFormInputs) => {
         // ✅ вызываем API '/users', обновляем 'alias'
         const value = formData[userProperty];
-        updateUser({ id: user.id, body: { [userProperty]: value }});
+        updateUser({ id: yourId, body: { [userProperty]: value }});
         closeModal();
     };
 

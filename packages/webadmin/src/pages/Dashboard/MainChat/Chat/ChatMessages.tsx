@@ -1,15 +1,15 @@
 import React from 'react';
 import { useAppSelector } from 'store/hook';
 import { useGetMessagesQuery } from 'store/api/websocketApi';
-import { selectCurrentUser, getSelectedUserId } from 'store/slices/auth';
+import { selectYourId, getSelectedUserId } from 'store/slices/auth';
 import { iMessage } from 'store/api/apiTypes';
 import { ChatBubbleGroup } from './ChatBubbleGroup';
 import s from './Chat.module.sass';
 
 export const ChatMessages = () => {
-    const user = useAppSelector(selectCurrentUser);
+    const yourId = useAppSelector(selectYourId);
     const selectedUserId = useAppSelector(getSelectedUserId);
-    const { data } = useGetMessagesQuery(user.id);
+    const { data } = useGetMessagesQuery(yourId);
 
     const chat = (data && selectedUserId)
         ?   data[selectedUserId].msgs

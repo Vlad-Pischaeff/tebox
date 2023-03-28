@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'store/hook';
-import { selectCurrentUser } from 'store/slices/auth';
+import { selectYourId } from 'store/slices/auth';
 import { useUpdateTeamMemberWebsitesMutation, useGetUserQuery } from 'store/api/usersApi';
 import { useWebsitesQuery } from 'store/api/websitesApi';
 import { setServicesModal, setEditedMember, selectUIState, eModal } from "store/slices/ui";
@@ -16,8 +16,8 @@ type tFormInputs = {
 const Form = () => {
     const dispatch = useAppDispatch();
     const member = useAppSelector(selectUIState('editedMember'));
-    const user = useAppSelector(selectCurrentUser);
-    const { data: owner } = useGetUserQuery(user.id, { skip: !user.id });
+    const yourId = useAppSelector(selectYourId);
+    const { data: owner } = useGetUserQuery(yourId, { skip: !yourId });
     const { data: sites } = useWebsitesQuery('');
     const [ updWebsites ] = useUpdateTeamMemberWebsitesMutation();
     const { setValue, register, resetField, handleSubmit } = useForm<tFormInputs>();

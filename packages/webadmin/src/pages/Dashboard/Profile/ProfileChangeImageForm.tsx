@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
 import { canvasPreview, canvasHidden, customCenterCrop } from './ProfileUtils';
 import { useAppDispatch, useAppSelector } from 'store/hook';
-import { selectCurrentUser } from 'store/slices/auth';
+import { selectYourId } from 'store/slices/auth';
 import { setServicesModal, setEditedImage, selectUIState, eModal } from 'store/slices/ui';
 import { useUpdateUserMutation } from 'store/api/usersApi';
 import { withModalBG } from 'components/HOC';
@@ -17,7 +17,7 @@ const SCALE = 1;
 
 const Form = () => {
     const dispatch = useAppDispatch();
-    const user = useAppSelector(selectCurrentUser);
+    const yourId = useAppSelector(selectYourId);
     const imgSrc = useAppSelector(selectUIState('editedImage'));
     const imgRef = useRef<HTMLImageElement>(null);
     const previewCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -64,7 +64,7 @@ const Form = () => {
     const onSubmit = async () => {
         // ✅ вызываем API '/users', обновляем 'image'
         if (image64 !== '') {
-            updateUser({ id: user.id, body: { image: image64 }});
+            updateUser({ id: yourId, body: { image: image64 }});
             closeModal();
         }
     };

@@ -5,7 +5,7 @@ import { websitesApi } from 'store/api/websitesApi';
 import { answersApi } from 'store/api/answersApi';
 import { notesApi } from 'store/api/notesApi';
 import { todosApi } from 'store/api/todosApi';
-import { logout } from 'store/slices/auth';
+import { logout, setSelectedUserId } from 'store/slices/auth';
 import s from './Header.module.sass';
 
 export const Header = () => {
@@ -18,6 +18,7 @@ export const Header = () => {
         dispatch(notesApi.util.resetApiState());
         dispatch(answersApi.util.resetApiState());
         dispatch(websitesApi.util.resetApiState());
+        dispatch(setSelectedUserId(''));
         dispatch(logout());
         navigate("/", { replace: true });
     }

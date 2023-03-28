@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAppSelector } from 'store/hook';
-import { selectCurrentUser } from 'store/slices/auth';
+import { selectYourId } from 'store/slices/auth';
 import * as UI from 'components/ui';
 
 export const AuthPage = () => {
     const navigate = useNavigate();
-    const user = useAppSelector(selectCurrentUser);
+    const yourId = useAppSelector(selectYourId);
 
     useEffect(() => {
-        user.id &&
+        yourId &&
             navigate("/dashboard/main", { replace: true });
-    }, [user.id, navigate]);
+    }, [yourId, navigate]);
 
     return (
         <>

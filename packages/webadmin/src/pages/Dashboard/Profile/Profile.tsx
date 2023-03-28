@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppSelector } from 'store/hook';
 import { useGetUserQuery } from 'store/api/usersApi';
-import { selectCurrentUser } from 'store/slices/auth';
+import { selectYourId } from 'store/slices/auth';
 import { ProfileDescriptions } from './ProfileDescriptions';
 import { ProfileImage } from './ProfileImage';
 import { ProfileWebsites } from './ProfileWebsites';
@@ -10,8 +10,8 @@ import { ProfileModals } from './ProfileModals';
 import s from './Profile.module.sass';
 
 export const Profile = () => {
-    const user = useAppSelector(selectCurrentUser);
-    const { data } = useGetUserQuery(user.id, { skip: !user.id });
+    const yourId = useAppSelector(selectYourId);
+    const { data } = useGetUserQuery(yourId, { skip: !yourId });
 
     return (
         <div className={s.Container}>
