@@ -23,8 +23,8 @@ export const ChatInput = () => {
 
     const onSubmit = async (data: tFormInputs) => {
         // ✅ вызываем API '/websocket', добавляем 'message'
-        // обновляем кэш сообщений
         if (data.message && selectedUserId) {
+            // ✅ шлем сообщение
             const message = {
                 'MSG_FROM_MANAGER': {
                     'from': yourId,
@@ -35,6 +35,7 @@ export const ChatInput = () => {
             };
             await sendMessage(JSON.stringify(message));
 
+            // ✅ обновляем кэш сообщений
             const idx = message['MSG_FROM_MANAGER'].to;
 
             dispatch(
