@@ -1,3 +1,6 @@
+/**
+ * chat container styles description
+ */
 .ChatContainer
     flex: 1 1 10rem
     overflow: auto
@@ -10,6 +13,9 @@
 .ChatMessages
     flex: 1 1 3rem
     overflow: auto
+/**
+ * chat input form styles description
+ */
 .Form
     flex: 0 0 3rem
     width: 100%
@@ -17,16 +23,40 @@
 .FormBody
     flex: 1 1 auto
     height: 100%
+    & > input
+        width: 100%
+        height: 100%
+        font-size: 1rem
+        padding: 0 4px
+        border: none
+        border-radius: 4px
+        &:focus
+            outline: none
+            background: var(--color-INPUTFOCUS)
 .FormButtons
     flex: 0 0 3rem
     height: 100%
+    display: grid
+    place-items: center
+.Button
+    width: 3rem
+    height: 3rem
+    border: none
+    background: transparent
+    &:hover
+        background: var(--color-HOVER)
+/**
+ * chat messages styles description
+ */
 .Chat
     width: 100%
     height: 100%
+/**
+ * chat users styles description
+ */
 .UserPictWrap
     width: 4rem
     height: 4rem
-    // background: antiquewhite
     border-radius: 8px
     border: 2px solid var(--color-SHADOW)
     margin: 8px
@@ -34,8 +64,10 @@
     position: relative
     &:hover
         cursor: pointer
-        border: 2px solid var(--C8)
+        border: 2px solid var(--C7)
         background: var(--color-HOVER)
+.focus
+    border: 2px solid var(--C1)
 .UserPict
     width: 100%
 .UserCounter
@@ -46,7 +78,6 @@
     bottom: -2px
     border-radius: 50%
     transform: translate(2px,2px)
-    // outline: 4px solid teal
     background: tomato
     display: grid
     place-items: center

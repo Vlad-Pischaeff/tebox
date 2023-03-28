@@ -31,8 +31,7 @@ const slice = createSlice({
             state.isAuthenticated = payload.isAuthenticated;
         },
         setSelectedUserId: (state, { payload }) => {
-            console.log('setSelectedUserId..', payload)
-            state.selectedtUserID = payload.selectedtUserID;
+            state.selectedtUserID = payload;
         }
     },
     extraReducers: (builder) => {

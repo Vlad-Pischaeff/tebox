@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import { selectCurrentUser } from 'store/slices/auth';
 import { useSendMessageMutation, websocketApi } from 'store/api/websocketApi';
+import * as ICONS from 'assets/icons';
 import s from './Chat.module.sass';
 
 type tFormInputs = {
@@ -57,7 +58,9 @@ export const ChatInput = () => {
                 />
             </div>
             <div className={s.FormButtons}>
-                <input className={s.Button} type="submit" value="Send" />
+                <button className={s.Button} type="submit">
+                    <ICONS.SendIcon />
+                </button>
             </div>
         </form>
     );
