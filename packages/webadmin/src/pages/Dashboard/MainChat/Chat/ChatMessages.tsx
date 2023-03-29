@@ -32,7 +32,9 @@ export const ChatMessages = () => {
                             <ChatBubbleGroup group={group} />
                         </div>
                     ))
-                :   <p>Select user to show messages..</p>
+                :   <div className={s.ChatMessagesEmpty}>
+                        <p>Select user to show messages..</p>
+                    </div>
             }
         </div>
     );

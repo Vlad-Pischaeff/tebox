@@ -30,7 +30,6 @@ export const ChatBubble = ({ msg }: iProps) => {
             <div className={s.msg}>
                 {
                     typeof msg.message === 'string' &&
-                        // msg.message
                         parse(removeContentEditableAttr(msg.message))
                 }
             </div>
