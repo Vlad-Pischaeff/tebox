@@ -35,11 +35,11 @@ export const websocketApi = createApi({
                 try {
                     await cacheDataLoaded;
 
+                    const yourId = (getState() as RootState).auth.id;
+
                     socket = getSocket();
 
                     socket.onopen = () => {
-                        const yourId = (getState() as RootState).auth.id;
-
                         !!socket &&
                             socket.send(JSON.stringify({
                                 'MANAGER_IS_ONLINE': {
@@ -77,17 +77,22 @@ export const websocketApi = createApi({
                         console.log('💬 socket..', msg);
                     };
 
+                    socket.onclose = () => { console.log('❌ socket closed..') };
+
                     await cacheEntryRemoved;
 
-                    socket.onclose = () => { console.log('❗ socket closed..') };
-
-                    //
-                    // ⚡️ TODO!!!
-                    // при 'logout' сведения о сокете на сервере сохраняются
-                    // и сервер может туда слать сообщения...
-                    //
+                    // ✅ after 'logout' send message to server
+                    // and make websocket undefined
+                    socket.send(JSON.stringify({
+                        'MANAGER_IS_OFFLINE': {
+                            'from': yourId,
+                            'to': 'server',
+                            'message': 'OFFLINE',
+                            'date': Date.now()
+                        }
+                    }));
                     socket = undefined;
-                    console.log('❗ socket undefined..')
+
                 } catch {
                     // if cacheEntryRemoved resolved before cacheDataLoaded,
                     // cacheDataLoaded throws

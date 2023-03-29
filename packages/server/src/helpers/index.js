@@ -86,6 +86,12 @@ const MAPS = {
         mapWsToClient.set(ws, obj);
         mapClientToWs.set(obj, ws);
     },
+    delete(ws, id) {
+        const obj = { 'ID': id };
+        ws.id = id;
+        mapWsToClient.delete(ws, obj);
+        mapClientToWs.delete(obj, ws);
+    },
     getID(ws) {
         return mapWsToClient.get(ws);
     },
@@ -134,6 +140,11 @@ const DISPATCHER = {
     MANAGER_IS_ONLINE(ws, data) {
         console.log('🔹 ws MANAGER_IS_ONLINE..', data);
         MAPS.set(ws, data['MANAGER_IS_ONLINE'].from);
+    },
+    MANAGER_IS_OFFLINE(ws, data) {
+        console.log('🔹 ws MANAGER_IS_OFFLINE..', data);
+        MAPS.delete(ws, data['MANAGER_IS_OFFLINE'].from);
+        ws.close();
     },
     run(ws, message) {
         let data = JSON.parse(message);
