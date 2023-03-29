@@ -34,3 +34,6 @@ npm run dev
 ```
 - подключитесь к [панели управления](http://localhost:3000)
 
+### Tebox administration screen
+
+<img src="./packages/assets/images/webadmin1.jpg" alt="webadmin" />
