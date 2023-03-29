@@ -5,6 +5,7 @@ import { selectUIState, setItemServiceMenu } from 'store/slices/ui';
 import { iAnswers } from 'store/api/apiTypes';
 import { AnswersServiceMenu } from './AnswersServiceMenu';
 import { AnswersMarkServiceMenu } from './AnswersMarkServiceMenu';
+import { useWebSocketMessage } from 'hooks/useWebSocketMessage';
 import { removeContentEditableAttr } from 'assets/utils';
 import * as ICONS from 'assets/icons';
 import { SYMBOLS_OBJ } from './AnswersVariables';
@@ -17,6 +18,7 @@ interface iProps extends React.HtmlHTMLAttributes<HTMLDetailsElement> {
 export const AnswersItem = ({ answer }: iProps) => {
     const dispatch = useAppDispatch();
     const serviceMenu = useAppSelector(selectUIState('serviceMenu'));
+    const { sendWsMessage } = useWebSocketMessage();
 
     const showMenu = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -25,6 +27,7 @@ export const AnswersItem = ({ answer }: iProps) => {
 
     const sendAnswer = () => {
         // TODO add logic
+        sendWsMessage(answer.description);
     }
 
     return (

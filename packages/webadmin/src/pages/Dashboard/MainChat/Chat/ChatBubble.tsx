@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+import parse from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
 import { iMessage } from  'store/api/apiTypes';
+import { removeContentEditableAttr } from 'assets/utils';
 import s from './Chat.module.sass';
 
 interface iProps extends React.HTMLAttributes<HTMLDivElement>{
@@ -28,7 +30,8 @@ export const ChatBubble = ({ msg }: iProps) => {
             <div className={s.msg}>
                 {
                     typeof msg.message === 'string' &&
-                        msg.message
+                        // msg.message
+                        parse(removeContentEditableAttr(msg.message))
                 }
             </div>
         </div>

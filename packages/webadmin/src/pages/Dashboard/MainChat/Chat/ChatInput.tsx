@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from 'store/hook';
-import { selectYourId, getSelectedUserId } from 'store/slices/auth';
-import { useSendMessageMutation, websocketApi } from 'store/api/websocketApi';
+import { useWebSocketMessage } from 'hooks/useWebSocketMessage';
 import * as ICONS from 'assets/icons';
 import s from './Chat.module.sass';
 
@@ -11,10 +9,7 @@ type tFormInputs = {
 }
 
 export const ChatInput = () => {
-    const dispatch = useAppDispatch();
-    const yourId = useAppSelector(selectYourId);
-    const selectedUserId = useAppSelector(getSelectedUserId);
-    const [ sendMessage ] = useSendMessageMutation();
+    const { sendWsMessage } = useWebSocketMessage();
     const { setFocus, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
     useEffect(() => {
@@ -23,33 +18,9 @@ export const ChatInput = () => {
 
     const onSubmit = async (data: tFormInputs) => {
         // ✅ вызываем API '/websocket', добавляем 'message'
-        if (data.message && selectedUserId) {
-            // ✅ шлем сообщение
-            const message = {
-                'MSG_FROM_MANAGER': {
-                    'from': yourId,
-                    'to': selectedUserId,
-                    'message': data.message,
-                    'date': Date.now()
-                }
-            };
-            await sendMessage(JSON.stringify(message));
-
-            // ✅ обновляем кэш сообщений
-            const idx = message['MSG_FROM_MANAGER'].to;
-
-            dispatch(
-                websocketApi.util.updateQueryData(
-                    'getMessages',
-                    yourId,
-                    (draft) => {
-                        draft[idx].msgs.push(message['MSG_FROM_MANAGER']);
-                    }
-                )
-            );
-            resetField('message');
-        }
-    };
+        const result = await sendWsMessage(data.message);
+        if (result === 'OK') resetField('message');
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={s.Form}>

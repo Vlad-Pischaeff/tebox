@@ -76,6 +76,20 @@
     width: 100%
     text-overflow: ellipsis
     overflow: hidden
+    & a
+        text-decoration: underline dotted
+        color: coral
+    & p,
+    & ol,
+    & ul,
+    & iframe
+        padding-bottom: 4px
+    & ol,
+    & ul
+        padding-left: 1.5em
+    & p img
+        max-width: 100%
+        max-height: 200px
 /**
  * chat bubbles styles description
  */
@@ -129,7 +143,7 @@ $RIGHT_CHAT_COLOR: pink
             border-color: transparent $LEFT_CHAT_COLOR transparent transparent
             border-style: solid
     & .msg
-        text-align: right
+        text-align: left
     & .date
         text-align: right
 

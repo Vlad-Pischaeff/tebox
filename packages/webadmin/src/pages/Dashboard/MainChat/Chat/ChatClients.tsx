@@ -3,17 +3,17 @@ import { UserIcons } from '@tebox/assets';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { useGetMessagesQuery } from 'store/api/websocketApi';
 import { selectYourId, setSelectedUserId, getSelectedUserId } from 'store/slices/auth';
-import { websocketApi } from 'store/api/websocketApi';
+import { useWebSocketMessage } from 'hooks/useWebSocketMessage';
 import s from './Chat.module.sass';
+
 let USERS: string[];
 
 export const ChatClients = () => {
     const dispatch = useAppDispatch();
     const yourId = useAppSelector(selectYourId);
     const selectedUserId = useAppSelector(getSelectedUserId);
+    const { resetNewMessagesCounter } = useWebSocketMessage();
     const { data } = useGetMessagesQuery(yourId);
-
-    // console.log('ChatClients..data..', data);
 
     if (data) {
         USERS =  Object.keys(data);
@@ -21,14 +21,7 @@ export const ChatClients = () => {
 
     const handlerClick = (client: string) => {
         dispatch(setSelectedUserId(client));
-
-        dispatch(
-            websocketApi.util.updateQueryData(
-                'getMessages',
-                yourId,
-                (draft) => { draft[client].cnt = 0; }
-            )
-        );
+        resetNewMessagesCounter(client);
     }
 
     return (
@@ -38,7 +31,7 @@ export const ChatClients = () => {
                     const num = data[user].msgs[0].date % 100;
                     const idx = 'user' + num;
                     const pict = UserIcons.PNG[idx];
-                    // console.log('pict..', pict, idx)
+
                     return  (
                         <div
                             key={user}
