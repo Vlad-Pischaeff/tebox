@@ -11,6 +11,7 @@ export const DashboardLayout = () => {
     const dispatch = useAppDispatch();
     const [ trigger, { isLoading } ] = useLazyUsersQuery();
 
+
     const Logout = () => {
         dispatch(logout());
         navigate("/", { replace: true });
