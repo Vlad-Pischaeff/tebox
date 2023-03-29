@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useWebSocketMessage } from 'hooks/useWebSocketMessage';
+import { useWebSocketMessage } from 'hooks';
 import * as ICONS from 'assets/icons';
 import s from './Chat.module.sass';
 

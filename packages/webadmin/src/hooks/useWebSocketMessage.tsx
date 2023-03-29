@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import { selectYourId, getSelectedUserId } from 'store/slices/auth';

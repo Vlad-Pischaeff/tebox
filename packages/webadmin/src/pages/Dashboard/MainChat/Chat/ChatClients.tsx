@@ -3,7 +3,7 @@ import { UserIcons } from '@tebox/assets';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { useGetMessagesQuery } from 'store/api/websocketApi';
 import { selectYourId, setSelectedUserId, getSelectedUserId } from 'store/slices/auth';
-import { useWebSocketMessage } from 'hooks/useWebSocketMessage';
+import { useWebSocketMessage } from 'hooks';
 import s from './Chat.module.sass';
 
 let USERS: string[];

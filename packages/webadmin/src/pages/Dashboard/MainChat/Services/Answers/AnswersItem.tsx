@@ -5,7 +5,7 @@ import { selectUIState, setItemServiceMenu } from 'store/slices/ui';
 import { iAnswers } from 'store/api/apiTypes';
 import { AnswersServiceMenu } from './AnswersServiceMenu';
 import { AnswersMarkServiceMenu } from './AnswersMarkServiceMenu';
-import { useWebSocketMessage } from 'hooks/useWebSocketMessage';
+import { useWebSocketMessage } from 'hooks';
 import { removeContentEditableAttr } from 'assets/utils';
 import * as ICONS from 'assets/icons';
 import { SYMBOLS_OBJ } from './AnswersVariables';
@@ -26,7 +26,6 @@ export const AnswersItem = ({ answer }: iProps) => {
     }
 
     const sendAnswer = () => {
-        // TODO add logic
         sendWsMessage(answer.description);
     }
 
