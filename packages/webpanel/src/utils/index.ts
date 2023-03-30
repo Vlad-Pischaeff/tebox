@@ -11,18 +11,6 @@ export const indexOfAll = (arr: any[], val: any) => {
         ), []
     );
 }
-
-class EventEmitter {
-    // eslint-disable-next-line
-    on = (eventName: string, callback: any) => window.addEventListener(eventName, callback, false)
-    // eslint-disable-next-line
-    off = (eventName: string, callback: any) => window.removeEventListener(eventName, callback, false)
-    // eslint-disable-next-line
-    emit = (eventName: string, data: any) => window.dispatchEvent(new CustomEvent(eventName, { detail: data }))
-}
-
-export const emitter = new EventEmitter();
-
 /**
  *
  * @returns {true} if Browser supports Service Worker
@@ -35,7 +23,6 @@ export const isServiceWorkerEnabled = () => {
         return false;
     }
 }
-
 /**
  *
  * @returns {true} if Service Worker activated
@@ -45,3 +32,14 @@ export const isServiceWorkerActivated = (e: Event) => {
             'state' in e.target &&
             e.target.state === 'activated';
 };
+
+class EventEmitter {
+    // eslint-disable-next-line
+    on = (eventName: string, callback: any) => window.addEventListener(eventName, callback, false)
+    // eslint-disable-next-line
+    off = (eventName: string, callback: any) => window.removeEventListener(eventName, callback, false)
+    // eslint-disable-next-line
+    emit = (eventName: string, data: any) => window.dispatchEvent(new CustomEvent(eventName, { detail: data }))
+}
+
+export const emitter = new EventEmitter();

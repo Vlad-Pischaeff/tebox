@@ -21,6 +21,10 @@ module.exports = async (server) => {
             ws.on('pong', () => {
                 ws.isAlive = true;
             });
+
+            ws.on('close', () => {
+                console.log('❌ WS connection closed...');
+            });
         });
 
         setInterval(() => {
