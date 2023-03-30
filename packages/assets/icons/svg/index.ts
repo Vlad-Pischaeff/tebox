@@ -10,6 +10,9 @@ import oldking from './oldking.svg';
 import github from './github.svg';
 import chat from './chat.svg';
 import mail from './mail.svg';
+import Eye from './eye.svg';
+import EyeBlocked from './eye-blocked.svg';
+import Site from './site.svg';
 
 export {
     lion,
@@ -23,5 +26,8 @@ export {
     oldking,
     github,
     chat,
-    mail
+    mail,
+    Eye,
+    EyeBlocked,
+    Site
 };

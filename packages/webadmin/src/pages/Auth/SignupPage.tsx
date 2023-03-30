@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Icons } from '@tebox/assets';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { resetMessage, setMessage, selectUI } from "store/slices/ui";
 import { useAddUserMutation } from "store/api/usersApi";
 import { tFormInputs, tWarning, InputType } from './Types';
 import * as yup from "yup";
-import * as IMG from 'assets/img';
 import s from './Auth.module.sass';
 
 const schema = yup.object({
@@ -86,7 +86,10 @@ export const SignupPage = () => {
                                 data-testid="password-input"
                             />
                             <img
-                                src={type === InputType.pw ? IMG.EyeBlocked : IMG.Eye}
+                                src={ type === InputType.pw
+                                        ?   Icons.SVG.EyeBlocked
+                                        :   Icons.SVG.Eye
+                                    }
                                 alt="eye blocked"
                                 onClick={switchPassVisibility}
                                 data-testid="eye-switch"

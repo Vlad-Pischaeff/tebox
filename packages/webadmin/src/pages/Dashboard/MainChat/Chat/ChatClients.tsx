@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserIcons } from '@tebox/assets';
+import { Icons } from '@tebox/assets';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { useGetMessagesQuery } from 'store/api/websocketApi';
 import { selectYourId, setSelectedUserId, getSelectedUserId } from 'store/slices/auth';
@@ -30,7 +30,7 @@ export const ChatClients = () => {
                 USERS.map((user) => {
                     const num = data[user].msgs[0].date % 100;
                     const idx = 'user' + num;
-                    const pict = UserIcons.PNG[idx];
+                    const pict = Icons.PNG[idx];
 
                     return  (
                         <div

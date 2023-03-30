@@ -1,8 +1,8 @@
 import React from 'react';
 import { useAppDispatch } from 'store/hook';
+import { Icons } from '@tebox/assets';
 import { useDeleteWebsiteMutation } from 'store/api/websitesApi';
 import { setServicesModal, setEditedSite, eModal } from 'store/slices/ui';
-import { Site } from 'assets/img';
 import { iWebsites } from 'store/api/apiTypes';
 import * as ICON from 'assets/icons';
 import s from './Profile.module.sass';
@@ -31,7 +31,7 @@ export const ProfileWebsitesItem = ({ item }: iProps) => {
                 src={`https://${item.site}/favicon.ico`}
                 alt=""
                 onError={(e) => {
-                    e.currentTarget.src = `${Site}`
+                    e.currentTarget.src = Icons.SVG.Site;
                 }}
             />
 

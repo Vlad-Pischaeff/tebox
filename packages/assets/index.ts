@@ -1,1 +1,1 @@
-export const UserIcons = require('./icons');
+export const Icons = require('./icons');

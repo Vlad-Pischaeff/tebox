@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import bcrypt from 'bcryptjs-react';
 import testbcrypt from 'bcryptjs';
+import { Icons } from '@tebox/assets';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { setCredentials } from 'store/slices/auth';
 import { resetMessage, setMessage, selectUI } from "store/slices/ui";
 import { useGetUserIdFromTokenMutation, useUpdateUserMutation } from "store/api/usersApi";
 import { tFormPasswords, tWarning, InputType } from './Types';
 import * as yup from "yup";
-import * as ICON from 'assets/img';
 import s from './Auth.module.sass';
 
 // workaround для прохождения теста, пока не победил
@@ -127,7 +127,10 @@ export const PasswordChangePage = () => {
                                 data-testid="repeatpassword-input"
                             />
                             <img
-                                src={type === InputType.pw ? ICON.EyeBlocked : ICON.Eye}
+                                src={ type === InputType.pw
+                                        ? Icons.SVG.EyeBlocked
+                                        : Icons.SVG.Eye
+                                    }
                                 alt="eye blocked"
                                 onClick={switchPassVisibility}
                                 data-testid="submit-input"
