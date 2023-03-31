@@ -1,10 +1,5 @@
 export const log = console.log.bind(console);
 
-export const removeContentEditableAttr = (str: string) => {
-    return str.replaceAll('contenteditable', 'spellcheck');
-};
-
-
 export const checkIfImageExists = (url: string): boolean | undefined  => {
     const img = new Image();
     img.src = url;

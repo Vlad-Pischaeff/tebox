@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import parse from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
+import { removeContentEditableAttr } from '@tebox/utils/lib';
 import { iMessage } from  'store/api/apiTypes';
-import { removeContentEditableAttr } from 'assets/utils';
 import s from './Chat.module.sass';
 
 interface iProps extends React.HTMLAttributes<HTMLDivElement>{

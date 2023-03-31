@@ -3,7 +3,6 @@
  * @param arr Array of objects
  * @param key key of object
  * @returns Array of Array of grouped objects
- *
  */
 export function groupObjectsInArray<T, K extends keyof T>(arr: T[], key: K) {
 
@@ -18,3 +17,11 @@ export function groupObjectsInArray<T, K extends keyof T>(arr: T[], key: K) {
 
     return GROUPED;
 }
+/**
+ *
+ * @param str incoming html string
+ * @returns html string without "contenteditable" attribute
+ */
+export const removeContentEditableAttr = (str: string) => {
+    return str.replaceAll('contenteditable', 'spellcheck');
+};

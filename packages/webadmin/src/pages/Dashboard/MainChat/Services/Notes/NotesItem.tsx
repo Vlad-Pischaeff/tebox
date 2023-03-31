@@ -1,10 +1,10 @@
 import React from 'react';
 import parse from 'html-react-parser';
+import { removeContentEditableAttr } from '@tebox/utils/lib';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { selectUIState, setItemServiceMenu } from "store/slices/ui";
 import { NotesServiceMenu } from './NotesServiceMenu';
 import { NotesMarkServiceMenu } from './NotesMarkServiceMenu';
-import { removeContentEditableAttr } from 'assets/utils';
 import { iNotes } from 'store/api/apiTypes';
 import * as ICONS from 'assets/icons';
 import s from '../Services.module.sass';

@@ -1,12 +1,12 @@
 import React from 'react';
 import parse from 'html-react-parser';
+import { removeContentEditableAttr } from '@tebox/utils/lib';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { selectUIState, setItemServiceMenu } from 'store/slices/ui';
 import { iAnswers } from 'store/api/apiTypes';
 import { AnswersServiceMenu } from './AnswersServiceMenu';
 import { AnswersMarkServiceMenu } from './AnswersMarkServiceMenu';
 import { useWebSocketMessage } from 'hooks';
-import { removeContentEditableAttr } from 'assets/utils';
 import * as ICONS from 'assets/icons';
 import { SYMBOLS_OBJ } from './AnswersVariables';
 import s from '../Services.module.sass';
