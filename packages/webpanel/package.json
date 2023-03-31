@@ -7,6 +7,7 @@
     "dependencies": {
         "@tebox/config": "^1.0.0",
         "@tebox/assets": "^1.0.0",
+        "@tebox/utils": "^1.0.0",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^14.4.3",

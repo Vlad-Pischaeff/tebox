@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserIcons } from '@tebox/assets';
+import { Icons } from '@tebox/assets';
 import { useChatContext } from 'store';
 import s from 'styles/ManagerProfile.module.sass';
 
@@ -16,7 +16,7 @@ export const ManagerProfile = () => {
             <figure className={s.avatar}>
                 { !!mngProfile
                     ?   <img src={mngProfile.image} alt="avatar" />
-                    :   <img src={UserIcons.SVG.userfemale} alt="user" className={s.gray}/>
+                    :   <img src={Icons.SVG.userfemale} alt="user" className={s.gray}/>
                 }
                 <div className={`${s.descriptionSw} ${isSWReady ? s.lb : s.lc}`}></div>
             </figure>
@@ -32,8 +32,8 @@ export const ManagerProfile = () => {
             <div className={s.menu} onClick={handleToggle}>
                 <div className={s.menuItem}>
                     { isMail
-                        ?   <img src={UserIcons.SVG.chat} alt="chat" />
-                        :   <img src={UserIcons.SVG.mail} alt="mail" />
+                        ?   <img src={Icons.SVG.chat} alt="chat" />
+                        :   <img src={Icons.SVG.mail} alt="mail" />
                     }
                 </div>
             </div>

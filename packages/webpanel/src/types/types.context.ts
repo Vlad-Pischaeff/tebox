@@ -20,6 +20,7 @@ export enum iMSG {
     'messageFromClient' = 'MSG_FROM_CLIENT',
     'mailFromClient' = 'MAIL_FROM_CLIENT',
     'messageFromManager' = 'MSG_FROM_MANAGER',
+    'messageFromServer' = 'MSG_FROM_SERVER',
     'managerIsOnline' = 'MANAGER_IS_ONLINE',
     'managerProfile' = 'MANAGER_PROFILE',
     'clientIsOnline' = 'CLIENT_IS_ONLINE',

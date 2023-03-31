@@ -1,11 +1,10 @@
 # `@tebox/utils`
 
-> TODO: description
+> Some usefull functions
 
 ## Usage
 
+> after changing `index.ts` don't forget to run
 ```
-const utils = require('@tebox/utils');
-
-// TODO: DEMONSTRATE API
+lerna run tsc
 ```

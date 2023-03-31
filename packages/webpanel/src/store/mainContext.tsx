@@ -14,7 +14,12 @@ export const useChat = () => {
 
     const ACT = {
         [iMSG.messageFromManager]: (data: iWebSocketMessage) => {
+            console.log('8️⃣ iMSG.messageFromManager..', data);
             updChat(data[iMSG.messageFromManager]);
+        },
+        [iMSG.messageFromServer]: (data: iWebSocketMessage) => {
+            console.log('7️⃣ iMSG.messageFromServer..', data);
+            updChat(data[iMSG.messageFromServer]);
         },
         [iMSG.messageFromClient]: (data: iWebSocketMessage) => {
             console.log('5️⃣ iMSG.messageFromClient..', data);

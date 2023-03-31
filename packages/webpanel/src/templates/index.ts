@@ -1,4 +1,5 @@
 import randomstring from 'randomstring';
+// eslint-disable-next-line
 import { iChat, iSession, iMngProfile } from 'types/types.context';
 
 export const SS = {
