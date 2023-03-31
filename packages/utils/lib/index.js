@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.groupObjectsInArray = void 0;
 /**
  *
  * @param arr Array of objects
@@ -5,16 +8,16 @@
  * @returns Array of Array of grouped objects
  *
  */
-export function groupObjectsInArray<T, K extends keyof T>(arr: T[], key: K) {
-
-    const GROUPED = arr.reduce((r: T[][], o: T, i: number, a: T[]) => {
+function groupObjectsInArray(arr, key) {
+    const GROUPED = arr.reduce((r, o, i, a) => {
         if (a[i][key] === (a[i - 1] && a[i - 1][key])) {
             r[r.length - 1].push(o);
-        } else {
+        }
+        else {
             r.push([o]);
         }
         return r;
     }, []);
-
     return GROUPED;
 }
+exports.groupObjectsInArray = groupObjectsInArray;

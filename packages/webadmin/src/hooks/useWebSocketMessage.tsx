@@ -12,7 +12,7 @@ export const useWebSocketMessage = () => {
 
     const sendWsMessage = async (message: string) => {
         if (message && selectedUserId) {
-            // ✅ шлем сообщение
+            // ✅ шлем сообщение если оно есть и выбран клиент
             const msg = {
                 'MSG_FROM_MANAGER': {
                     'from': yourId,

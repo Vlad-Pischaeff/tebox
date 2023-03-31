@@ -1,8 +1,8 @@
 import React from 'react';
+import { groupObjectsInArray } from '@tebox/utils/lib';
 import { useAppSelector } from 'store/hook';
 import { useGetMessagesQuery } from 'store/api/websocketApi';
 import { selectYourId, getSelectedUserId } from 'store/slices/auth';
-import { iMessage } from 'store/api/apiTypes';
 import { ChatBubbleGroup } from './ChatBubbleGroup';
 import s from './Chat.module.sass';
 
@@ -15,14 +15,7 @@ export const ChatMessages = () => {
         ?   data[selectedUserId].msgs
         :   [];
 
-    const GROUPED = chat.reduce((r: iMessage[][], o: iMessage, i: number, a: iMessage[]) => {
-        if (a[i].from === (a[i - 1] && a[i - 1].from)) {
-            r[r.length - 1].push(o);
-        } else {
-            r.push([o]);
-        }
-        return r;
-    }, []);
+    const GROUPED = groupObjectsInArray(chat, 'from');
 
     return (
         <div className={s.ChatMessages} role="listbox">
