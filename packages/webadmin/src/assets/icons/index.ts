@@ -7,6 +7,7 @@ export { EditIcon } from './EditIcon';
 export { LabelIcon } from './LabelIcon';
 export { ServiceMenuIcon } from './ServiceMenuIcon';
 export { SendIcon } from './SendIcon';
+export { EmojiIcon } from './EmojiIcon';
 export { OpenEditorIcon } from './OpenEditorIcon';
 export { ProfileIcon } from './ProfileIcon';
 export { GithubIcon } from './GithubIcon';

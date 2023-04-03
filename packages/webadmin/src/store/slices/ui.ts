@@ -30,6 +30,7 @@ export enum eModal {
     changeGreeting = 'CHANGE_GREETING',
     addMember = 'ADD_MEMBER',
     editMemberSites = 'EDIT_MEMBER_SITES',
+    pickEmoji = "PICK_EMOJI",
     none = 'NONE'
 }
 
@@ -48,6 +49,7 @@ export type UIType = {
     notesFilterColor: string;
     answersFilterIcon: string;
     hiddenPanelServices: boolean;
+    emoji: string;
 }
 
 export type UIKeys = keyof UIType;
@@ -74,6 +76,7 @@ const initialState: UIType = {
     notesFilterColor: 'none',
     answersFilterIcon: 'none',
     hiddenPanelServices: false,
+    emoji: ''
 }
 
 const slice = createSlice({
@@ -129,6 +132,9 @@ const slice = createSlice({
         },
         setHiddenPanelServices: (state, { payload }: PayloadAction<boolean>) => {
             state.hiddenPanelServices = payload;
+        },
+        setEmoji: (state, { payload }: PayloadAction<string>) => {
+            state.emoji = payload;
         },
     },
     extraReducers: (builder) => {
@@ -191,7 +197,8 @@ export const {
     setItemServiceMenu,
     setNotesFilterColor,
     setAnswersFilterIcon,
-    setHiddenPanelServices
+    setHiddenPanelServices,
+    setEmoji
 } = slice.actions;
 
 export default slice.reducer;

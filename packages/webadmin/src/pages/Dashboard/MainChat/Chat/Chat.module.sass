@@ -6,6 +6,7 @@
     overflow: auto
     width: 100%
     display: flex
+    position: relative
 .ChatUsers
     flex: 0 1 6rem
     overflow: auto
@@ -46,14 +47,13 @@
         &:focus
             outline: none
             background: var(--color-INPUTFOCUS)
-.FormButtons
-    display: grid
-    place-items: center
 .Button
     width: 3rem
     height: 47px
     border: none
     background: transparent
+    display: grid
+    place-items: center
     &:hover
         cursor: pointer
         background: var(--color-HOVER)
