@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'store/hook';
-import { setServicesModal, selectUIState, eModal } from 'store/slices/ui';
+import { setServicesModal, setEmoji, selectUIState, eModal } from 'store/slices/ui';
 import { useWebSocketMessage } from 'hooks';
 import * as ICONS from 'assets/icons';
 import s from './Chat.module.sass';
@@ -31,7 +31,10 @@ export const ChatInput = () => {
     const onSubmit = async (data: tFormInputs) => {
         // ✅ вызываем API '/websocket', добавляем 'message'
         const result = await sendWsMessage(data.message);
-        if (result === 'OK') resetField('message');
+        if (result === 'OK') {
+            resetField('message');
+            dispatch(setEmoji(''));
+        }
     }
 
     const openModalPickEmoji = () => {

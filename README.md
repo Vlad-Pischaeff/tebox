@@ -36,4 +36,6 @@ npm run dev
 
 ### Tebox administration screen
 
-<img src="./packages/assets/images/webadmin1.jpg" alt="webadmin" />
+<img src="./packages/assets/images/webadmin1.jpg" alt="webadmin1" />
+
+<img src="./packages/assets/images/webadmin2.gif" alt="webadmin2" />
