@@ -2,8 +2,9 @@ const config = {
     SERVER_PORT:            process.env.REACT_APP_SERVER_PORT,
     SERVER_ADDR:            process.env.REACT_APP_SERVER_ADDR,
     SERVER_PROTO:           process.env.REACT_APP_SERVER_PROTO,
-    WEBSOCKET_PROTO:        '',
-    WEBSOCKET_ADDR:         '',
+    URL:                    '',
+    SERVER_URL:             '',
+    WEBSOCKET_URL:          '',
     LIFETIME:               '10m',
 
     SMTP_HOST:              process.env.SMTP_HOST,
@@ -26,10 +27,19 @@ const config = {
                             },
 };
 
-config.WEBSOCKET_PROTO = config.SERVER_PROTO === 'https' ? 'wss' : 'ws';
+const ADDR = process.env.NODE_ENV === "development"
+                ? 'localhost'
+                : config.SERVER_ADDR;
 
-const { WEBSOCKET_PROTO, SERVER_ADDR, SERVER_PORT } = config;
+const PORT = process.env.NODE_ENV === "development"
+                ? 3000
+                : config.SERVER_PORT;
 
-config.WEBSOCKET_ADDR = `${WEBSOCKET_PROTO}://${SERVER_ADDR}:${SERVER_PORT}/ws`;
+config.URL = `${config.SERVER_PROTO}://${ADDR}:${PORT}`;
+config.SERVER_URL = `${config.SERVER_PROTO}://${config.SERVER_ADDR}:${config.SERVER_PORT}`;
+
+const WS_PROTO = config.SERVER_PROTO === 'https' ? 'wss' : 'ws';
+
+config.WEBSOCKET_URL = `${WS_PROTO}://${config.SERVER_ADDR}:${config.SERVER_PORT}/ws`;
 
 export default config;

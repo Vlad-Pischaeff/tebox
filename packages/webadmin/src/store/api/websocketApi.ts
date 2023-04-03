@@ -7,7 +7,7 @@ let socket: WebSocket | undefined;
 
 const getSocket = () => {
     return !socket
-        ? new WebSocket(config.WEBSOCKET_ADDR)
+        ? new WebSocket(config.WEBSOCKET_URL)
         : socket;
 };
 

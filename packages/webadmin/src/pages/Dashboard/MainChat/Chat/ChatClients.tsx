@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icons } from '@tebox/assets';
+import config from '@tebox/config/client';
 import { useAppSelector, useAppDispatch } from 'store/hook';
 import { useGetMessagesQuery } from 'store/api/websocketApi';
 import { selectYourId, setSelectedUserId, getSelectedUserId } from 'store/slices/auth';
@@ -30,7 +30,7 @@ export const ChatClients = () => {
                 USERS.map((user) => {
                     const num = data[user].msgs[0].date % 100;
                     const idx = 'user' + num;
-                    const pict = Icons.PNG[idx];
+                    const addr = `${config.SERVER_URL}/images/png/${idx}.png`;
 
                     return  (
                         <div
@@ -39,7 +39,7 @@ export const ChatClients = () => {
                             className={`${s.UserPictWrap} ${user === selectedUserId ? s.focus : ''}`}
                             role="listitem"
                         >
-                            <img src={pict} alt="user" className={s.UserPict} />
+                            <img src={addr} alt="user" className={s.UserPict} />
 
                             {/* new messages counter */}
                             { !!data[user].cnt &&

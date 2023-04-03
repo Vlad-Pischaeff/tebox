@@ -10,6 +10,7 @@ module.exports = app => {
     app.use('/upload', express.static(path.join(__dirname, '..', '/public/upload')));
     app.use('/fonts', express.static(path.join(__dirname, '..', '/public/fonts' )));
     app.use('/test', express.static(path.join(__dirname, '..', '/public/test' )));
+    app.use('/images', express.static(path.join(__dirname, '..', '/public/images' )));
 
     // tebutton
     app.use('/dist', express.static(path.join(__dirname, '../../..', 'tebutton', 'dist', 'tebutton' )));

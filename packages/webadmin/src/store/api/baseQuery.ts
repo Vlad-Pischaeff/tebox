@@ -8,15 +8,6 @@ import config from '@tebox/config/client';
 import { setCredentials, logout } from 'store/slices/auth';
 import { RootState } from 'store/store';
 
-const PROTO = config.SERVER_PROTO;
-const ADDR = process.env.NODE_ENV === "development"
-                ? window.location.hostname
-                : config.SERVER_ADDR;
-const PORT = process.env.NODE_ENV === "development"
-                ? 3000
-                : config.SERVER_PORT;
-const URL = `${PROTO}://${ADDR}:${PORT}`;
-
 type tData = {
     accessToken: string,
     refreshToken: string,
@@ -28,7 +19,7 @@ type tResult = {
 }
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: `${URL}/api/`,
+    baseUrl: `${config.URL}/api/`,
     credentials: 'include',     // ⚡ will send back "httpOnly cookie" for every request
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.jwtToken;

@@ -1,8 +1,8 @@
 import { rest } from 'msw';
-import * as CONF from 'assets/config';
+import config from 'config';
 import { log } from 'assets/utils';
 
-const reqLoginUser = rest.post(`${CONF.URL}/api/users/login`, (req, res, ctx) => {
+const reqLoginUser = rest.post(`${config.URL}/api/users/login`, (req, res, ctx) => {
     const { name, password } = req.body;
     global.__TEST__ = { name, password };
 
@@ -17,7 +17,7 @@ const reqLoginUser = rest.post(`${CONF.URL}/api/users/login`, (req, res, ctx) =>
     )
 });
 
-const reqSignupUser = rest.put(`${CONF.URL}/api/users/register`, (req, res, ctx) => {
+const reqSignupUser = rest.put(`${config.URL}/api/users/register`, (req, res, ctx) => {
     const { name, email, password } = req.body;
     global.__TEST__ = { name, email, password };
 
@@ -33,7 +33,7 @@ const reqSignupUser = rest.put(`${CONF.URL}/api/users/register`, (req, res, ctx)
     )
 });
 
-const reqResetPassword = rest.post(`${CONF.URL}/api/users/reset`, (req, res, ctx) => {
+const reqResetPassword = rest.post(`${config.URL}/api/users/reset`, (req, res, ctx) => {
     const { email } = req.body;
     global.__TEST__ = { email };
 
@@ -47,7 +47,7 @@ const reqResetPassword = rest.post(`${CONF.URL}/api/users/reset`, (req, res, ctx
     )
 });
 
-const reqUpdateUser = rest.patch(`${CONF.URL}/api/users/:id`, (req, res, ctx) => {
+const reqUpdateUser = rest.patch(`${config.URL}/api/users/:id`, (req, res, ctx) => {
     const { password } = req.body;
     const { id } = req.params;
     global.__TEST__ = { id, password };

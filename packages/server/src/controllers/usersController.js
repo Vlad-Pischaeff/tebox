@@ -226,7 +226,7 @@ const usersController = () => {
                 const userDTO = new UserDTO(user);          // ⚠️ it is extra code, should be removed
                 const accessToken = TokenService.generateToken({ ...userDTO }, 'ACCESS', config.LIFETIME);
                 // ⚠️ TODO change link definition to .env variable
-                await MailService.sendResetPasswordMail(email, `${config.HOST}/setpw/${accessToken}`);
+                await MailService.sendResetPasswordMail(email, `${config.SMTP_HOST}/setpw/${accessToken}`);
             }
 
             // always send successfull message to sender
