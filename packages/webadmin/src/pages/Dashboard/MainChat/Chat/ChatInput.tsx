@@ -29,6 +29,7 @@ export const ChatInput = () => {
 
     const onSubmit = async (data: tFormInputs) => {
         // ✅ вызываем API '/websocket', добавляем 'message'
+        console.log('message...', data.message)
         const result = await sendWsMessage(data.message);
         if (result === 'OK') {
             resetField('message');
