@@ -21,8 +21,7 @@ export const ChatInput = () => {
     }, [setFocus]);
 
     useEffect(() => {
-        let message = getValues('message');
-        if (!message) message = '';
+        let message = getValues('message') || '';
         message = message + '' + emoji;
         setValue('message', message);
         // eslint-disable-next-line
