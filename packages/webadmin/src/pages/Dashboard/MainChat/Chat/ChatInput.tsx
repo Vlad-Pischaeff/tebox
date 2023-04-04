@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { EmojiStyle } from "emoji-picker-react";
 import { useAppDispatch, useAppSelector } from 'store/hook';
+import { getSelectedUserId } from 'store/slices/auth';
 import { setServicesModal, setEmoji, selectUIState, eModal } from 'store/slices/ui';
 import { useWebSocketMessage } from 'hooks';
 import * as ICONS from 'assets/icons';
@@ -10,9 +12,15 @@ type tFormInputs = {
     message: string;
 }
 
+interface iEmojiObject {
+    [x: string]: string
+}
+
 export const ChatInput = () => {
     const dispatch = useAppDispatch();
-    const emoji = useAppSelector(selectUIState('emoji'));
+    const selecterUserId = useAppSelector(getSelectedUserId);
+    const emojiData = useAppSelector(selectUIState('emoji'));
+    const [ emojiObj, setEmojiObj ] = useState<iEmojiObject>({});
     const { sendWsMessage } = useWebSocketMessage();
     const { setFocus, setValue, getValues, register, resetField, handleSubmit } = useForm<tFormInputs>();
 
@@ -21,20 +29,55 @@ export const ChatInput = () => {
     }, [setFocus]);
 
     useEffect(() => {
-        let message = getValues('message') || '';
-        message = message + '' + emoji;
-        setValue('message', message);
+        if (emojiData) {
+            const key = emojiData.emoji.codePointAt(0);
+
+            if (key) {
+                const emoji = {
+                    ...emojiObj,
+                    [key]: `<img class="emj" src="${emojiData.getImageUrl(EmojiStyle.NATIVE)}" alt="${emojiData.names[0]}" />`
+                };
+
+                setEmojiObj(emoji);
+                let message = getValues('message') || '';
+                message = message + String.fromCodePoint(key);  // 😄 = '&#128516;'
+                setValue('message', message);
+            }
+        }
         // eslint-disable-next-line
-    }, [emoji]);
+    }, [emojiData]);
 
     const onSubmit = async (data: tFormInputs) => {
         // ✅ вызываем API '/websocket', добавляем 'message'
-        console.log('message...', data.message)
-        const result = await sendWsMessage(data.message);
-        if (result === 'OK') {
-            resetField('message');
-            dispatch(setEmoji(''));
+        if (selecterUserId && data.message.length !== 0) {
+            const message = replaceEmojisByImages(data.message);
+
+            const result = await sendWsMessage(message);
+
+            if (result === 'OK') {
+                resetField('message');
+                dispatch(setEmoji(null));
+                setEmojiObj({});            // м.б. этого и не надо делать
+            }
         }
+    }
+
+    const replaceEmojisByImages = (message: string) => {
+        let msg = message;
+
+        if (Object.keys(emojiObj).length !== 0) {
+
+            [ ...msg ].forEach((char) => {
+
+                const key = char.codePointAt(0);
+
+                if (key && emojiObj[key]) {
+                    msg = msg.replace(char, emojiObj[key]);
+                }
+            })
+
+        }
+        return msg;
     }
 
     const openModalPickEmoji = () => {

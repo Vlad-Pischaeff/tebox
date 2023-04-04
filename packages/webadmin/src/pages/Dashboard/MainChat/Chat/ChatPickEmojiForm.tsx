@@ -15,10 +15,7 @@ const Form = () => {
     const dispatch = useAppDispatch();
 
     const onClick = (emojiData: EmojiClickData, event: MouseEvent) => {
-        // dispatch(setEmoji(emojiData.emoji));
-        const emoji = `<img src="${emojiData.getImageUrl(EmojiStyle.NATIVE)}" alt="emoji" />`
-        console.log('emoji..', emojiData.getImageUrl(EmojiStyle.NATIVE));
-        dispatch(setEmoji(emoji));
+        dispatch(setEmoji(emojiData));
         closeModal();
     }
 

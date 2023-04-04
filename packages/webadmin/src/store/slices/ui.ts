@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, isAnyOf  } from '@reduxjs/toolkit';
+import { EmojiClickData } from "emoji-picker-react";
 import { usersApi } from 'store/api/usersApi';
 import { todosApi } from 'store/api/todosApi';
 import { notesApi } from 'store/api/notesApi';
@@ -49,7 +50,7 @@ export type UIType = {
     notesFilterColor: string;
     answersFilterIcon: string;
     hiddenPanelServices: boolean;
-    emoji: string;
+    emoji: EmojiClickData | null;
 }
 
 export type UIKeys = keyof UIType;
@@ -76,7 +77,7 @@ const initialState: UIType = {
     notesFilterColor: 'none',
     answersFilterIcon: 'none',
     hiddenPanelServices: false,
-    emoji: ''
+    emoji: null
 }
 
 const slice = createSlice({
@@ -133,7 +134,7 @@ const slice = createSlice({
         setHiddenPanelServices: (state, { payload }: PayloadAction<boolean>) => {
             state.hiddenPanelServices = payload;
         },
-        setEmoji: (state, { payload }: PayloadAction<string>) => {
+        setEmoji: (state, { payload }: PayloadAction<EmojiClickData | null>) => {
             state.emoji = payload;
         },
     },
@@ -211,23 +212,3 @@ export function selectUIState<T extends UIKeys>(arg: T) {
 }
 
 export const selectUI = (state: RootState) => state.ui;
-
-// ✅ interchanged with a universal selector
-// export const selectUITheme = (state: RootState) => state.ui.theme;
-// export const selectUIMessage = (state: RootState) => state.ui.message;
-
-// export const selectUIServices = (state: RootState) => state.ui.services;
-// export const selectUIServicesModal = (state: RootState) => state.ui.servicesModal;
-// export const selectUIServiceMenu = (state: RootState) => state.ui.serviceMenu;
-
-// export const selectUIEditedNote = (state: RootState) => state.ui.editedNote;
-// export const selectUIEditedAnswer = (state: RootState) => state.ui.editedAnswer;
-
-// export const selectUIEditedSite = (state: RootState) => state.ui.editedSite;
-// export const selectUIEditedImage = (state: RootState) => state.ui.editedImage;
-// export const selectUIEditedMember = (state: RootState) => state.ui.editedMember;
-
-// export const selectUIAnswersFilterIcon = (state: RootState) => state.ui.answersFilterIcon;
-// export const selectUINotesFilterColor = (state: RootState) => state.ui.notesFilterColor;
-
-// export const selectUIHiddenPanelServices = (state: RootState) => state.ui.hiddenPanelServices;
