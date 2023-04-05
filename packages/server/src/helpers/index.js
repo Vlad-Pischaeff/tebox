@@ -4,7 +4,7 @@ const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
 
 let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
-let WebSockets = {};
+let WebSockets = {}, Socket;
 const mapWsToClient = new WeakMap();
 
 
@@ -120,13 +120,13 @@ const DISPATCHER = {
         }
     },
     MSG_FROM_MANAGER(ws, data) {
-        // const obj = MAPS.getID(ws);
-        if (ws.id !== 'server') {
-            // const { ID } = obj;
-            const MSG = DISPATCHER.msg('MSG_FROM_MANAGER', ws.id, 'server', data);
-            // ws.send(MSG);
-            console.log('🔹 ws MSG_FROM_MANAGER..');
-        }
+        const { to, from, message } = data['MSG_FROM_MANAGER'];
+
+        const MSG = DISPATCHER.msg('MSG_FROM_MANAGER', to, from, message);
+        Socket = MAPS.getWS(to);       // ..get WebSocket of client
+        if (Socket) Socket.send(MSG);
+
+        console.log('🔹 ws MSG_FROM_MANAGER..');
     },
     MSG_FROM_SERVER(ws, data) {
         // const obj = MAPS.getID(ws);
@@ -138,19 +138,20 @@ const DISPATCHER = {
         }
     },
     MSG_FROM_CLIENT(_, data) {
-        let ws;
-        const { to: siteHash, from, message: msg } = data['MSG_FROM_CLIENT'];
-        const site = mappedHashSites[`$2a$10$${siteHash}`];
+        const { to, from, message } = data['MSG_FROM_CLIENT'];
+        const site = mappedHashSites[`$2a$10$${to}`];
+        const { ownerId, teamUserIds } = site;
 
-        const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', site.ownerId, from, msg);
-        console.log('🔹 ws MSG_FROM_CLIENT to owner..', site.ownerId, from, msg);
-        ws = MAPS.getWS(site.ownerId) && ws.send(MSG);
+        const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', ownerId, from, message);
+        Socket = MAPS.getWS(ownerId);       // ..get WebSockets of managers
+        if (Socket) Socket.send(MSG);
 
-        site.teamUserIds.forEach((to) => {
-            const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', to, from, msg);
-            console.log('🔹 ws MSG_FROM_CLIENT to team..', to, from, msg);
-            ws = MAPS.getWS(to) && ws.send(MSG);
+        teamUserIds.forEach((memberId) => {
+            const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', memberId, from, message);
+            Socket = MAPS.getWS(memberId);  // ..get WebSockets of manager's team users
+            if (Socket) Socket.send(MSG);
         });
+        // console.log('🔹 ws MSG_FROM_CLIENT to owner..', data);
     },
     MAIL_FROM_CLIENT(ws, data) {
         console.log('🔹 ws MAIL_FROM_CLIENT..', data);
