@@ -1,7 +1,7 @@
 'use strict';
 
 const WebSocket = require('ws');
-const { DISPATCHER } = require('#s/helpers/index');
+const { DISPATCHER, MAPS } = require('#s/helpers/index');
 
 module.exports = async (server) => {
     try {
@@ -11,6 +11,7 @@ module.exports = async (server) => {
         wss.on('connection', async (ws, req) => {
             ws.isAlive = true;
             ws.id = 'server';
+            MAPS.set(ws, 'server');
 
             console.log('✅ WS connection');
 

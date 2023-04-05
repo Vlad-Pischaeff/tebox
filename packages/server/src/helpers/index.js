@@ -4,8 +4,9 @@ const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
 
 let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
+let WebSockets = {};
 const mapWsToClient = new WeakMap();
-const mapClientToWs = new WeakMap();
+
 
 const HELPER = {
     async runWebSitesHashReduce() {
@@ -69,35 +70,38 @@ const HELPER = {
     },
     async getSiteOwnerProfile(hash) {
         const site = mappedHashSites[`$2a$10$${hash}`];
-        const ownerId = site.ownerId;
+        console.log('site...', site)
 
-        const owner = await Users.findOne({ _id: ownerId });
+        if (site) {
+            const ownerId = site.ownerId;
 
-        const { id, name, alias, image, greeting } = owner;
+            const owner = await Users.findOne({ _id: ownerId });
 
-        return ({ id, name, alias, image, greeting });
+            const { id, name, alias, image, greeting } = owner;
+
+            return ({ id, name, alias, image, greeting });
+        } else {
+            return null;
+        }
     },
 };
 
 const MAPS = {
     set(ws, id) {
         const obj = { 'ID': id };
-        ws.id = id;
         mapWsToClient.set(ws, obj);
-        mapClientToWs.set(obj, ws);
+        WebSockets = { ...WebSockets, [id]: ws };
     },
     delete(ws, id) {
         const obj = { 'ID': id };
-        ws.id = id;
         mapWsToClient.delete(ws, obj);
-        mapClientToWs.delete(obj, ws);
+        delete WebSockets[id];
     },
     getID(ws) {
         return mapWsToClient.get(ws);
     },
     getWS(id) {
-        const obj = { 'ID': id };
-        return mapClientToWs.get(obj);
+        return WebSockets[id];
     },
 };
 
@@ -108,10 +112,12 @@ const DISPATCHER = {
         const siteHash = data['REGISTER_CLIENT'].to;
         const owner = await HELPER.getSiteOwnerProfile(siteHash);
 
-        // 3 step. after register client send site owner profile to client
-        const MSG = DISPATCHER.msg('MANAGER_PROFILE', ws.id, owner.id, owner);
-        ws.send(MSG);
-        console.log('🔹 ws REGISTER_CLIENT..');
+        if (owner) {
+            // 3 step. after register client send site owner profile to client
+            const MSG = DISPATCHER.msg('MANAGER_PROFILE', ws.id, owner.id, owner);
+            ws.send(MSG);
+            console.log('🔹 ws REGISTER_CLIENT..');
+        }
     },
     MSG_FROM_MANAGER(ws, data) {
         // const obj = MAPS.getID(ws);
@@ -131,8 +137,20 @@ const DISPATCHER = {
             console.log('🔹 ws MSG_FROM_SERVER..');
         }
     },
-    MSG_FROM_CLIENT(ws, data) {
-        console.log('🔹 ws MSG_FROM_CLIENT..', data);
+    MSG_FROM_CLIENT(_, data) {
+        let ws;
+        const { to: siteHash, from, message: msg } = data['MSG_FROM_CLIENT'];
+        const site = mappedHashSites[`$2a$10$${siteHash}`];
+
+        const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', site.ownerId, from, msg);
+        console.log('🔹 ws MSG_FROM_CLIENT to owner..', site.ownerId, from, msg);
+        ws = MAPS.getWS(site.ownerId) && ws.send(MSG);
+
+        site.teamUserIds.forEach((to) => {
+            const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', to, from, msg);
+            console.log('🔹 ws MSG_FROM_CLIENT to team..', to, from, msg);
+            ws = MAPS.getWS(to) && ws.send(MSG);
+        });
     },
     MAIL_FROM_CLIENT(ws, data) {
         console.log('🔹 ws MAIL_FROM_CLIENT..', data);
@@ -169,5 +187,6 @@ const DISPATCHER = {
 
 module.exports = {
     DISPATCHER,
-    HELPER
+    HELPER,
+    MAPS
 };
