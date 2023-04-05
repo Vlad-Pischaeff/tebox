@@ -35,7 +35,7 @@ export const useMessageObject = () => {
     useEffect(() => {
         if (isSWReady) {
             // 1 step. Initialize WebSocket when Service Worker activated
-            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_ADDR);
+            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_URL);
         }
         // eslint-disable-next-line
     }, [isSWReady]);

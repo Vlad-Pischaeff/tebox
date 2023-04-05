@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+import parse from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
+import { removeContentEditableAttr } from '@tebox/utils/lib';
 import { iMessage } from  'types/types.context';
 import s from 'styles/MainChat.module.sass';
 
@@ -28,7 +30,7 @@ export const ChatBubble = ({ msg }: iProps) => {
             <div className={s.msg}>
                 {
                     typeof msg.message === 'string' &&
-                        msg.message
+                        parse(removeContentEditableAttr(msg.message))
                 }
             </div>
         </div>
