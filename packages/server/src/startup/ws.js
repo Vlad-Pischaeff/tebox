@@ -1,7 +1,7 @@
 'use strict';
 
 const WebSocket = require('ws');
-const { DISPATCHER, MAPS } = require('#s/helpers/index');
+const { DISPATCHER, MAPS } = require('#s/services/websocketService');
 
 module.exports = async (server) => {
     try {

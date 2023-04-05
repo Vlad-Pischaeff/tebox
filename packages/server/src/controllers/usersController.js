@@ -12,7 +12,7 @@ const {
     fillTodosTemplates,
     // fillWebTemplates         // use for development
 } = require('#s/templates/index');
-const { HELPER } = require('#s/helpers/index');
+const { HELPER } = require('#s/services/websocketService');
 
 const usersController = () => {
     /** ******************************************
@@ -225,7 +225,6 @@ const usersController = () => {
             if (user) {
                 const userDTO = new UserDTO(user);          // ⚠️ it is extra code, should be removed
                 const accessToken = TokenService.generateToken({ ...userDTO }, 'ACCESS', config.LIFETIME);
-                // ⚠️ TODO change link definition to .env variable
                 await MailService.sendResetPasswordMail(email, `${config.SMTP_HOST}/setpw/${accessToken}`);
             }
 
