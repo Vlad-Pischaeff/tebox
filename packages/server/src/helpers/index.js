@@ -88,6 +88,7 @@ const HELPER = {
 
 const MAPS = {
     set(ws, id) {
+        ws.id = id;
         const obj = { 'ID': id };
         mapWsToClient.set(ws, obj);
         WebSockets = { ...WebSockets, [id]: ws };
@@ -106,7 +107,7 @@ const MAPS = {
 };
 
 const DISPATCHER = {
-    async REGISTER_CLIENT(ws, data) {
+    async REGISTER_CLIENT(ws, data) {           // ✅
         const { to, from } = data['REGISTER_CLIENT'];
 
         MAPS.set(ws, from);
@@ -120,24 +121,22 @@ const DISPATCHER = {
             console.log('🔹 ws REGISTER_CLIENT..');
         }
     },
-    MSG_FROM_MANAGER(_, data) {
+    MSG_FROM_MANAGER(_, data) {                 // ✅
         const { to } = data['MSG_FROM_MANAGER'];
 
-        let Socket = MAPS.getWS(to);                        // ..get WebSocket of client
+        let Socket = MAPS.getWS(to);                    // ..get WebSocket of client
         if (Socket) Socket.send(JSON.stringify(data));  // ..retransmit message to client
 
         console.log('🔹 ws MSG_FROM_MANAGER..');
     },
-    MSG_FROM_SERVER(ws, data) {
-        // const obj = MAPS.getID(ws);
+    MSG_FROM_SERVER(ws, data) {                 // ✅
         if (ws.id !== 'server') {
-            // const { ID } = obj;
             const MSG = DISPATCHER.msg('MSG_FROM_SERVER', ws.id, 'server', data);
             ws.send(MSG);
             console.log('🔹 ws MSG_FROM_SERVER..');
         }
     },
-    MSG_FROM_CLIENT(_, data) {
+    MSG_FROM_CLIENT(_, data) {                  // ✅
         const { to, from, message } = data['MSG_FROM_CLIENT'];
 
         const site = mappedHashSites[`$2a$10$${to}`];
@@ -153,7 +152,7 @@ const DISPATCHER = {
             let Socket = MAPS.getWS(memberId);  // ..get WebSockets of manager's team users
             if (Socket) Socket.send(MSG);
         });
-        // console.log('🔹 ws MSG_FROM_CLIENT to owner..', data);
+        console.log('🔹 ws MSG_FROM_CLIENT to owner..', data);
     },
     MAIL_FROM_CLIENT(ws, data) {
         console.log('🔹 ws MAIL_FROM_CLIENT..', data);
