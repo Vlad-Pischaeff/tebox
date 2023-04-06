@@ -38,7 +38,7 @@ const schema = new Schema({
         required: true
     },
     date: {
-        type: String,
+        type: Number,
         required: true,
         default: Date.now()
     },
