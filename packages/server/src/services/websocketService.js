@@ -2,6 +2,7 @@
 
 const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
+const MailsService = require('#s/services/mailsService');
 
 let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
 let WebSockets = {};
@@ -154,8 +155,25 @@ const DISPATCHER = {
         });
         console.log('🔹 ws MSG_FROM_CLIENT to owner..', data);
     },
-    MAIL_FROM_CLIENT(ws, data) {
-        console.log('🔹 ws MAIL_FROM_CLIENT..', data);
+    async MAIL_FROM_CLIENT(ws, data) {
+        const { to, from, message } = data['MAIL_FROM_CLIENT'];
+
+        const site = mappedHashSites[`$2a$10$${to}`];
+
+        const { ownerId, teamUserIds } = site;
+        // ..add new mail to database
+        const newMail = await MailsService.addMail(data['MAIL_FROM_CLIENT']);
+        // ..send notification to site's owner and his team members
+        const MSG = DISPATCHER.msg('MAIL_FROM_CLIENT', ownerId, from, message);
+        let Socket = MAPS.getWS(ownerId);       // ..get WebSockets of managers
+        if (Socket) Socket.send(MSG);
+
+        teamUserIds.forEach((memberId) => {
+            const MSG = DISPATCHER.msg('MAIL_FROM_CLIENT', memberId, from, message);
+            let Socket = MAPS.getWS(memberId);  // ..get WebSockets of manager's team users
+            if (Socket) Socket.send(MSG);
+        });
+        console.log('🔹 ws MAIL_FROM_CLIENT..', newMail, data);
     },
     MANAGER_IS_ONLINE(ws, data) {
         console.log('🔹 ws MANAGER_IS_ONLINE..', data);

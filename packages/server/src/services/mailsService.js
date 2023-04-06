@@ -33,6 +33,18 @@ class MailsService {
 
         return mails;
     }
+    /**
+     *
+     * @param {Object} mail
+     */
+    async addMail(mail) {
+        try {
+            const newMail = await Mails.create({ ...mail });
+            return newMail;
+        } catch (e) {
+            return ({ error: `Add mail error, details... ${e.message}` });
+        }
+    };
 }
 
 module.exports = new MailsService();
