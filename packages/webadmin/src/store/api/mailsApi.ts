@@ -7,9 +7,11 @@ export const mailsApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Mails'],
     endpoints: (builder) => ({
-        Mails: builder.query<iMails[], string>({
-            query: () => ({
-                url: 'mails'
+        Mails: builder.query<iMails[], string[]>({
+            query: (websites) => ({
+                url: 'mails',
+                method: 'POST',
+                body: websites
             }),
             providesTags: ['Mails'],
         }),
@@ -22,7 +24,7 @@ export const mailsApi = createApi({
         addMail: builder.mutation({
             query: (mail) => ({
                 url: 'mails',
-                method: 'POST',
+                method: 'PUT',
                 body: mail
             }),
             invalidatesTags: ['Mails'],

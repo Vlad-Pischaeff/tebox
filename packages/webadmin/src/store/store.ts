@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { usersApi } from 'store/api/usersApi';
 import { todosApi } from 'store/api/todosApi';
 import { notesApi } from 'store/api/notesApi';
+import { mailsApi } from 'store/api/mailsApi';
 import { answersApi } from 'store/api/answersApi';
 import { websitesApi } from 'store/api/websitesApi';
 import { websocketApi } from 'store/api/websocketApi';
@@ -15,6 +16,7 @@ export const store = configureStore({
         [usersApi.reducerPath]: usersApi.reducer,
         [todosApi.reducerPath]: todosApi.reducer,
         [notesApi.reducerPath]: notesApi.reducer,
+        [mailsApi.reducerPath]: mailsApi.reducer,
         [answersApi.reducerPath]: answersApi.reducer,
         [websitesApi.reducerPath]: websitesApi.reducer,
         [websocketApi.reducerPath]: websocketApi.reducer,
@@ -24,6 +26,7 @@ export const store = configureStore({
             .concat(usersApi.middleware)
             .concat(todosApi.middleware)
             .concat(notesApi.middleware)
+            .concat(mailsApi.middleware)
             .concat(answersApi.middleware)
             .concat(websitesApi.middleware)
             .concat(websocketApi.middleware)

@@ -11,6 +11,7 @@ const mailsController = () => {
      ****************************************** */
     const getMails = async (req, res) => {
         try {
+            console.log('get mail...', req.body)
             const mails = await MailsService.aggregateMail(req);
 
             res.status(201).json(mails);

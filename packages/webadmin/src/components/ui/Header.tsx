@@ -4,6 +4,7 @@ import { useAppDispatch } from 'store/hook';
 import { websitesApi } from 'store/api/websitesApi';
 import { answersApi } from 'store/api/answersApi';
 import { notesApi } from 'store/api/notesApi';
+import { mailsApi } from 'store/api/mailsApi';
 import { todosApi } from 'store/api/todosApi';
 import { websocketApi } from 'store/api/websocketApi';
 import { logout, setSelectedUserId } from 'store/slices/auth';
@@ -17,6 +18,7 @@ export const Header = () => {
     const handlerLogout = () => {
         dispatch(todosApi.util.resetApiState());
         dispatch(notesApi.util.resetApiState());
+        dispatch(mailsApi.util.resetApiState());
         dispatch(answersApi.util.resetApiState());
         dispatch(websitesApi.util.resetApiState());
         dispatch(websocketApi.util.resetApiState());

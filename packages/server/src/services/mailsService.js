@@ -5,12 +5,15 @@ const Mails = require('#s/models/mails');
 class MailsService {
     async aggregateMail(req) {
         let mails;
+
+        const arrayOfHash = req.body.map(hash => hash.substring(7));
+
         const { offset, num } = req.query;
 
         if (offset && num) {
             mails = await Mails.aggregate([
                 {
-                    $match: { user: req.id }
+                    $match: { to: arrayOfHash }
                 },
                 {
                     $facet: {
@@ -24,10 +27,7 @@ class MailsService {
             const [value] = mails;
             mails = [...value.data];
         } else {
-            // use with authorization middleware
-            mails = await Mails.find({ user: req.id });
-
-            // use without authorization middleware
+            mails = await Mails.find({ to: arrayOfHash });
             // mails = await Mails.find();
         }
 
