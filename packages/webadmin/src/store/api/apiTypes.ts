@@ -11,7 +11,7 @@ export type tUser = {
     alias: string,
     email: string,
     password?: string,
-    date: string,
+    date: number,
     image: string,
     team: tMember[],
     greeting: string
@@ -56,6 +56,8 @@ export interface iMessage {
     message: string
     date: number
 }
+
+export interface iMails extends iMessage {}
 
 export interface iWebSocketMessage {
     [x: string]: iMessage

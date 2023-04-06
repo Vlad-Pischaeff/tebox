@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useBroadcastChannel } from 'hooks/useBroadcastChannel';
 import { useServiceWorker } from 'hooks/useServiceWorker';
-import { iMSG, iSendMsgType } from 'types/types.context';
+import { iPrepMsg, iMSG } from 'types/types.context';
 import { USER_ID } from 'templates';
 import { emitter } from 'utils';
 import config from '@tebox/config/client';
@@ -15,18 +15,18 @@ export const useMessageObject = () => {
     const [ serverId, setServerId ] = useState('undefined');
 
     const MSG = {
-        prepareMessage(type: iMSG, message = '') {
+        prepareMessage({ type, message = '', from }: iPrepMsg) {
             return {
                 [type]: {
-                    'from': userId,
+                    'from': from || userId,
                     'to': serverId,
                     'message': message,
                     'date': Date.now(),
                 }
             }
         },
-        sendMessage(type: iSendMsgType, message: string ) {
-            const msg = MSG.prepareMessage(type, message);
+        sendMessage({ type, message, from }: iPrepMsg) {
+            const msg = MSG.prepareMessage({ type, message, from });
             emitter.emit('RUN_ACTION', msg);
             BC?.postMessage(msg);
         },
@@ -35,7 +35,9 @@ export const useMessageObject = () => {
     useEffect(() => {
         if (isSWReady) {
             // 1 step. Initialize WebSocket when Service Worker activated
-            MSG.sendMessage(iMSG.initWebSocket, config.WEBSOCKET_URL);
+            const type = iMSG.initWebSocket;
+            const message = config.WEBSOCKET_URL;
+            MSG.sendMessage({ type, message });
         }
         // eslint-disable-next-line
     }, [isSWReady]);

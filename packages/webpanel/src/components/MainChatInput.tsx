@@ -15,8 +15,11 @@ export const MainChatInput = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (ipRef.current?.value) {
-            MSG.sendMessage(iMSG.messageFromClient, ipRef.current?.value);
+        const type = iMSG.messageFromClient;
+        const message = ipRef.current?.value;
+
+        if (message) {
+            MSG.sendMessage({ type, message });
             ipRef.current.value = '';
             ipRef.current.focus();
         }

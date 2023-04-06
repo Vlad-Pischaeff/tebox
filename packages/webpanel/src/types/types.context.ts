@@ -32,6 +32,12 @@ export type iSendMsgType = Exclude<
     iMSG.managerProfile | iMSG.messageFromManager | iMSG.managerIsOnline
 >
 
+export interface iPrepMsg {
+    type: iSendMsgType,
+    message?: string,
+    from?: string
+}
+
 export interface iMail {
     mailFrom: string,
     message: string
@@ -57,12 +63,3 @@ export interface iSession {
     'userId'?: string,
     'mngProfile'?: iMngProfile | undefined
 }
-
-// export interface iSessionHandler {
-//     Session: iSession,
-//     getSession: () => void,
-//     saveSession: () => void,
-//     getUserID: () => string,
-//     getMngProfile: () => iMngProfile | undefined,
-//     saveMngProfile: (profile: iMngProfile) => void
-// }

@@ -16,12 +16,12 @@ export const MainMailForm = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        const type = iMSG.mailFromClient;
         const message = taRef.current?.value;
-        const mailFrom = ipRef.current?.value;
-        const data = JSON.stringify({ message, mailFrom });
+        const from = ipRef.current?.value;
 
-        if (message && mailFrom) {
-            MSG.sendMessage(iMSG.mailFromClient, data);
+        if (message && from) {
+            MSG.sendMessage({ type, message, from });
             taRef.current.value = '';
             ipRef.current.value = '';
             taRef.current.focus();
