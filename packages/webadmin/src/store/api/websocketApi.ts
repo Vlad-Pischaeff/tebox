@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import config from '@tebox/config/client';
-import { iWebSocketMessage, iChat, iMails, iMessage } from './apiTypes';
+import { iWebSocketMessage, iChat, iMails } from './apiTypes';
 import { mailsApi } from 'store/api/mailsApi';
 import { RootState } from 'store/store';
 
@@ -31,7 +31,7 @@ export const websocketApi = createApi({
             // providesTags: ['Post'],
             async onCacheEntryAdded(
                 userId,
-                { getState, cacheDataLoaded, cacheEntryRemoved, updateCachedData },
+                { getState, dispatch, cacheDataLoaded, cacheEntryRemoved, updateCachedData },
             ) {
                 try {
                     await cacheDataLoaded;
@@ -76,15 +76,16 @@ export const websocketApi = createApi({
                             });
                         }
 
-                        // if (key === 'MAIL_FROM_CLIENT') {
-                        //     mailsApi.util.updateQueryData(
-                        //         'Mails',    // query endpoint
-                        //         '',
-                        //         (draftPosts) => {
-                        //             draftPosts.push(msg[key] as iMails);
-                        //         }
-                        //     )
-                        // }
+                        // ..update cache of mails, after recieving new mail from client
+                        if (key === 'MAIL_FROM_CLIENT') {
+                            dispatch(mailsApi.util.updateQueryData(
+                                'Mails',    // query endpoint
+                                yourId,
+                                (draftMails) => {
+                                    draftMails.push(msg[key] as iMails);
+                                }
+                            ));
+                        }
                     };
 
                     socket.onclose = () => { console.log('❌ socket closed..') };
