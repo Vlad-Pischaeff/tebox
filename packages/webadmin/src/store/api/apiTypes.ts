@@ -58,7 +58,8 @@ export interface iMessage {
 }
 
 export interface iMails extends iMessage {
-    id: string
+    id: string,
+    recipients: string[]
 }
 
 export interface iWebSocketMessage {
