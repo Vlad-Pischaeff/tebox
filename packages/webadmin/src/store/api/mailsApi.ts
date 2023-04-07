@@ -38,7 +38,7 @@ export const mailsApi = createApi({
             invalidatesTags: ['Mails']
         }),
         deleteMail: builder.mutation({
-            query: ({ id }) => ({
+            query: (id) => ({
                 url: `mails/${id}`,
                 method: 'DELETE',
             }),
