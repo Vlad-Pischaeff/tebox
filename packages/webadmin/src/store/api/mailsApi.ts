@@ -21,22 +21,6 @@ export const mailsApi = createApi({
             }),
             providesTags: ['Mails'],
         }),
-        addMail: builder.mutation({
-            query: (mail) => ({
-                url: 'mails',
-                method: 'PUT',
-                body: mail
-            }),
-            invalidatesTags: ['Mails'],
-        }),
-        editMail: builder.mutation({
-            query: ({ id, ...rest }) => ({
-                url: `mails/${id}`,
-                method: 'PATCH',
-                body: rest
-            }),
-            invalidatesTags: ['Mails']
-        }),
         deleteMail: builder.mutation({
             query: (id) => ({
                 url: `mails/${id}`,
@@ -52,7 +36,5 @@ export const {
     useLazyMailsQuery,
     useGetMailQuery,
     useLazyGetMailQuery,
-    useAddMailMutation,
-    useEditMailMutation,
     useDeleteMailMutation
 } = mailsApi;
