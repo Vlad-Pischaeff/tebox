@@ -62,7 +62,7 @@ export interface iMails extends iMessage {
 }
 
 export interface iWebSocketMessage {
-    [x: string]: iMessage
+    [x: string]: iMessage | iMails
 }
 
 export interface iChatUserMessages {

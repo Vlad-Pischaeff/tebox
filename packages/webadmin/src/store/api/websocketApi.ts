@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import config from '@tebox/config/client';
-import { iWebSocketMessage, iChat } from './apiTypes';
+import { iWebSocketMessage, iChat, iMails, iMessage } from './apiTypes';
+import { mailsApi } from 'store/api/mailsApi';
 import { RootState } from 'store/store';
 
 let socket: WebSocket | undefined;
@@ -54,6 +55,7 @@ export const websocketApi = createApi({
 
                     socket.onmessage = (message) => {
                         const msg = JSON.parse(message.data) as iWebSocketMessage;
+                        console.log('💬 socket..', msg);
                         const [ key ] = Object.keys(msg);
 
                         if (key === 'MSG_FROM_CLIENT' ||
@@ -74,7 +76,15 @@ export const websocketApi = createApi({
                             });
                         }
 
-                        console.log('💬 socket..', msg);
+                        // if (key === 'MAIL_FROM_CLIENT') {
+                        //     mailsApi.util.updateQueryData(
+                        //         'Mails',    // query endpoint
+                        //         '',
+                        //         (draftPosts) => {
+                        //             draftPosts.push(msg[key] as iMails);
+                        //         }
+                        //     )
+                        // }
                     };
 
                     socket.onclose = () => { console.log('❌ socket closed..') };
