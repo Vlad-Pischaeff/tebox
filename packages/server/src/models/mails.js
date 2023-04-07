@@ -3,8 +3,12 @@
 const { Schema, model } = require('mongoose');
 
 const schema = new Schema({
-    to: {
+    to: {           // ..site's key
         type: String
+    },
+    recipients: {
+        type: [String],
+        default: []
     },
     from: {
         type: String,

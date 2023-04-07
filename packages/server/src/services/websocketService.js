@@ -143,14 +143,12 @@ const DISPATCHER = {
         const site = mappedHashSites[`$2a$10$${to}`];
 
         const { ownerId, teamUserIds } = site;
+        const recipients = [ ownerId, ...teamUserIds ];
 
-        const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', ownerId, from, message);
-        let Socket = MAPS.getWS(ownerId);       // ..get WebSockets of managers
-        if (Socket) Socket.send(MSG);
-
-        teamUserIds.forEach((memberId) => {
-            const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', memberId, from, message);
-            let Socket = MAPS.getWS(memberId);  // ..get WebSockets of manager's team users
+        // ✔️..send notification to site's owner and his team members
+        recipients.forEach((recipient) => {
+            const MSG = DISPATCHER.msg('MSG_FROM_CLIENT', recipient, from, message);
+            let Socket = MAPS.getWS(recipient);     // ✔️..get WebSocket of recipient
             if (Socket) Socket.send(MSG);
         });
         console.log('🔹 ws MSG_FROM_CLIENT to owner..', data);
@@ -161,16 +159,16 @@ const DISPATCHER = {
         const site = mappedHashSites[`$2a$10$${to}`];
 
         const { ownerId, teamUserIds } = site;
-        // ..add new mail to database
-        const newMail = await MailsService.addMail(data['MAIL_FROM_CLIENT']);
-        // ..send notification to site's owner and his team members
-        const MSG = DISPATCHER.msg('MAIL_FROM_CLIENT', ownerId, from, message);
-        let Socket = MAPS.getWS(ownerId);       // ..get WebSockets of managers
-        if (Socket) Socket.send(MSG);
+        const recipients = [ ownerId, ...teamUserIds ];
 
-        teamUserIds.forEach((memberId) => {
-            const MSG = DISPATCHER.msg('MAIL_FROM_CLIENT', memberId, from, message);
-            let Socket = MAPS.getWS(memberId);  // ..get WebSockets of manager's team users
+        // ✔️..add new mail to database
+        const mail = { recipients, ...data['MAIL_FROM_CLIENT'] };
+        const newMail = await MailsService.addMail(mail);
+
+        // ✔️..send notification to site's owner and his team members
+        recipients.forEach((recipient) => {
+            const MSG = DISPATCHER.msg('MAIL_FROM_CLIENT', recipient, from, message);
+            let Socket = MAPS.getWS(recipient);     // ✔️..get WebSocket of recipient
             if (Socket) Socket.send(MSG);
         });
         console.log('🔹 ws MAIL_FROM_CLIENT..', newMail, data);

@@ -57,7 +57,9 @@ export interface iMessage {
     date: number
 }
 
-export interface iMails extends iMessage {}
+export interface iMails extends iMessage {
+    id: string
+}
 
 export interface iWebSocketMessage {
     [x: string]: iMessage
