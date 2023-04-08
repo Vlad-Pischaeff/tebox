@@ -8,7 +8,7 @@ export const ManagerProfile = () => {
     const { mngProfile, isMail, setIsMail, isSWReady } = useChatContext();
 
     const handleToggle = () => {
-        setIsMail(!isMail);
+        setIsMail(isMail => !isMail);
     }
 
     return (
