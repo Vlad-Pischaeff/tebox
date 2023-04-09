@@ -71,7 +71,7 @@ const HELPER = {
     },
     async getSiteOwnerProfile(hash) {
         const site = mappedHashSites[`$2a$10$${hash}`];
-        console.log('site...', site)
+        console.log('getSiteOwnerProfile...site...', site)
 
         if (site) {
             const ownerId = site.ownerId;
@@ -119,7 +119,9 @@ const DISPATCHER = {
             // 3 step. after register client send site owner profile to client
             const MSG = DISPATCHER.msg('MANAGER_PROFILE', from, owner.id, owner);
             ws.send(MSG);
-            console.log('🔹 ws REGISTER_CLIENT..');
+            console.log('🔹 ws REGISTER_CLIENT SUCCESSFULLY..✅');
+        } else {
+            console.log('🔹 ws REGISTER_CLIENT FAILED..❌');
         }
     },
     MSG_FROM_MANAGER(_, data) {                 // ✅
