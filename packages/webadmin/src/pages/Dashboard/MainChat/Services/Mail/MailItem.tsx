@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
 import { removeContentEditableAttr } from '@tebox/utils/lib';
 import { iMails } from 'store/api/apiTypes';
@@ -13,7 +14,9 @@ export const MailItem = ({ mail }: iProps) => {
         <div className={s.mailContainer} role="listitem">
             <p>
                 <span className={s.gray}> from: </span>
-                {mail.from}
+                <Link className={s.link} to={`mailto:${mail.from}`}>
+                    {mail.from}
+                </Link>
                 <span className={s.gray}> at: </span>
                 {new Date(mail.date).toLocaleDateString()}
             </p>
