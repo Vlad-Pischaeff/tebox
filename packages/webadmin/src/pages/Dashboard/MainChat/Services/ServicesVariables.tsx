@@ -5,7 +5,12 @@ import { Notes } from 'pages/Dashboard/MainChat/Services/Notes';
 import { Answers } from 'pages/Dashboard/MainChat/Services/Answers';
 
 export const MENU = [ "Todos", "Notes", "Mail", "Answers" ] as const;
+
 export type tServiceMenu = typeof MENU[number];
+
+type tSymbol = {
+    [key in tServiceMenu]: () => JSX.Element
+}
 
 export const BODY = [
     { name: MENU[0], render: () => <Todos /> },
@@ -14,11 +19,7 @@ export const BODY = [
     { name: MENU[3], render: () => <Answers /> },
 ];
 
-type iSymbol = {
-    [key in tServiceMenu]: () => JSX.Element
-}
-
-export const BODY_OBJ = BODY.reduce((next: iSymbol, val) => {
+export const BODY_OBJ = BODY.reduce((next: tSymbol, val) => {
     next[val.name] = val.render;
     return next;
-}, {} as iSymbol);
+}, {} as tSymbol);
