@@ -12,6 +12,19 @@
         "type": "git",
         "url": "https://github.com/vlad-pischaeff/tebox"
     },
+    "keywords": [
+        "react",
+        "jwt",
+        "typescript",
+        "serviceworker",
+        "websocket",
+        "monorepo",
+        "renewal",
+        "webcomponent",
+        "react-hook-form",
+        "redux-toolkit",
+        "rtk-query"
+    ],
     "workspaces": [
         "packages/*"
     ],
