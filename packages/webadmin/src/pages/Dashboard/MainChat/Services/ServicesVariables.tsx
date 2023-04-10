@@ -14,11 +14,11 @@ export const BODY = [
     { name: MENU[3], render: () => <Answers /> },
 ];
 
-interface iSymbol{
-    [name: string]: () => JSX.Element
+type iSymbol = {
+    [key in tServiceMenu]: () => JSX.Element
 }
 
 export const BODY_OBJ = BODY.reduce((next: iSymbol, val) => {
     next[val.name] = val.render;
     return next;
-}, {});
+}, {} as iSymbol);
