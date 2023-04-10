@@ -9,7 +9,7 @@ import { iNotes } from 'store/api/apiTypes';
 import * as ICONS from 'assets/icons';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HtmlHTMLAttributes<HTMLDetailsElement> {
+interface iProps {
     note: iNotes
 }
 

@@ -6,7 +6,7 @@ import * as ICON from 'assets/icons';
 import { iTodos } from 'store/api/apiTypes';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     todo: iTodos,
 }
 

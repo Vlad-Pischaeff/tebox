@@ -7,7 +7,7 @@ import * as ICONS from 'assets/icons';
 import { iNotes } from 'store/api/apiTypes';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     note: iNotes,
     closeMenu: (e: React.MouseEvent<HTMLDivElement>) => void,
 }

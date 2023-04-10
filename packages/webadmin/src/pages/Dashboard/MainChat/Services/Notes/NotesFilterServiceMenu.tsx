@@ -6,7 +6,7 @@ import { COLORS } from './NotesVariables';
 import * as ICONS from 'assets/icons';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     closeMenu: (e: React.MouseEvent<HTMLDivElement>) => void,
 }
 

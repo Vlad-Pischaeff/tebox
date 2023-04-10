@@ -5,7 +5,7 @@ import { removeContentEditableAttr } from '@tebox/utils/lib';
 import { iMails } from 'store/api/apiTypes';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
+interface iProps {
     mail: iMails
 }
 

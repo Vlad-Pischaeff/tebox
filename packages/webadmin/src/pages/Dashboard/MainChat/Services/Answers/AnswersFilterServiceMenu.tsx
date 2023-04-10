@@ -5,7 +5,7 @@ import { withHiddenMouseClickArea } from 'components/HOC';
 import { SYMBOLS } from './AnswersVariables';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     closeMenu: (e: React.MouseEvent<HTMLDivElement>) => void,
 }
 

@@ -5,7 +5,7 @@ import { iAnswers } from 'store/api/apiTypes';
 import { SYMBOLS } from './AnswersVariables';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     closeMenu: (e: React.MouseEvent<HTMLDivElement>) => void,
     answer: iAnswers
 }

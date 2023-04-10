@@ -11,7 +11,7 @@ import * as ICONS from 'assets/icons';
 import { SYMBOLS_OBJ } from './AnswersVariables';
 import s from '../Services.module.sass';
 
-interface iProps extends React.HtmlHTMLAttributes<HTMLDetailsElement> {
+interface iProps {
     answer: iAnswers
 }
 
