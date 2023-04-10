@@ -6,7 +6,6 @@ const controller = require('#s/controllers/mailsController')();
 const auth = require('#s/middleware/auth');
 
 mailsRouter.route('/mails')
-    .get(auth, controller.getMails)
     .post(auth, controller.getMails)
     .put(auth, controller.addMail);
 
