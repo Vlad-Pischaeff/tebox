@@ -9,7 +9,7 @@ import s from '../Services.module.sass';
 export const Mail = () => {
     const yourId = useAppSelector(selectYourId);
     const { data: mails } = useMailsQuery(yourId ?? skipToken);
-
+    console.log('mails...', mails)
     return (
         <>
             <div className={s.Main}>

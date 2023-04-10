@@ -1,4 +1,6 @@
 import React from 'react';
+import parse from 'html-react-parser';
+import { removeContentEditableAttr } from '@tebox/utils/lib';
 import { iMails } from 'store/api/apiTypes';
 import s from '../Services.module.sass';
 
@@ -15,7 +17,9 @@ export const MailItem = ({ mail }: iProps) => {
                 <span className={s.gray}> at: </span>
                 {new Date(mail.date).toLocaleDateString()}
             </p>
-            <p className={s.mailBody}>{mail.message}</p>
+            <div className={s.mailBody}>
+                { parse(removeContentEditableAttr(mail.message)) }
+            </div>
         </div>
     );
 };

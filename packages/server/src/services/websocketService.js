@@ -156,7 +156,7 @@ const DISPATCHER = {
         console.log('🔹 ws MSG_FROM_CLIENT to owner..', data);
     },
     async MAIL_FROM_CLIENT(ws, data) {
-        const { to, from, message } = data['MAIL_FROM_CLIENT'];
+        const { to, from } = data['MAIL_FROM_CLIENT'];
 
         const site = mappedHashSites[`$2a$10$${to}`];
 
@@ -169,7 +169,7 @@ const DISPATCHER = {
 
         // ✔️..send notification to site's owner and his team members
         recipients.forEach((recipient) => {
-            const MSG = DISPATCHER.msg('MAIL_FROM_CLIENT', recipient, from, message);
+            const MSG = DISPATCHER.msg('MAIL_FROM_CLIENT', recipient, from, newMail);
             let Socket = MAPS.getWS(recipient);     // ✔️..get WebSocket of recipient
             if (Socket) Socket.send(MSG);
         });

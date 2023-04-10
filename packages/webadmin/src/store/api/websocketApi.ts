@@ -54,7 +54,7 @@ export const websocketApi = createApi({
                     };
 
                     socket.onmessage = (message) => {
-                        const msg = JSON.parse(message.data) as iWebSocketMessage;
+                        const msg = JSON.parse(message.data) satisfies iWebSocketMessage;
                         console.log('💬 socket..', msg);
                         const [ key ] = Object.keys(msg);
 
@@ -82,7 +82,8 @@ export const websocketApi = createApi({
                                 'Mails',    // query endpoint
                                 yourId,
                                 (draftMails) => {
-                                    draftMails.push(msg[key] as iMails);
+                                    const mail = msg[key].message as iMails;
+                                    draftMails.push(mail);
                                 }
                             ));
                         }
