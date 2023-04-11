@@ -201,7 +201,7 @@ const DISPATCHER = {
         });
         console.log('🔹 ws MSG_FROM_CLIENT to owner..', data);
     },
-    async MAIL_FROM_CLIENT(ws, data) {
+    async MAIL_FROM_CLIENT(ws, data) {          // ✅
         const { to, from } = data['MAIL_FROM_CLIENT'];
 
         const site = mappedHashSites[`$2a$10$${to}`];
