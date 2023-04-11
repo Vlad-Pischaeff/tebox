@@ -32,6 +32,7 @@ module.exports = app => {
     app.use('/api', ROUTER.answersRouter);
     app.use('/api', ROUTER.websitesRouter);
     app.use('/api', ROUTER.uploadRouter);
+    app.use('/api', ROUTER.additionalRouter);
 
     if (isProduction) {
         app.use('/', express.static(path.join(__dirname, '../../..', 'dashboard', 'build')));
