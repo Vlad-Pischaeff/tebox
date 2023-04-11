@@ -6,6 +6,7 @@ const MailsService = require('#s/services/mailsService');
 
 let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
 let WebSockets = {};
+let numberOfUsersOnSite = {};
 const mapWsToClient = new WeakMap();
 
 
@@ -71,7 +72,7 @@ const HELPER = {
     },
     async getSiteOwnerProfile(hash) {
         const site = mappedHashSites[`$2a$10$${hash}`];
-        console.log('getSiteOwnerProfile...site...', site)
+        // console.log('getSiteOwnerProfile...site...', site, hash)
 
         if (site) {
             const ownerId = site.ownerId;
@@ -105,6 +106,40 @@ const MAPS = {
     getWS(id) {
         return WebSockets[id];
     },
+    /**
+     *
+     * Count online users on site
+     * numberOfUsersOnSite = { 'siteHash1': [ userId1, userId2.. ],
+     *                         'siteHash2': [ userId3, userId4.. ],
+     *                          ...
+     *                        }
+     * @param {string} siteHash
+     * @param {string} userId
+     */
+    addWebsiteUser(siteHash, userId) {
+        if (siteHash in numberOfUsersOnSite) {
+            let arr = numberOfUsersOnSite[siteHash];
+            numberOfUsersOnSite[siteHash] = [ ...arr, userId ];
+        } else {
+            numberOfUsersOnSite[siteHash] = [ userId ];
+        }
+    },
+    /**
+     *
+     * Remove user from numberOfUsersOnSite counter
+     * @param {string} userId
+     */
+    delWebsiteUser(userId) {
+        const sites = Object.keys(numberOfUsersOnSite);
+        sites.forEach(site => {
+            let arr = numberOfUsersOnSite[site];
+            arr = arr.filter(id => id !== userId);
+            numberOfUsersOnSite[site] = arr;
+        })
+    },
+    getWebsiteUsers(siteHash) {
+        return numberOfUsersOnSite[siteHash];
+    }
 };
 
 const DISPATCHER = {
@@ -112,6 +147,7 @@ const DISPATCHER = {
         const { to, from } = data['REGISTER_CLIENT'];
 
         MAPS.set(ws, from);
+        MAPS.addWebsiteUser(to, from);
 
         const owner = await HELPER.getSiteOwnerProfile(to);
 

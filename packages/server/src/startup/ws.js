@@ -24,7 +24,12 @@ module.exports = async (server) => {
             });
 
             ws.on('close', () => {
-                console.log('❌ WS connection closed...');
+                const id = MAPS.getID(ws);
+                if (id && 'ID' in id) {
+                    MAPS.delete(ws, id.ID);
+                    MAPS.delWebsiteUser(id.ID);
+                }
+                console.log(`❌ WS connection id=${JSON.stringify(id)} closed..`);
             });
         });
 
