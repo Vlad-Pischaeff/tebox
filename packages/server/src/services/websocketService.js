@@ -137,8 +137,18 @@ const MAPS = {
             numberOfUsersOnSite[site] = arr;
         })
     },
+    /**
+     *
+     * Get amount of online users
+     * @param {string} siteHash
+     * @returns number of online users
+     */
     getWebsiteUsers(siteHash) {
-        return numberOfUsersOnSite[siteHash];
+        if (siteHash in numberOfUsersOnSite) {
+            return numberOfUsersOnSite[siteHash].length;
+        } else {
+            return 0;
+        }
     }
 };
 
