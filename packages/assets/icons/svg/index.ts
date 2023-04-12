@@ -10,6 +10,9 @@ import oldking from './oldking.svg';
 import github from './github.svg';
 import chat from './chat.svg';
 import mail from './mail.svg';
+import Users from './users.svg';
+import Users2 from './users2.svg';
+import Users3 from './users3.svg';
 import Eye from './eye.svg';
 import EyeBlocked from './eye-blocked.svg';
 import Site from './site.svg';
@@ -29,5 +32,8 @@ export {
     mail,
     Eye,
     EyeBlocked,
-    Site
+    Site,
+    Users,
+    Users2,
+    Users3
 };
