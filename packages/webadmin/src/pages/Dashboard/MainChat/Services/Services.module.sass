@@ -233,6 +233,8 @@
     color: var(--C1)
     &:hover
         background: var(--color-HOVER)
+    &:hover .propertyIcon
+        visibility: visible
 .mailBody
     margin: 4px
     padding: 4px
@@ -241,6 +243,12 @@
     color: var(--C5)
     &:hover
         background: var(--color-HOVER)
+.mailHeader
+    display: flex
+    justify-content: space-between
+.propertyIcon
+    visibility: hidden
+
 .link
     color: var(--C1)
     &:hover
