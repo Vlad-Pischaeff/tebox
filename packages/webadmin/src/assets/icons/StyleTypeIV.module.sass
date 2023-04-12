@@ -1,0 +1,23 @@
+.svg
+    width: 2.5rem
+    height: 2.5rem
+    border-radius: 50%
+    border: 2px solid var(--C2)
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 6px
+    margin-right: 4px
+    &:hover
+        cursor: pointer
+        background: var(--C2)
+    &:hover .body
+        fill: var(--C4)
+
+.body
+    fill: var(--C5)
+
+.active
+    background: var(--C5)
+    & .body
+        fill: var(--C2)

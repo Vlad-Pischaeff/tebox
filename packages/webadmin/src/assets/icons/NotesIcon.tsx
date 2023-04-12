@@ -1,15 +1,13 @@
 import React from 'react';
-import s from './StyleTypeO.module.sass';
+import s from './StyleTypeIV.module.sass';
 
 export const NotesIcon = ({ active }: { active: boolean}) => (
     <div className={`${s.svg} ${active ? s.active : ''}`}>
-        <svg className={s.fillStyle} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-            <g id="x0020_2">
-                <polygon className={`${s.strokeStyle} ${active ? s.active : ''}`} points="442,100 830,100 830,900 170,900 170,364 "/>
-                <polyline className={`${s.strokeStyle} ${active ? s.active : ''}`} points="442,100 442,364 172,364 "/>
-                <line className={`${s.strokeStyle} ${active ? s.active : ''}`} x1="588" y1="285" x2="680" y2="285" />
-                <line className={`${s.strokeStyle} ${active ? s.active : ''}`} x1="294" y1="513" x2="680" y2="513" />
-                <line className={`${s.strokeStyle} ${active ? s.active : ''}`} x1="294" y1="683" x2="680" y2="683" />
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0,0,256,256">
+            <g className={s.body}>
+                <g transform="scale(5.12,5.12)">
+                    <path d="M7,2v46h36v-33.40625l-0.28125,-0.3125l-12,-12l-0.3125,-0.28125zM9,4h20v12h12v30h-32zM31,5.4375l8.5625,8.5625h-8.5625zM15,22v2h20v-2zM15,28v2h16v-2zM15,34v2h20v-2z"></path>
+                </g>
             </g>
         </svg>
     </div>

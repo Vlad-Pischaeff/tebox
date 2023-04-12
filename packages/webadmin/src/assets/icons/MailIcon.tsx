@@ -1,14 +1,13 @@
 import React from 'react';
-import s from './StyleTypeO.module.sass';
+import s from './StyleTypeIV.module.sass';
 
 export const MailIcon = ({ active }: { active: boolean}) => (
     <div className={`${s.svg} ${active ? s.active : ''}`}>
-        <svg className={s.fillStyle} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-            <g id="x0020_3">
-                <polygon className={`${s.strokeStyle} ${active ? s.active : ''}`} points="900,830 100,830 100,170 900,170 "/>
-                <polyline className={`${s.strokeStyle} ${active ? s.active : ''}`} points="900,170 500,540.47 100,170 "/>
-                <line className={`${s.strokeStyle} ${active ? s.active : ''}`} x1="100" y1="830" x2="442" y2= "488" />
-                <line className={`${s.strokeStyle} ${active ? s.active : ''}`} x1="900" y1="830" x2="557" y2= "487" />
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0,0,256,256">
+            <g className={s.body}>
+                <g transform="scale(5.12,5.12)">
+                    <path d="M0,7v36h50v-36zM2,9h46v2.5c-0.39062,0.33984 -17.92578,15.63672 -19.5625,17.0625l-0.09375,0.09375c-1.29687,1.12891 -2.625,1.34375 -3.34375,1.34375c-0.71484,0 -2.04687,-0.21484 -3.34375,-1.34375c-0.37109,-0.32422 -3.04297,-2.63281 -4.96875,-4.3125c-5.71484,-4.98437 -14.39453,-12.58594 -14.6875,-12.84375zM2,14.15625c1.73438,1.51172 7.88672,6.86719 13.125,11.4375l-13.125,10.375zM48,14.15625v21.8125l-13.125,-10.375c5.23828,-4.57031 11.39063,-9.92578 13.125,-11.4375zM16.65625,26.9375c1.21484,1.05859 3.41016,2.97656 3.6875,3.21875l0.03125,0.03125c1.69141,1.45313 3.48828,1.8125 4.625,1.8125c1.14453,0 2.95703,-0.36328 4.65625,-1.84375c0.28125,-0.24219 2.49219,-2.14844 3.71875,-3.21875l14.625,11.5625v2.5h-46v-2.5z"></path>
+                </g>
             </g>
         </svg>
     </div>
