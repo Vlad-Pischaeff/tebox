@@ -8,7 +8,7 @@ const auth = require('#s/middleware/auth');
 additionalRouter.route('/extra/:id')
     .get(auth, controller.getOnlineUsersNumber)
 
-additionalRouter.route('/mngsites/:id')
+additionalRouter.route('/mngsites')
     .get(auth, controller.getMonitoredWebsites)
 
 module.exports = additionalRouter;

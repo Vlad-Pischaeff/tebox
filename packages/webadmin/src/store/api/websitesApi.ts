@@ -20,6 +20,11 @@ export const websitesApi = createApi({
             providesTags: ['Websites'],
             transformResponse: (response: iWebsites[]) => response.map((site) => site.hash),
         }),
+        getMonitoredWebsites: builder.query<string[], void>({
+            query: () => ({
+                url: `mngsites`
+            }),
+        }),
         getWebsite: builder.query({
             query: (id) => ({
                 url: `websites/${id}`
@@ -55,6 +60,7 @@ export const websitesApi = createApi({
 export const {
     useWebsitesQuery,
     useLazyWebsitesQuery,
+    useGetMonitoredWebsitesQuery,
     useWebsitesHashQuery,
     useGetWebsiteQuery,
     useLazyGetWebsiteQuery,

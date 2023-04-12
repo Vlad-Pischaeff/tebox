@@ -4,7 +4,7 @@ const { MAPS, HELPER } = require('#s/services/websocketService');
 
 const additionalController = () => {
     /** ******************************************
-     * get number of users on site - host/api/extra
+     * get number of users on site - host/api/extra/:key
      * @param {string} key - site KEY (HASH)
      ****************************************** */
     const getOnlineUsersNumber = async (req, res) => {
@@ -23,7 +23,8 @@ const additionalController = () => {
      ****************************************** */
     const getMonitoredWebsites = async (req, res) => {
         try {
-            const { id } = req.params;
+            const { id } = req;     // ..only if user is authorized
+
             const websites = await HELPER.getSitesToWhichManagersSubscribe(id);
 
             res.status(201).json(websites);

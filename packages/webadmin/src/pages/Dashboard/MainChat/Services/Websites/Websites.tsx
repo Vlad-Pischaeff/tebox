@@ -1,17 +1,12 @@
 import React from 'react';
-// import { useAppDispatch } from 'store/hook';
-// import { setServicesModal, eModal } from 'store/slices/ui';
-// import { TodosMain } from './TodosMain';
-// import { TodosModals } from './TodosModals';
+import { useWebsitesQuery, useGetMonitoredWebsitesQuery } from 'store/api/websitesApi';
 import s from '../Services.module.sass';
 
-
 export const Websites = () => {
-    // const dispatch = useAppDispatch();
+    const { data: monitoredSites } = useGetMonitoredWebsitesQuery();
+    const { data: ownSites } = useWebsitesQuery();
 
-    // const openModal = () => {
-    //     dispatch(setServicesModal(eModal.todo));
-    // }
+    console.log('data..', monitoredSites, ownSites)
 
     return (
         <>
