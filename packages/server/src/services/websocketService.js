@@ -4,9 +4,10 @@ const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
 const MailsService = require('#s/services/mailsService');
 
-let mappedSites = {}, mappedHashSites = {}, mappedUsers = {};
+let mappedSites = {}, mappedHashSites = {}, mappedUsers = [];
 let WebSockets = {};
 let numberOfUsersOnSite = {};
+let sitesToWhichManagersSubscribe = {};
 const mapWsToClient = new WeakMap();
 
 
@@ -41,6 +42,12 @@ const HELPER = {
                 return summary;
             }, []);
 
+            sitesToWhichManagersSubscribe = mappedUsers.reduce((summary, item) => {
+                const key = item.member.toString();
+                summary[key] = item.sites;
+                return summary;
+            }, {});
+
             mappedUsers.forEach((item) => {
                 if (item.sites.lenght !== 0) {
                     item.sites.forEach((site) => {
@@ -54,7 +61,8 @@ const HELPER = {
                     })
                 }
             });
-            // console.log('✅ mappedUsers..', mappedUsers, users)
+            // console.log('✅ mappedUsers..', mappedUsers)
+            // console.log('✅ sitesToWhichManagersSubscribe..', sitesToWhichManagersSubscribe)
             // console.log('✅ mappedSites..', mappedSites)
             // console.log('✅ mappedHashSites..', mappedHashSites)
         } catch(e) {
@@ -69,6 +77,13 @@ const HELPER = {
     },
     getMappedUsers() {
         return mappedUsers;
+    },
+    getSitesToWhichManagersSubscribe(id) {
+        if (id in sitesToWhichManagersSubscribe) {
+            return sitesToWhichManagersSubscribe[id];
+        } else {
+            return [];
+        }
     },
     async getSiteOwnerProfile(hash) {
         const site = mappedHashSites[`$2a$10$${hash}`];

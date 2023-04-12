@@ -1,6 +1,6 @@
 'use strict';
 
-const { MAPS } = require('#s/services/websocketService');
+const { MAPS, HELPER } = require('#s/services/websocketService');
 
 const additionalController = () => {
     /** ******************************************
@@ -17,9 +17,23 @@ const additionalController = () => {
             res.status(500).json({ message: `Get online users error, details... ${e.message}` });
         }
     };
+    /** ******************************************
+     * get all monitored websites of manager - host/api/mngsites
+     * @param {string} id - manager ID
+     ****************************************** */
+    const getMonitoredWebsites = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const websites = await HELPER.getSitesToWhichManagersSubscribe(id);
 
+            res.status(201).json(websites);
+        } catch (e) {
+            res.status(500).json({ message: `Get monitored websites error, details... ${e.message}` });
+        }
+    };
     return {
         getOnlineUsersNumber,
+        getMonitoredWebsites
     };
 };
 

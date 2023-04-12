@@ -1,7 +1,6 @@
 'use strict';
 
 const Websites = require('#s/models/websites');
-const Users = require('#s/models/users');
 const WebsitesService = require('#s/services/websitesService');
 
 const websitesController = () => {
