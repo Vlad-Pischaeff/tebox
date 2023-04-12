@@ -2,6 +2,7 @@ export { TodosIcon } from './TodosIcon';
 export { NotesIcon } from './NotesIcon';
 export { MailIcon } from './MailIcon';
 export { ChatIcon } from './ChatIcon';
+export { WebsiteIcon } from './WebsiteIcon';
 export { TrashIcon } from './TrashIcon';
 export { EditIcon } from './EditIcon';
 export { LabelIcon } from './LabelIcon';

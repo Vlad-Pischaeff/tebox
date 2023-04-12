@@ -14,6 +14,7 @@ export const ServicesHeader = () => {
         { name: MENU[1], render: () => <ICON.NotesIcon active={services === MENU[1]} />},
         { name: MENU[2], render: () => <ICON.MailIcon active={services === MENU[2]} />},
         { name: MENU[3], render: () => <ICON.ChatIcon active={services === MENU[3]} />},
+        { name: MENU[4], render: () => <ICON.WebsiteIcon active={services === MENU[4]} />},
     ]), [services]);
 
     const handlerClick = (name: tServiceMenu) => {
