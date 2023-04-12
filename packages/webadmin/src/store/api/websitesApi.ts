@@ -7,7 +7,7 @@ export const websitesApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Websites'],
     endpoints: (builder) => ({
-        Websites: builder.query<iWebsites[], string>({
+        Websites: builder.query<iWebsites[], void>({
             query: () => ({
                 url: 'websites'
             }),
