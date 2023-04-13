@@ -25,6 +25,12 @@ export const websitesApi = createApi({
                 url: `mngsites`
             }),
         }),
+        getOnlineUsersNumber: builder.query<number[], string>({
+            query: (hash) => ({
+                url: `usrnumbers`,
+                params: { hash }
+            }),
+        }),
         getWebsite: builder.query({
             query: (id) => ({
                 url: `websites/${id}`
@@ -62,6 +68,7 @@ export const {
     useLazyWebsitesQuery,
     useGetMonitoredWebsitesQuery,
     useWebsitesHashQuery,
+    useGetOnlineUsersNumberQuery,
     useGetWebsiteQuery,
     useLazyGetWebsiteQuery,
     useAddWebsiteMutation,

@@ -5,7 +5,7 @@ const additionalRouter = express.Router();
 const controller = require('#s/controllers/additionalController')();
 const auth = require('#s/middleware/auth');
 
-additionalRouter.route('/extra/:id')
+additionalRouter.route('/usrnumbers')
     .get(auth, controller.getOnlineUsersNumber)
 
 additionalRouter.route('/mngsites')

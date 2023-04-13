@@ -4,13 +4,14 @@ const { MAPS, HELPER } = require('#s/services/websocketService');
 
 const additionalController = () => {
     /** ******************************************
-     * get number of users on site - host/api/extra/:key
-     * @param {string} key - site KEY (HASH)
+     * get number of users on site - host/api/usrnumbers?hash=siteHash
+     * @param {string} key - site HASH
      ****************************************** */
     const getOnlineUsersNumber = async (req, res) => {
         try {
-            const { key } = req.params;
-            const number = MAPS.getOnlineUsersNumber(key);
+            const { hash } = req.query;
+
+            const number = MAPS.getWebsiteUsers(hash);
 
             res.status(201).json(number);
         } catch (e) {
