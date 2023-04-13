@@ -48,6 +48,8 @@ export interface iWebsites {
     site: string,
     key: string,
     hash: string,
+    onlineUsers: string[],
+    onlineUsersCounter: number
 }
 
 export interface iMessage {

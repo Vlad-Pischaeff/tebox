@@ -40,6 +40,7 @@ const websitesController = () => {
     const addWebsite = async (req, res) => {
         try {
             const { site, key, hash } = req.body;
+
             const website = await Websites.create({ user: req.id, site, key, hash });
 
             res.status(201).json({ website });

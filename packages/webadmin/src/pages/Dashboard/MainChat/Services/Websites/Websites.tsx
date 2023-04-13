@@ -8,7 +8,7 @@ export const Websites = () => {
     const { data: monitoredSites } = useGetMonitoredWebsitesQuery();
     const { data: ownSites } = useWebsitesQuery();
 
-    console.log('data..', monitoredSites, ownSites)
+    // console.log('data..', monitoredSites, ownSites)
 
     return (
         <>

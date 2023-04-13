@@ -23,6 +23,12 @@ const schema = new Schema({
     onlineUsers: {
         type: [String],
         default: []
+    },
+    onlineUsersCounter: {
+        type: Number,
+        default: function() {
+            return this.onlineUsers.length
+        }
     }
 });
 

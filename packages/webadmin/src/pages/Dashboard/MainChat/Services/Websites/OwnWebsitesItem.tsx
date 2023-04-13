@@ -34,6 +34,7 @@ export const OwnWebsitesItem = ({ item }: iProps) => {
             />
             <p className={s.PropertyUsersCounter}>
                 {usersCount}
+                {item.onlineUsersCounter}
             </p>
         </div>
     );
