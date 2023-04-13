@@ -54,28 +54,22 @@ class WebsitesService {
     }
     /**
      *
-     * Count online users on site
-     * numberOfUsersOnSite = { 'siteHash1': [ userId1, userId2.. ],
-     *                         'siteHash2': [ userId3, userId4.. ],
-     *                          ...
-     *                        }
+     * Add online users on site
      * @param {string} siteHash
      * @param {string} userId
      */
     async addWebsiteUser(siteHash, userId) {
-        // ✅ add user to website
         await Websites.updateOne(
             { hash: `$2a$10$${siteHash}` },
             { $push: { "onlineUsers": userId } });
     }
     /**
      *
-     * Remove user from numberOfUsersOnSite counter
+     * Remove user from onlineUsers
      * @param {string} siteHash
      * @param {string} userId
      */
     async delWebsiteUser(siteHash, userId) {
-        // ✅ del user from website
         await Websites.updateOne(
             { hash: `$2a$10$${siteHash}` },
             { $pull: { "onlineUsers": userId } });
