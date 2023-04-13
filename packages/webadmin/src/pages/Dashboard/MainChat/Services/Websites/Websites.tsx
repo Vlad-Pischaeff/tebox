@@ -1,6 +1,7 @@
 import React from 'react';
 import { useWebsitesQuery, useGetMonitoredWebsitesQuery } from 'store/api/websitesApi';
-import { OwnWebsitesItem } from './OwnWebsiteItem';
+import { OwnWebsitesItem } from './OwnWebsitesItem';
+import { MonitoredWebsitesItem } from './MonitoredWebsitesItem';
 import s from '../Services.module.sass';
 
 export const Websites = () => {
@@ -21,6 +22,13 @@ export const Websites = () => {
                     ownSites.map(item => (
                         <div key={item.id}>
                             <OwnWebsitesItem item={item} />
+                        </div>
+                    ))
+                }
+                { monitoredSites && monitoredSites?.length !== 0 &&
+                    monitoredSites.map(siteId => (
+                        <div key={siteId}>
+                            <MonitoredWebsitesItem siteId={siteId} />
                         </div>
                     ))
                 }

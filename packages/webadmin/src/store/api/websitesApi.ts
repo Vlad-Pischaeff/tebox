@@ -31,7 +31,7 @@ export const websitesApi = createApi({
                 params: { hash }
             }),
         }),
-        getWebsite: builder.query({
+        getWebsite: builder.query<iWebsites, string>({
             query: (id) => ({
                 url: `websites/${id}`
             }),

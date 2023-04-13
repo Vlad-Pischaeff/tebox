@@ -19,6 +19,10 @@ const schema = new Schema({
     hash: {
         type: String,
         required: true
+    },
+    onlineUsers: {
+        type: [String],
+        default: []
     }
 });
 

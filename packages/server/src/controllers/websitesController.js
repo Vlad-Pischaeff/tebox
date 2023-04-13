@@ -25,9 +25,11 @@ const websitesController = () => {
     const getWebsite = async (req, res) => {
         try {
             const { id } = req.params;
-            const website = await Websites.findOne({ _id: id, user: req.id });
 
-            res.status(201).json(website);
+            if (id) {
+                const website = await Websites.findOne({ _id: id });
+                res.status(201).json(website);
+            }
         } catch (e) {
             res.status(500).json({ message: `Get website error, details... ${e.message}` });
         }
