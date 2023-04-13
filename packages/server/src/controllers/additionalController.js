@@ -7,17 +7,17 @@ const additionalController = () => {
      * get number of users on site - host/api/usrnumbers?hash=siteHash
      * @param {string} key - site HASH
      ****************************************** */
-    const getOnlineUsersNumber = async (req, res) => {
-        try {
-            const { hash } = req.query;
+    // const getOnlineUsersNumber = async (req, res) => {
+    //     try {
+    //         const { hash } = req.query;
 
-            const number = MAPS.getWebsiteUsers(hash);
+    //         const number = MAPS.getWebsiteUsers(hash);
 
-            res.status(201).json(number);
-        } catch (e) {
-            res.status(500).json({ message: `Get online users error, details... ${e.message}` });
-        }
-    };
+    //         res.status(201).json(number);
+    //     } catch (e) {
+    //         res.status(500).json({ message: `Get online users error, details... ${e.message}` });
+    //     }
+    // };
     /** ******************************************
      * get all monitored websites of manager - host/api/mngsites
      * @param {string} id - manager ID
@@ -34,7 +34,7 @@ const additionalController = () => {
         }
     };
     return {
-        getOnlineUsersNumber,
+        // getOnlineUsersNumber,
         getMonitoredWebsites
     };
 };

@@ -1,6 +1,7 @@
 'use strict';
 
 const WebSocket = require('ws');
+const WebsitesService = require('#s/services/WebsitesService');
 const { DISPATCHER, MAPS } = require('#s/services/websocketService');
 
 module.exports = async (server) => {
@@ -27,7 +28,7 @@ module.exports = async (server) => {
                 const id = MAPS.getID(ws);
                 if (id && 'ID' in id) {
                     MAPS.delete(ws, id.ID);
-                    MAPS.delWebsiteUser(id.ID);
+                    WebsitesService.delWebsiteUser(id.HASH, id.ID);
                 }
                 console.log(`❌ WS connection id=${JSON.stringify(id)} closed..`);
             });

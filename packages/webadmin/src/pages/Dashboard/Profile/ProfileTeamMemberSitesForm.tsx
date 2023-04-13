@@ -18,7 +18,7 @@ const Form = () => {
     const member = useAppSelector(selectUIState('editedMember'));
     const yourId = useAppSelector(selectYourId);
     const { data: owner } = useGetUserQuery(yourId, { skip: !yourId });
-    const { data: sites } = useWebsitesQuery();
+    const { data: sites } = useWebsitesQuery('');
     const [ updWebsites ] = useUpdateTeamMemberWebsitesMutation();
     const { setValue, register, resetField, handleSubmit } = useForm<tFormInputs>();
 

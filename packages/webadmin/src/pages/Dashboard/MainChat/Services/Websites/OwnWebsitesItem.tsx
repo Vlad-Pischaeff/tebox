@@ -1,5 +1,4 @@
 import React from 'react';
-import { useGetOnlineUsersNumberQuery } from 'store/api/websitesApi';
 import { iWebsites } from 'store/api/apiTypes';
 import { Icons } from '@tebox/assets';
 import s from '../Services.module.sass';
@@ -9,10 +8,6 @@ interface iProps {
 }
 
 export const OwnWebsitesItem = ({ item }: iProps) => {
-    const { data: usersCount } = useGetOnlineUsersNumberQuery(item.hash.substring(7),
-        {
-            pollingInterval: 30000,
-        });
 
     return (
         <div key={item.key} className={s.PropertyContainer} role="listitem">
@@ -33,7 +28,6 @@ export const OwnWebsitesItem = ({ item }: iProps) => {
                 alt="users"
             />
             <p className={s.PropertyUsersCounter}>
-                {usersCount}
                 {item.onlineUsersCounter}
             </p>
         </div>

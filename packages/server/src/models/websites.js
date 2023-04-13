@@ -24,12 +24,11 @@ const schema = new Schema({
         type: [String],
         default: []
     },
-    onlineUsersCounter: {
-        type: Number,
-        default: function() {
-            return this.onlineUsers.length
-        }
-    }
+});
+
+schema.virtual('onlineUsersCounter')
+    .get(function() {
+        return this.onlineUsers.length;
 });
 
 module.exports = model('Websites', schema);

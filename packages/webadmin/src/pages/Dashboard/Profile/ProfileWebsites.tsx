@@ -7,7 +7,7 @@ import s from './Profile.module.sass';
 
 export const ProfileWebsites = () => {
     const dispatch = useAppDispatch();
-    const { data, isSuccess, isLoading } = useWebsitesQuery();
+    const { data, isSuccess, isLoading } = useWebsitesQuery('');
 
     const openModalAddSite = () => {
         dispatch(setServicesModal(eModal.addSite));

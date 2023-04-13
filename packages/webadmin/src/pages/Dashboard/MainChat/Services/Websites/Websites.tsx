@@ -6,7 +6,9 @@ import s from '../Services.module.sass';
 
 export const Websites = () => {
     const { data: monitoredSites } = useGetMonitoredWebsitesQuery();
-    const { data: ownSites } = useWebsitesQuery();
+    const { data: ownSites } = useWebsitesQuery('',{
+        pollingInterval: 30000,
+    });
 
     // console.log('data..', monitoredSites, ownSites)
 

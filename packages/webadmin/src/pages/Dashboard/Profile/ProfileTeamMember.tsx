@@ -13,7 +13,7 @@ interface iProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const ProfileTeamMember = ({ user }: iProps ) => {
     const dispatch = useAppDispatch();
-    const { data: sites } = useWebsitesQuery();
+    const { data: sites } = useWebsitesQuery('');
     const { data: member } = useGetUserQuery(user.member, { skip: !user.member });
     const [ removeUser ] = useRemoveUserTeamMembersMutation();
 

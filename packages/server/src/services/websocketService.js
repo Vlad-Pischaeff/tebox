@@ -3,6 +3,7 @@
 const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
 const MailsService = require('#s/services/mailsService');
+const WebsitesService = require('#s/services/WebsitesService');
 
 let mappedSites = {}, mappedHashSites = {}, mappedUsers = [];
 let WebSockets = {};
@@ -104,15 +105,15 @@ const HELPER = {
 };
 
 const MAPS = {
-    set(ws, id) {
+    set(ws, id, hash = '') {
         ws.id = id;
-        const obj = { 'ID': id };
+        const obj = { 'ID': id, 'HASH': hash };
         mapWsToClient.set(ws, obj);
         WebSockets = { ...WebSockets, [id]: ws };
     },
     delete(ws, id) {
-        const obj = { 'ID': id };
-        mapWsToClient.delete(ws, obj);
+        // const obj = { 'ID': id };
+        mapWsToClient.delete(ws);
         delete WebSockets[id];
     },
     getID(ws) {
@@ -121,58 +122,59 @@ const MAPS = {
     getWS(id) {
         return WebSockets[id];
     },
-    /**
-     *
-     * Count online users on site
-     * numberOfUsersOnSite = { 'siteHash1': [ userId1, userId2.. ],
-     *                         'siteHash2': [ userId3, userId4.. ],
-     *                          ...
-     *                        }
-     * @param {string} siteHash
-     * @param {string} userId
-     */
-    addWebsiteUser(siteHash, userId) {
-        if (siteHash in numberOfUsersOnSite) {
-            let arr = numberOfUsersOnSite[siteHash];
-            numberOfUsersOnSite[siteHash] = [ ...arr, userId ];
-        } else {
-            numberOfUsersOnSite[siteHash] = [ userId ];
-        }
-    },
-    /**
-     *
-     * Remove user from numberOfUsersOnSite counter
-     * @param {string} userId
-     */
-    delWebsiteUser(userId) {
-        const sites = Object.keys(numberOfUsersOnSite);
-        sites.forEach(site => {
-            let arr = numberOfUsersOnSite[site];
-            arr = arr.filter(id => id !== userId);
-            numberOfUsersOnSite[site] = arr;
-        })
-    },
-    /**
-     *
-     * Get amount of online users
-     * @param {string} siteHash
-     * @returns number of online users
-     */
-    getWebsiteUsers(siteHash) {
-        if (siteHash in numberOfUsersOnSite) {
-            return numberOfUsersOnSite[siteHash].length;
-        } else {
-            return 0;
-        }
-    }
+    // /**
+    //  *
+    //  * Count online users on site
+    //  * numberOfUsersOnSite = { 'siteHash1': [ userId1, userId2.. ],
+    //  *                         'siteHash2': [ userId3, userId4.. ],
+    //  *                          ...
+    //  *                        }
+    //  * @param {string} siteHash
+    //  * @param {string} userId
+    //  */
+    // addWebsiteUser(siteHash, userId) {
+    //     if (siteHash in numberOfUsersOnSite) {
+    //         let arr = numberOfUsersOnSite[siteHash];
+    //         numberOfUsersOnSite[siteHash] = [ ...arr, userId ];
+    //     } else {
+    //         numberOfUsersOnSite[siteHash] = [ userId ];
+    //     }
+    // },
+    // /**
+    //  *
+    //  * Remove user from numberOfUsersOnSite counter
+    //  * @param {string} userId
+    //  */
+    // delWebsiteUser(userId) {
+    //     const sites = Object.keys(numberOfUsersOnSite);
+    //     sites.forEach(site => {
+    //         let arr = numberOfUsersOnSite[site];
+    //         arr = arr.filter(id => id !== userId);
+    //         numberOfUsersOnSite[site] = arr;
+    //     })
+    // },
+    // /**
+    //  *
+    //  * Get amount of online users
+    //  * @param {string} siteHash
+    //  * @returns number of online users
+    //  */
+    // getWebsiteUsers(siteHash) {
+    //     if (siteHash in numberOfUsersOnSite) {
+    //         return numberOfUsersOnSite[siteHash].length;
+    //     } else {
+    //         return 0;
+    //     }
+    // }
 };
 
 const DISPATCHER = {
     async REGISTER_CLIENT(ws, data) {           // ✅
         const { to, from } = data['REGISTER_CLIENT'];
-
-        MAPS.set(ws, from);
-        MAPS.addWebsiteUser(to, from);
+        // console.log('to..', to)
+        MAPS.set(ws, from, to);
+        // MAPS.addWebsiteUser(to, from);
+        await WebsitesService.addWebsiteUser(to, from);
 
         const owner = await HELPER.getSiteOwnerProfile(to);
 
@@ -238,7 +240,8 @@ const DISPATCHER = {
     },
     MANAGER_IS_ONLINE(ws, data) {
         console.log('🔹 ws MANAGER_IS_ONLINE..', data);
-        MAPS.set(ws, data['MANAGER_IS_ONLINE'].from);
+        const { from , to } = data['MANAGER_IS_ONLINE'];
+        MAPS.set(ws, from, to);
     },
     MANAGER_IS_OFFLINE(ws, data) {
         console.log('🔹 ws MANAGER_IS_OFFLINE..', data);

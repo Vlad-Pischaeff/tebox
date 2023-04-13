@@ -7,7 +7,7 @@ export const websitesApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Websites'],
     endpoints: (builder) => ({
-        Websites: builder.query<iWebsites[], void>({
+        Websites: builder.query<iWebsites[], string>({
             query: () => ({
                 url: 'websites'
             }),
@@ -25,12 +25,12 @@ export const websitesApi = createApi({
                 url: `mngsites`
             }),
         }),
-        getOnlineUsersNumber: builder.query<number[], string>({
-            query: (hash) => ({
-                url: `usrnumbers`,
-                params: { hash }
-            }),
-        }),
+        // getOnlineUsersNumber: builder.query<number[], string>({
+        //     query: (hash) => ({
+        //         url: `usrnumbers`,
+        //         params: { hash }
+        //     }),
+        // }),
         getWebsite: builder.query<iWebsites, string>({
             query: (id) => ({
                 url: `websites/${id}`
@@ -68,7 +68,7 @@ export const {
     useLazyWebsitesQuery,
     useGetMonitoredWebsitesQuery,
     useWebsitesHashQuery,
-    useGetOnlineUsersNumberQuery,
+    // useGetOnlineUsersNumberQuery,
     useGetWebsiteQuery,
     useLazyGetWebsiteQuery,
     useAddWebsiteMutation,

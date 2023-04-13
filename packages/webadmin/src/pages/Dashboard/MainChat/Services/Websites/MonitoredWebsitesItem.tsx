@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGetOnlineUsersNumberQuery, useGetWebsiteQuery } from 'store/api/websitesApi';
+import { useGetWebsiteQuery } from 'store/api/websitesApi';
 import { Icons } from '@tebox/assets';
 import s from '../Services.module.sass';
 
@@ -8,14 +8,12 @@ interface iProps {
 }
 
 export const MonitoredWebsitesItem = ({ siteId }: iProps) => {
-    const { data: site } = useGetWebsiteQuery(siteId);
-    const { data: usersCount } = useGetOnlineUsersNumberQuery(
-                                    site ? site?.hash.substring(7) : '',
-                                    {
-                                        pollingInterval: 30000,
-                                    }
-                                );
-    console.log('site...', site?.onlineUsers, site?.onlineUsersCounter)
+    const { data: site } = useGetWebsiteQuery(siteId, {
+        pollingInterval: 30000,
+    });
+
+    // console.log('site...', site?.onlineUsers, site?.onlineUsersCounter)
+
     return (
         <>
             { !!site &&
@@ -37,8 +35,8 @@ export const MonitoredWebsitesItem = ({ siteId }: iProps) => {
                         alt="users"
                     />
                     <p className={s.PropertyUsersCounter}>
-                        {usersCount}
-                        {/* 1 */}
+                        {/* {usersCount} */}
+                        {site.onlineUsersCounter}
                     </p>
                 </div>
             }
