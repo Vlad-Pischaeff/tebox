@@ -70,6 +70,14 @@ class WebsitesService {
             { hash: `$2a$10$${siteHash}` },
             { $pull: { "onlineUsers": userId } });
     }
+    /**
+     *
+     * Get site on which user loged in
+     * @param {string} userId
+     */
+    async getWebsiteUserLogedIn(userId) {
+        return await Websites.findOne({ onlineUsers: userId });
+    }
 }
 
 module.exports = new WebsitesService();

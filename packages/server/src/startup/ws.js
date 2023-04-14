@@ -39,7 +39,7 @@ module.exports = async (server) => {
                 console.log('🔹 ws heartbeat..', ws.id);
                 ws.isAlive = false;
                 ws.ping();
-                DISPATCHER.MSG_FROM_SERVER(ws, 'test message');
+                // DISPATCHER.MSG_FROM_SERVER(ws, 'test message');
             });
         }, 29661);
 

@@ -14,7 +14,7 @@ export const ChatMessages = () => {
     const chat = (data && selectedUserId)
         ?   data[selectedUserId].msgs
         :   [];
-
+    console.log('ChatMessages..', data)
     const GROUPED = groupObjectsInArray(chat, 'from');
 
     return (

@@ -150,15 +150,30 @@ const DISPATCHER = {
             console.log('🔹 ws REGISTER_CLIENT FAILED..❌');
         }
     },
-    MSG_FROM_MANAGER(_, data) {                 // ✅
-        const { to } = data['MSG_FROM_MANAGER'];
+    async MSG_FROM_MANAGER(_, data) {                 // ✅
+        const { to, from, message } = data['MSG_FROM_MANAGER'];
 
         let Socket = MAPS.getWS(to);                    // ..get WebSocket of client
         if (Socket) Socket.send(JSON.stringify(data));  // ..retransmit message to client
 
         // 💡🚩 TODO add retransmit message to other managers of this site
+        const site = await WebsitesService.getWebsiteUserLogedIn(to);
 
-        console.log('🔹 ws MSG_FROM_MANAGER..');
+        const siteHashMap = HELPER.getMappedHashSite(site.hash.substring(7));
+
+        const { ownerId, teamUserIds } = siteHashMap;
+        const recipients = [ ownerId, ...teamUserIds ];
+
+        // ✔️..send message to other site's managers exclude sender
+        recipients.forEach((recipient) => {
+            if ( recipient !== from ) {
+                const MSG = DISPATCHER.msg('MSG_FROM_MANAGER', to, recipient, message);
+                let Socket = MAPS.getWS(recipient);     // ✔️..get WebSocket of recipient
+                if (Socket) Socket.send(MSG);
+            }
+        });
+
+        console.log('🔹 ws MSG_FROM_MANAGER..', data['MSG_FROM_MANAGER'], site);
     },
     MSG_FROM_SERVER(ws, data) {                 // ✅
         if (ws.id !== 'server') {

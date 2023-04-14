@@ -36,7 +36,8 @@ export const websocketApi = createApi({
                 try {
                     await cacheDataLoaded;
 
-                    const yourId = (getState() as RootState).auth.id;
+                    const state = (getState() as RootState).auth;
+                    const { id: yourId, selectedtUserID } = state;
 
                     socket = getSocket();
 
@@ -66,7 +67,22 @@ export const websocketApi = createApi({
 
                                 if (idx in draft) {
                                     // обновляем счетчик, если пользователь на выбран
-                                    const selectedtUserID = (getState() as RootState).auth.selectedtUserID;
+                                    (idx !== selectedtUserID) && draft[idx].cnt++;
+                                } else {
+                                    draft[idx] = { 'msgs': [], 'cnt': 1 };
+                                }
+
+                                draft[idx].msgs.push(msg[key]);
+                            });
+                        }
+
+                        if (key === 'MSG_FROM_MANAGER') {
+
+                            updateCachedData((draft) => {
+                                const idx = msg[key].to;
+
+                                if (idx in draft) {
+                                    // обновляем счетчик, если пользователь на выбран
                                     (idx !== selectedtUserID) && draft[idx].cnt++;
                                 } else {
                                     draft[idx] = { 'msgs': [], 'cnt': 1 };
