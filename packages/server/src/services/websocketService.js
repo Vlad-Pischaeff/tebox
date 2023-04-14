@@ -17,7 +17,7 @@ const HELPER = {
             const websites = await Websites.find();
             const users = await Users.find();
 
-            mappedSites = websites.reduce((summary, item) => {   // mappedSites
+            const objS = websites.reduce((summary, item) => {   // mappedSites
                 summary[item.id.toString()] = {
                     'siteName': item.site,
                     'siteHash': item.hash,
@@ -27,7 +27,7 @@ const HELPER = {
                 return summary;
             }, {});
 
-            mappedHashSites = websites.reduce((summary, item) => {   // mappedSites
+            const objH = websites.reduce((summary, item) => {   // mappedSites
                 summary[item.hash] = {
                     'siteName': item.site,
                     'siteId': item.id,
@@ -37,16 +37,20 @@ const HELPER = {
                 return summary;
             }, {});
 
-            mappedUsers = users.reduce((summary, item) => {     // mappedUsers
+            const arr = users.reduce((summary, item) => {     // mappedUsers
                 summary.push( ...item.team )
                 return summary;
             }, []);
 
-            sitesToWhichManagersSubscribe = mappedUsers.reduce((summary, item) => {
+            mappedUsers = arr;
+
+            const obj = mappedUsers.reduce((summary, item) => {
                 const key = item.member.toString();
                 summary[key] = item.sites;
                 return summary;
             }, {});
+
+            sitesToWhichManagersSubscribe = obj;
 
             mappedUsers.forEach((item) => {
                 if (item.sites.lenght !== 0) {
@@ -54,13 +58,16 @@ const HELPER = {
                         const memberId = item.member.toString();
 
                         const siteId = site.toString();
-                        mappedSites[siteId].teamUserIds.push(memberId);
+                        objS[siteId].teamUserIds.push(memberId);
 
-                        const siteHash = mappedSites[siteId].siteHash;
-                        mappedHashSites[siteHash].teamUserIds.push(memberId);
+                        const siteHash = objS[siteId].siteHash;
+                        objH[siteHash].teamUserIds.push(memberId);
                     })
                 }
             });
+
+            mappedSites = objS;
+            mappedHashSites = objH;
             // console.log('✅ mappedUsers..', mappedUsers)
             // console.log('✅ sitesToWhichManagersSubscribe..', sitesToWhichManagersSubscribe)
             // console.log('✅ mappedSites..', mappedSites)
@@ -87,7 +94,6 @@ const HELPER = {
     },
     async getSiteOwnerProfile(hash) {
         const site = mappedHashSites[`$2a$10$${hash}`];
-        // console.log('getSiteOwnerProfile...site...', site, hash)
 
         if (site) {
             const ownerId = site.ownerId;

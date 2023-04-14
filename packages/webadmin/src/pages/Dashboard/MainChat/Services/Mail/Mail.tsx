@@ -17,13 +17,11 @@ export const Mail = () => {
                     ?   <div className={s.MainPlaceholder}>
                             <p>No mails...</p>
                         </div>
-                    :   mails?.map((mail) => {
-                            return (
-                                <div key={mail.id} role="listbox">
-                                    <MailItem mail={mail} />
-                                </div>
-                            )
-                        })
+                    :   mails?.map((mail) => (
+                            <div key={mail.id} role="listbox">
+                                <MailItem mail={mail} />
+                            </div>
+                        ))
                 }
             </div>
 

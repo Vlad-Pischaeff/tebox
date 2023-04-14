@@ -12,8 +12,6 @@ export const MonitoredWebsitesItem = ({ siteId }: iProps) => {
         pollingInterval: 30000,
     });
 
-    // console.log('site...', site?.onlineUsers, site?.onlineUsersCounter)
-
     return (
         <>
             { !!site &&
@@ -35,7 +33,6 @@ export const MonitoredWebsitesItem = ({ siteId }: iProps) => {
                         alt="users"
                     />
                     <p className={s.PropertyUsersCounter}>
-                        {/* {usersCount} */}
                         {site.onlineUsersCounter}
                     </p>
                 </div>
