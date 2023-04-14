@@ -1,4 +1,7 @@
 import React, { useMemo, useState } from 'react';
+import { skipToken } from '@reduxjs/toolkit/query/react';
+import { useAppSelector } from 'store/hook';
+import { selectYourId } from 'store/slices/auth';
 import { useTodosQuery} from 'store/api/todosApi';
 import { TodosItem } from './TodosItem';
 import { iTodos } from 'store/api/apiTypes';
@@ -9,7 +12,8 @@ const TYPES = [ "All", "Completed", "Pending" ] as const;
 type tTypes = typeof TYPES[number];
 
 export const TodosMain = () => {
-    const { data, isSuccess, isLoading } = useTodosQuery('');
+    const yourId = useAppSelector(selectYourId);
+    const { data, isSuccess, isLoading } = useTodosQuery({ userId: yourId } ?? skipToken);
     const [ checked, setChecked ] = useState<tTypes>("All");
 
     const FILTER = useMemo(() => ({

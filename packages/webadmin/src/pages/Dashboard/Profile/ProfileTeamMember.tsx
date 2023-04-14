@@ -1,5 +1,7 @@
 import React from 'react';
-import { useAppDispatch } from 'store/hook';
+import { skipToken } from '@reduxjs/toolkit/query/react';
+import { useAppDispatch, useAppSelector } from 'store/hook';
+import { selectYourId } from 'store/slices/auth';
 import { setServicesModal, setEditedMember, eModal } from 'store/slices/ui';
 import { useGetUserQuery, useRemoveUserTeamMembersMutation } from 'store/api/usersApi';
 import { useWebsitesQuery } from 'store/api/websitesApi';
@@ -13,7 +15,8 @@ interface iProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const ProfileTeamMember = ({ user }: iProps ) => {
     const dispatch = useAppDispatch();
-    const { data: sites } = useWebsitesQuery('');
+    const yourId = useAppSelector(selectYourId);
+    const { data: sites } = useWebsitesQuery({ userId: yourId } ?? skipToken);
     const { data: member } = useGetUserQuery(user.member, { skip: !user.member });
     const [ removeUser ] = useRemoveUserTeamMembersMutation();
 

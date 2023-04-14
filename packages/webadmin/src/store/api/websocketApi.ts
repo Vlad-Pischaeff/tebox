@@ -80,7 +80,7 @@ export const websocketApi = createApi({
                         if (key === 'MAIL_FROM_CLIENT') {
                             dispatch(mailsApi.util.updateQueryData(
                                 'Mails',    // query endpoint
-                                yourId,
+                                { 'userId': yourId },
                                 (draftMails) => {
                                     const mail = msg[key].message as iMails;
                                     draftMails.push(mail);

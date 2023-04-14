@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { skipToken } from '@reduxjs/toolkit/query/react';
 import { useAppDispatch, useAppSelector } from 'store/hook';
 import { selectYourId } from 'store/slices/auth';
 import { useUpdateTeamMemberWebsitesMutation, useGetUserQuery } from 'store/api/usersApi';
@@ -18,7 +19,7 @@ const Form = () => {
     const member = useAppSelector(selectUIState('editedMember'));
     const yourId = useAppSelector(selectYourId);
     const { data: owner } = useGetUserQuery(yourId, { skip: !yourId });
-    const { data: sites } = useWebsitesQuery('');
+    const { data: sites } = useWebsitesQuery({ userId: yourId } ?? skipToken);
     const [ updWebsites ] = useUpdateTeamMemberWebsitesMutation();
     const { setValue, register, resetField, handleSubmit } = useForm<tFormInputs>();
 

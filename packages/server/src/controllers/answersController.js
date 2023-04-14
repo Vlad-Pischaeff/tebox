@@ -5,7 +5,8 @@ const AnswersService = require('#s/services/answersService');
 
 const answersController = () => {
     /** ******************************************
-     * get all answers - host/api/answers?offset=2&num=3
+     * get all answers - host/api/answers?userId=userid&offset=2&num=3
+     * @param {string} userId - user ID
      * @param {number} offset - initial point (optional)
      * @param {number} num - quantity (optional)
      ****************************************** */

@@ -7,9 +7,10 @@ export const websitesApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Websites'],
     endpoints: (builder) => ({
-        Websites: builder.query<iWebsites[], string>({
-            query: () => ({
-                url: 'websites'
+        Websites: builder.query<iWebsites[], object>({
+            query: (arg) => ({
+                url: 'websites',
+                params: arg
             }),
             providesTags: ['Websites'],
         }),
@@ -20,9 +21,10 @@ export const websitesApi = createApi({
             providesTags: ['Websites'],
             transformResponse: (response: iWebsites[]) => response.map((site) => site.hash),
         }),
-        getMonitoredWebsites: builder.query<string[], void>({
-            query: () => ({
-                url: `mngsites`
+        getMonitoredWebsites: builder.query<string[], object>({
+            query: (arg) => ({
+                url: `mngsites`,
+                params: arg
             }),
         }),
         getWebsite: builder.query<iWebsites, string>({

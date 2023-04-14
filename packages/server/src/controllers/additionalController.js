@@ -20,13 +20,13 @@ const additionalController = () => {
     // };
     /** ******************************************
      * get all monitored websites of manager - host/api/mngsites
-     * @param {string} id - manager ID
+     * @param {string} userId - manager ID
      ****************************************** */
     const getMonitoredWebsites = async (req, res) => {
         try {
-            const { id } = req;     // ..only if user is authorized
+            const { userId } = req.query;     // ..only if user is authorized
 
-            const websites = await HELPER.getSitesToWhichManagersSubscribe(id);
+            const websites = await HELPER.getSitesToWhichManagersSubscribe(userId);
 
             res.status(201).json(websites);
         } catch (e) {

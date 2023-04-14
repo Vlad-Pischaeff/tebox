@@ -7,9 +7,10 @@ export const answersApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Answers'],
     endpoints: (builder) => ({
-        Answers: builder.query<iAnswers[], string>({
-            query: () => ({
-                url: 'answers'
+        Answers: builder.query<iAnswers[], object>({
+            query: (arg) => ({
+                url: 'answers',
+                params: arg
             }),
             providesTags: ['Answers'],
         }),

@@ -5,7 +5,8 @@ const MailsService = require('#s/services/mailsService');
 
 const mailsController = () => {
     /** ******************************************
-     * get all mails - host/api/mails?offset=2&num=3
+     * get all mails - host/api/mails?userId=userid&offset=2&num=3
+     * @param {string} userId - user ID
      * @param {number} offset - initial point (optional)
      * @param {number} num - quantity (optional)
      ****************************************** */

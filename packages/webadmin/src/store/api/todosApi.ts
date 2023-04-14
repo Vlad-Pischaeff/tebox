@@ -7,9 +7,10 @@ export const todosApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Todos'],
     endpoints: (builder) => ({
-        Todos: builder.query<iTodos[], string>({
-            query: () => ({
-                url: 'todos'
+        Todos: builder.query<iTodos[], object>({
+            query: (arg) => ({
+                url: 'todos',
+                params: arg
             }),
             providesTags: ['Todos'],
         }),

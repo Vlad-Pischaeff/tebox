@@ -5,12 +5,12 @@ const Notes = require('#s/models/notes');
 class NotesService {
     async aggregateNotes(req) {
         let notes;
-        const { offset, num } = req.query;
+        const { offset, num, userId } = req.query;
 
         if (offset && num) {
             notes = await Notes.aggregate([
                 {
-                    $match: { user: req.id }
+                    $match: { user: userId }
                 },
                 {
                     $facet: {
@@ -24,11 +24,7 @@ class NotesService {
             const [value] = notes;
             notes = [...value.data];
         } else {
-            // use with authorization middleware
-            notes = await Notes.find({ user: req.id });
-
-            // use without authorization middleware
-            // notes = await Notes.find();
+            notes = await Notes.find({ user: userId });
         }
 
         return notes;

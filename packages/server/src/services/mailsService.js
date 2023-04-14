@@ -6,13 +6,12 @@ class MailsService {
     async aggregateMail(req) {
         let mails;
 
-        const { recipient } = req.body;
-        const { offset, num } = req.query;
+        const { offset, num, userId } = req.query;
 
         if (offset && num) {
             mails = await Mails.aggregate([
                 {
-                    $match: { recipients: recipient }
+                    $match: { recipients: userId }
                 },
                 {
                     $facet: {
@@ -26,7 +25,7 @@ class MailsService {
             const [value] = mails;
             mails = [...value.data];
         } else {
-            mails = await Mails.find({ recipients: recipient });
+            mails = await Mails.find({ recipients: userId });
         }
 
         return mails;

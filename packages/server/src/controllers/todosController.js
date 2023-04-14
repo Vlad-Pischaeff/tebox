@@ -5,7 +5,8 @@ const TodosService = require('#s/services/todosService');
 
 const todosController = () => {
     /** ******************************************
-     * get all todos - host/api/todos?offset=2&num=3
+     * get all todos - host/api/todos?userId=userid&offset=2&num=3
+     * @param {string} userId - user ID
      * @param {number} offset - initial point (optional)
      * @param {number} num - quantity (optional)
      ****************************************** */

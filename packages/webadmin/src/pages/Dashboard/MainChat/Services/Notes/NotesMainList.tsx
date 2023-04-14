@@ -1,13 +1,16 @@
 import React from 'react';
+import { skipToken } from '@reduxjs/toolkit/query/react';
 import { useAppSelector } from 'store/hook';
+import { selectYourId } from 'store/slices/auth';
 import { selectUIState } from 'store/slices/ui';
 import { useNotesQuery } from 'store/api/notesApi';
 import { NotesItem } from './NotesItem';
 import s from '../Services.module.sass';
 
 export const NotesMainList = () => {
+    const yourId = useAppSelector(selectYourId);
     const notesFilterColor = useAppSelector(selectUIState('notesFilterColor'));
-    const { data, isSuccess, isLoading } = useNotesQuery('');
+    const { data, isSuccess, isLoading } = useNotesQuery({ userId: yourId } ?? skipToken);
 
     const filterData = () => {
         if (isSuccess && data) {

@@ -8,7 +8,7 @@ import s from '../Services.module.sass';
 
 export const Mail = () => {
     const yourId = useAppSelector(selectYourId);
-    const { data: mails } = useMailsQuery(yourId ?? skipToken);
+    const { data: mails } = useMailsQuery({ userId: yourId } ?? skipToken);
 
     return (
         <>

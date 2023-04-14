@@ -5,7 +5,8 @@ const WebsitesService = require('#s/services/websitesService');
 
 const websitesController = () => {
     /** ******************************************
-     * get all websites - host/api/websites?offset=2&num=3
+     * get all websites - host/api/websites?userId=userid&offset=2&num=3
+     * @param {string} userId - user ID
      * @param {number} offset - initial point (optional)
      * @param {number} num - quantity (optional)
      ****************************************** */

@@ -1,15 +1,20 @@
 import React from 'react';
+import { skipToken } from '@reduxjs/toolkit/query/react';
+import { useAppSelector } from 'store/hook';
+import { selectYourId } from 'store/slices/auth';
 import { useWebsitesQuery, useGetMonitoredWebsitesQuery } from 'store/api/websitesApi';
 import { OwnWebsitesItem } from './OwnWebsitesItem';
 import { MonitoredWebsitesItem } from './MonitoredWebsitesItem';
 import s from '../Services.module.sass';
 
 export const Websites = () => {
-    const { data: monitoredSites } = useGetMonitoredWebsitesQuery();
-    const { data: ownSites } = useWebsitesQuery('',{
+    const yourId = useAppSelector(selectYourId);
+    const { data: monitoredSites } = useGetMonitoredWebsitesQuery({ userId: yourId } ?? skipToken);
+    const { data: ownSites } = useWebsitesQuery({ userId: yourId } ?? skipToken,{
         pollingInterval: 30000,
     });
 
+    console.log('Websites..', ownSites, monitoredSites)
     return (
         <>
             <div className={s.Main}>

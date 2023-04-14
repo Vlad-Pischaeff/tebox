@@ -5,7 +5,8 @@ const NotesService = require('#s/services/notesService');
 
 const notesController = () => {
     /** ******************************************
-     * get all notes - host/api/notes?offset=2&num=3
+     * get all notes - host/api/notes?userId=userid&offset=2&num=3
+     * @param {string} userId - user ID
      * @param {number} offset - initial point (optional)
      * @param {number} num - quantity (optional)
      ****************************************** */

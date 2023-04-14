@@ -7,9 +7,10 @@ export const notesApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Notes'],
     endpoints: (builder) => ({
-        Notes: builder.query<iNotes[], string>({
-            query: () => ({
-                url: 'notes'
+        Notes: builder.query<iNotes[], object>({
+            query: (arg) => ({
+                url: 'notes',
+                params: arg
             }),
             providesTags: ['Notes'],
         }),

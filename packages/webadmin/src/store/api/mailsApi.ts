@@ -7,11 +7,10 @@ export const mailsApi = createApi({
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Mails'],
     endpoints: (builder) => ({
-        Mails: builder.query<iMails[], string>({
-            query: (recipient) => ({
+        Mails: builder.query<iMails[], object>({
+            query: (arg) => ({
                 url: 'mails',
-                method: 'POST',
-                body: { recipient }
+                params: arg
             }),
             providesTags: ['Mails'],
         }),

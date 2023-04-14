@@ -5,7 +5,8 @@ const Users = require('#s/models/users');
 const MailsService = require('#s/services/mailsService');
 const WebsitesService = require('#s/services/WebsitesService');
 
-let mappedSites = {}, mappedHashSites = {}, mappedUsers = [];
+let mappedSites = {}, mappedHashSites = {};
+let mappedUsers = [];
 let WebSockets = {};
 let sitesToWhichManagersSubscribe = {};
 const mapWsToClient = new WeakMap();
@@ -18,7 +19,7 @@ const HELPER = {
             const users = await Users.find();
 
             const objS = websites.reduce((summary, item) => {   // mappedSites by ID
-                summary[item.id.toString()] = {
+                summary[item.id] = {
                     'siteName': item.site,
                     'siteHash': item.hash,
                     'ownerId': item.user.toString(),
@@ -82,6 +83,9 @@ const HELPER = {
     getMappedHashSites() {
         return mappedHashSites;
     },
+    getMappedHashSite(hash) {
+        return mappedHashSites[`$2a$10$${hash}`];
+    },
     getMappedUsers() {
         return mappedUsers;
     },
@@ -93,7 +97,7 @@ const HELPER = {
         }
     },
     async getSiteOwnerProfile(hash) {
-        const site = mappedHashSites[`$2a$10$${hash}`];
+        const site = HELPER.getMappedHashSite(hash);
 
         if (site) {
             const ownerId = site.ownerId;
@@ -164,7 +168,7 @@ const DISPATCHER = {
     MSG_FROM_CLIENT(_, data) {                  // ✅
         const { to, from, message } = data['MSG_FROM_CLIENT'];
 
-        const site = mappedHashSites[`$2a$10$${to}`];
+        const site = HELPER.getMappedHashSite(to);
 
         const { ownerId, teamUserIds } = site;
         const recipients = [ ownerId, ...teamUserIds ];
@@ -180,7 +184,7 @@ const DISPATCHER = {
     async MAIL_FROM_CLIENT(ws, data) {          // ✅
         const { to, from } = data['MAIL_FROM_CLIENT'];
 
-        const site = mappedHashSites[`$2a$10$${to}`];
+        const site = HELPER.getMappedHashSite(to);
 
         const { ownerId, teamUserIds } = site;
         const recipients = [ ownerId, ...teamUserIds ];

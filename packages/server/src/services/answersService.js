@@ -5,12 +5,12 @@ const Answers = require('#s/models/answers');
 class AnswersService {
     async aggregateAnswers(req) {
         let answers;
-        const { offset, num } = req.query;
+        const { offset, num, userId } = req.query;
 
         if (offset && num) {
             answers = await Answers.aggregate([
                 {
-                    $match: { user: req.id }
+                    $match: { user: userId }
                 },
                 {
                     $facet: {
@@ -24,11 +24,7 @@ class AnswersService {
             const [value] = answers;
             answers = [...value.data];
         } else {
-            // use with authorization middleware
-            answers = await Answers.find({ user: req.id });
-
-            // use without authorization middleware
-            // answers = await Answers.find();
+            answers = await Answers.find({ user: userId });
         }
 
         return answers;

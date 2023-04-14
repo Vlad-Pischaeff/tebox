@@ -6,12 +6,12 @@ const Users = require('#s/models/users');
 class WebsitesService {
     async aggregateWebsites(req) {
         let websites;
-        const { offset, num } = req.query;
+        const { offset, num, userId } = req.query;
 
         if (offset && num) {
             websites = await Websites.aggregate([
                 {
-                    $match: { user: req.id }
+                    $match: { user: userId }
                 },
                 {
                     $facet: {
@@ -25,11 +25,7 @@ class WebsitesService {
             const [value] = websites;
             websites = [...value.data];
         } else {
-            // use with authorization middleware
-            websites = await Websites.find({ user: req.id });
-
-            // use without authorization middleware
-            // websites = await Websites.find();
+            websites = await Websites.find({ user: userId });
         }
 
         return websites;
