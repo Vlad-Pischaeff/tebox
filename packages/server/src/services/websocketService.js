@@ -17,7 +17,7 @@ const HELPER = {
             const websites = await Websites.find();
             const users = await Users.find();
 
-            const objS = websites.reduce((summary, item) => {   // mappedSites
+            const objS = websites.reduce((summary, item) => {   // mappedSites by ID
                 summary[item.id.toString()] = {
                     'siteName': item.site,
                     'siteHash': item.hash,
@@ -27,7 +27,7 @@ const HELPER = {
                 return summary;
             }, {});
 
-            const objH = websites.reduce((summary, item) => {   // mappedSites
+            const objH = websites.reduce((summary, item) => {   // mappedSites by Hash
                 summary[item.hash] = {
                     'siteName': item.site,
                     'siteId': item.id,
@@ -37,7 +37,7 @@ const HELPER = {
                 return summary;
             }, {});
 
-            const arr = users.reduce((summary, item) => {     // mappedUsers
+            const arr = users.reduce((summary, item) => {       // mappedUsers
                 summary.push( ...item.team )
                 return summary;
             }, []);
