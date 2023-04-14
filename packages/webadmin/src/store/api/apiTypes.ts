@@ -76,3 +76,9 @@ export interface iChatUserMessages {
 export interface iChat {
     [x: string]: iChatUserMessages
 }
+
+export interface iQuery {
+    userId: string,
+    offset?: number | string,
+    num?: number | string
+}

@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReAuth } from './baseQuery';
-import { iNotes } from './apiTypes';
+import { iNotes, iQuery } from './apiTypes';
 
 export const notesApi = createApi({
     reducerPath: 'notesApi',
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Notes'],
     endpoints: (builder) => ({
-        Notes: builder.query<iNotes[], object>({
+        Notes: builder.query<iNotes[], iQuery>({
             query: (arg) => ({
                 url: 'notes',
                 params: arg

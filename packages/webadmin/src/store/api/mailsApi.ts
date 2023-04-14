@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReAuth } from './baseQuery';
-import { iMails } from './apiTypes';
+import { iMails, iQuery } from './apiTypes';
 
 export const mailsApi = createApi({
     reducerPath: 'mailsApi',
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Mails'],
     endpoints: (builder) => ({
-        Mails: builder.query<iMails[], object>({
+        Mails: builder.query<iMails[], iQuery>({
             query: (arg) => ({
                 url: 'mails',
                 params: arg

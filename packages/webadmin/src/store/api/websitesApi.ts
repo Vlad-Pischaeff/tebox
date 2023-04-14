@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReAuth } from './baseQuery';
-import { iWebsites } from './apiTypes';
+import { iWebsites, iQuery } from './apiTypes';
 
 export const websitesApi = createApi({
     reducerPath: 'websitesApi',
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Websites'],
     endpoints: (builder) => ({
-        Websites: builder.query<iWebsites[], object>({
+        Websites: builder.query<iWebsites[], iQuery>({
             query: (arg) => ({
                 url: 'websites',
                 params: arg
@@ -21,7 +21,7 @@ export const websitesApi = createApi({
             providesTags: ['Websites'],
             transformResponse: (response: iWebsites[]) => response.map((site) => site.hash),
         }),
-        getMonitoredWebsites: builder.query<string[], object>({
+        getMonitoredWebsites: builder.query<string[], iQuery>({
             query: (arg) => ({
                 url: `mngsites`,
                 params: arg

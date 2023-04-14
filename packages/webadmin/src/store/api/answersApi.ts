@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReAuth } from './baseQuery';
-import { iAnswers } from './apiTypes';
+import { iAnswers, iQuery } from './apiTypes';
 
 export const answersApi = createApi({
     reducerPath: 'answersApi',
     baseQuery: baseQueryWithReAuth,
     tagTypes: ['Answers'],
     endpoints: (builder) => ({
-        Answers: builder.query<iAnswers[], object>({
+        Answers: builder.query<iAnswers[], iQuery>({
             query: (arg) => ({
                 url: 'answers',
                 params: arg
