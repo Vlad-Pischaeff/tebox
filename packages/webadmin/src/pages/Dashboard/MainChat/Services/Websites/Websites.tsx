@@ -14,7 +14,7 @@ export const Websites = () => {
         pollingInterval: 30000,
     });
 
-    console.log('Websites..', ownSites, monitoredSites)
+    // console.log('Websites..', ownSites, monitoredSites)
     return (
         <>
             <div className={s.Main}>
