@@ -156,6 +156,8 @@ const DISPATCHER = {
         let Socket = MAPS.getWS(to);                    // ..get WebSocket of client
         if (Socket) Socket.send(JSON.stringify(data));  // ..retransmit message to client
 
+        // 💡🚩 TODO add retransmit message to other managers of this site
+
         console.log('🔹 ws MSG_FROM_MANAGER..');
     },
     MSG_FROM_SERVER(ws, data) {                 // ✅
