@@ -5,7 +5,7 @@ import { ChatBubble } from './ChatBubble';
 import { iMessage } from  'store/api/apiTypes';
 import s from './Chat.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement>{
+interface iProps {
     group: iMessage[]
 }
 

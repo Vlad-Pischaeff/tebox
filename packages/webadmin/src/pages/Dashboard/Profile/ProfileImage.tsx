@@ -3,7 +3,7 @@ import { ProfileChangeImageButton } from './ProfileChangeImageButton';
 import { tUser } from 'store/api/apiTypes';
 import s from './Profile.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     user: tUser
 }
 

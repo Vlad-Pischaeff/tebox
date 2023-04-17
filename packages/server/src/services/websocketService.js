@@ -156,7 +156,7 @@ const DISPATCHER = {
         let Socket = MAPS.getWS(to);                    // ..get WebSocket of client
         if (Socket) Socket.send(JSON.stringify(data));  // ..retransmit message to client
 
-        // 💡🚩 TODO add retransmit message to other managers of this site
+        // 💡 add retransmit message to other managers of this site
         const site = await WebsitesService.getWebsiteUserLogedIn(to);
 
         const siteHashMap = HELPER.getMappedHashSite(site.hash.substring(7));
@@ -167,7 +167,7 @@ const DISPATCHER = {
         // ✔️..send message to other site's managers exclude sender
         recipients.forEach((recipient) => {
             if ( recipient !== from ) {
-                const MSG = DISPATCHER.msg('MSG_FROM_MANAGER', to, recipient, message);
+                const MSG = DISPATCHER.msg('MSG_FROM_MANAGER', to, from, message);
                 let Socket = MAPS.getWS(recipient);     // ✔️..get WebSocket of recipient
                 if (Socket) Socket.send(MSG);
             }

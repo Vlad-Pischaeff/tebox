@@ -7,7 +7,7 @@ import { iWebsites } from 'store/api/apiTypes';
 import * as ICON from 'assets/icons';
 import s from './Profile.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     item: iWebsites
 }
 
