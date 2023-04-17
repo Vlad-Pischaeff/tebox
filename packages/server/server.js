@@ -1,9 +1,24 @@
 'use strict';
 
-const express = require('express');
+let privateKey, certificate, credentials;
 
+const fs = require('fs');
+const express = require('express');
 const app = express();
-const server = require('http').createServer(app);
+
+const isProduction = process.env.NODE_ENV === 'production'
+                        ? true
+                        : false;
+
+if (isProduction) {
+    privateKey = fs.readFileSync('./keys/privkey.pem', { encoding: 'utf8', flag: 'r' });
+    certificate = fs.readFileSync('./keys/cert.pem', { encoding: 'utf8', flag: 'r' });
+    credentials = { key: privateKey, cert: certificate };
+}
+
+const server = isProduction
+                    ? require('https').createServer(credentials, app)
+                    : require('http').createServer(app);
 
 require('#s/startup/db')();
 require('#s/startup/cors')(app);
