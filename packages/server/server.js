@@ -1,11 +1,11 @@
 'use strict';
 
 const config = require('@tebox/config/server');
-let privateKey, certificate, credentials, server;
-
 const fs = require('fs');
 const express = require('express');
 const app = express();
+
+let privateKey, certificate, credentials, server;
 
 const isHTTPs = config.SERVER_PROTO === "http" ? false : true;
 
