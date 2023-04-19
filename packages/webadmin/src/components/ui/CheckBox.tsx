@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './CheckBox.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     checked: boolean,
     onChange: () => void,
     idx: number | string

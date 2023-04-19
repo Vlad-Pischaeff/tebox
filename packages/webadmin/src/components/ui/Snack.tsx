@@ -3,7 +3,7 @@ import { useAppDispatch } from 'store/hook';
 import { resetMessage } from "store/slices/ui";
 import s from './Snack.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     message: string
 }
 

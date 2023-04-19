@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Delete.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     checked?: boolean,
     onClick?: () => void
 }

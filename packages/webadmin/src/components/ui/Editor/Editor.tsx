@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import { modules } from './EditorConfig';
 import s from './Editor.module.sass';
 
-interface iProps extends React.HTMLAttributes<HTMLDivElement> {
+interface iProps {
     content: string | undefined,
     onSubmit: () => void,
     onClose: () => void,
