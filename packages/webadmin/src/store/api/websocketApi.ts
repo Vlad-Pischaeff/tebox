@@ -56,14 +56,23 @@ export const websocketApi = createApi({
 
                     socket.onmessage = (message) => {
                         const msg = JSON.parse(message.data) satisfies iWebSocketMessage;
+
                         console.log('💬 socket..', msg);
+
                         const [ key ] = Object.keys(msg);
+                        const MSG_TYPES = [
+                            'MSG_FROM_CLIENT',
+                            'MSG_FROM_SERVER',
+                            'MSG_FROM_MANAGER'
+                        ];
 
-                        if (key === 'MSG_FROM_CLIENT' ||
-                            key === 'MSG_FROM_SERVER') {
+                        if (MSG_TYPES.includes(key)) {
+                            const idx = (key === 'MSG_FROM_MANAGER')
+                                ?   msg[key].to
+                                :   msg[key].from;
 
                             updateCachedData((draft) => {
-                                const idx = msg[key].from;
+                                // const idx = msg[key].from;
 
                                 if (idx in draft) {
                                     // обновляем счетчик, если пользователь на выбран
@@ -76,21 +85,21 @@ export const websocketApi = createApi({
                             });
                         }
 
-                        if (key === 'MSG_FROM_MANAGER') {
+                        // if (key === 'MSG_FROM_MANAGER') {
 
-                            updateCachedData((draft) => {
-                                const idx = msg[key].to;
+                        //     updateCachedData((draft) => {
+                        //         // const idx = msg[key].to;
 
-                                if (idx in draft) {
-                                    // обновляем счетчик, если пользователь на выбран
-                                    (idx !== selectedtUserID) && draft[idx].cnt++;
-                                } else {
-                                    draft[idx] = { 'msgs': [], 'cnt': 1 };
-                                }
+                        //         if (idx in draft) {
+                        //             // обновляем счетчик, если пользователь на выбран
+                        //             (idx !== selectedtUserID) && draft[idx].cnt++;
+                        //         } else {
+                        //             draft[idx] = { 'msgs': [], 'cnt': 1 };
+                        //         }
 
-                                draft[idx].msgs.push(msg[key]);
-                            });
-                        }
+                        //         draft[idx].msgs.push(msg[key]);
+                        //     });
+                        // }
 
                         // ..update cache of mails, after recieving new mail from client
                         if (key === 'MAIL_FROM_CLIENT') {

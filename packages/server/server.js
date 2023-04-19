@@ -7,7 +7,7 @@ const app = express();
 
 let privateKey, certificate, credentials, server;
 
-const isHTTPs = config.SERVER_PROTO === "https" ? false : true;
+const isHTTPs = config.SERVER_PROTO === "https" ? true : false;
 
 if (isHTTPs) {
     privateKey = fs.readFileSync('./keys/privkey.pem', { encoding: 'utf8', flag: 'r' });
