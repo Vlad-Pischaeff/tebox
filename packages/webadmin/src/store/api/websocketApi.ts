@@ -21,7 +21,7 @@ export const websocketApi = createApi({
                 const socket = getSocket();
 
                 return new Promise(resolve => {
-                    socket.send(chatMessageContent)
+                    socket.send(chatMessageContent);
                     resolve({ data: 'OK' });
                 })
             },
@@ -51,7 +51,7 @@ export const websocketApi = createApi({
                                     'date': Date.now()
                                 }
                             }));
-                        console.log('✔️ socket opened..')
+                        console.log('✔️ socket opened..');
                     };
 
                     socket.onmessage = (message) => {
@@ -72,34 +72,15 @@ export const websocketApi = createApi({
                                 :   msg[key].from;
 
                             updateCachedData((draft) => {
-                                // const idx = msg[key].from;
-
                                 if (idx in draft) {
                                     // обновляем счетчик, если пользователь на выбран
                                     (idx !== selectedtUserID) && draft[idx].cnt++;
                                 } else {
                                     draft[idx] = { 'msgs': [], 'cnt': 1 };
                                 }
-
                                 draft[idx].msgs.push(msg[key]);
                             });
                         }
-
-                        // if (key === 'MSG_FROM_MANAGER') {
-
-                        //     updateCachedData((draft) => {
-                        //         // const idx = msg[key].to;
-
-                        //         if (idx in draft) {
-                        //             // обновляем счетчик, если пользователь на выбран
-                        //             (idx !== selectedtUserID) && draft[idx].cnt++;
-                        //         } else {
-                        //             draft[idx] = { 'msgs': [], 'cnt': 1 };
-                        //         }
-
-                        //         draft[idx].msgs.push(msg[key]);
-                        //     });
-                        // }
 
                         // ..update cache of mails, after recieving new mail from client
                         if (key === 'MAIL_FROM_CLIENT') {
