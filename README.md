@@ -55,13 +55,13 @@ npm install pm2@latest -g
 pm2 --name tebox --log tebox.log start npm -- start
 ```
 
-- подключитесь к `http://YourServerName:5000`
+- подключитесь к `http://YourServerName:5001`
 
 - Sign Up
 
-- add `YourControlledWebsiteName` into Your profile
+- add `YourControlledWebsiteName.com` into Your profile
 
-- copy `KEY` of `YourControlledWebsiteName`
+- copy `KEY` of `YourControlledWebsiteName.com`
 
 - add `tebutton` web-component to Your controlled website
 ```html
@@ -69,12 +69,12 @@ pm2 --name tebox --log tebox.log start npm -- start
 <html>
     <head>
         ...
-        <script type="module" src="http://YourServerName:5000/dist/tebutton.esm.js"></script>
+        <script type="module" src="http://YourServerName:5001/dist/tebutton.esm.js"></script>
     </head>
     <body>
         ...
         <te-button
-            url="http://YourServerName:5000/client"
+            url="http://YourServerName:5001/client"
             host_key="KEY of YourControlledWebsiteName">
         </te-button>
     </body>
