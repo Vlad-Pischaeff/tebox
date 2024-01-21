@@ -4,7 +4,7 @@
 
 - before starting the program, make sure that you have installed lerna
 ```sh
-npm i -g lerna!@6.5.1
+npm i -g lerna@6.5.1
 ```
 - в каталоге программы выполните команды
 ```sh
