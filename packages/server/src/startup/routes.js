@@ -35,9 +35,9 @@ module.exports = app => {
     app.use('/api', ROUTER.additionalRouter);
 
     if (isProduction) {
-        app.use('/', express.static(path.join(__dirname, '../../..', 'dashboard', 'build')));
+        app.use('/', express.static(path.join(__dirname, '../../..', 'webadmin', 'build')));
         app.get('*', (req, res) => {
-            res.sendFile(path.resolve(__dirname, '../../..', 'dashboard', 'build', 'index.html'));
+            res.sendFile(path.resolve(__dirname, '../../..', 'webadmin', 'build', 'index.html'));
         });
     }
 };
