@@ -3,7 +3,7 @@
 const Websites = require('#s/models/websites');
 const Users = require('#s/models/users');
 const MailsService = require('#s/services/mailsService');
-const WebsitesService = require('#s/services/WebsitesService');
+const WebsitesService = require("#s/services/websitesService");
 
 let mappedSites = {}, mappedHashSites = {};
 let mappedUsers = [];
