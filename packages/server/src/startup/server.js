@@ -1,7 +1,7 @@
 'use strict';
 
 const config = require('@tebox/config/server');
-const PORT = config.SERVER_PORT || 5000;
+const PORT = config.SERVER_PORT || 5001;
 
 module.exports = async (server) => {
     try {
