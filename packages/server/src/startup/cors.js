@@ -1,19 +1,26 @@
 'use strict';
 
 const cors = require('cors');
-
+const config = require("@tebox/config/server");
+const {
+    REACT_APP_SERVER_PROTO,
+    REACT_APP_SERVER_ADDR,
+    REACT_APP_SERVER_PORT,
+    REACT_APP_NGINX_REVERSE_PROXY,
+} = config;
 
 const corsOptions = {
     origin: [
-        "http://tebox.mooo.com",
-        "https://tebox.mooo.com",
-        "http://tebox.mooo.com:5001",
-        "https://tebox.mooo.com:5001",
+        `${REACT_APP_SERVER_PROTO}://${REACT_APP_SERVER_ADDR}:${REACT_APP_SERVER_PORT}`,
+        `${REACT_APP_SERVER_PROTO}://${REACT_APP_SERVER_ADDR}`,
     ],
-    optionSuccessStatus: 200, // для старых браузеров и SmartTV
     credentials: true,
 };
 
-module.exports = app => {
-    app.use(cors(corsOptions));
+module.exports = (app) => {
+    if (REACT_APP_NGINX_REVERSE_PROXY === "yes") {
+        app.use(cors(corsOptions));
+    } else {
+        app.use(cors());
+    }
 };

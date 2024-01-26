@@ -31,8 +31,12 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <div className="App-link">
-                    <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                        tebox &copy;
+                    <a
+                        href="https://telebox.slumbo.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        telebox &copy;
                     </a>
                 </div>
                 <div className="App-profile">
@@ -41,16 +45,16 @@ function App() {
             </header>
 
             <main className="App-main">
-                <div className={isMail ? 'full' : 'hidden'}>
+                <div className={isMail ? "full" : "hidden"}>
                     <MainMailForm />
                 </div>
-                <div className={isMail ? 'hidden' : 'full'}>
+                <div className={isMail ? "hidden" : "full"}>
                     <MainChat />
                 </div>
             </main>
-                <footer className={isMail ? 'hidden' : 'App-footer'}>
-                    <MainChatInput />
-                </footer>
+            <footer className={isMail ? "hidden" : "App-footer"}>
+                <MainChatInput />
+            </footer>
         </div>
     );
 }

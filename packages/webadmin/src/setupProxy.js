@@ -4,7 +4,7 @@ const config = require('@tebox/config/server');
 
 const ADDR = config.SERVER_ADDR;
 const PROTO = config.SERVER_PROTO;
-const PORT = config.SERVER_PORT || 5001;
+const PORT = config.SERVER_PORT || 5002;
 const PROXY = `${PROTO}://${ADDR}:${PORT}`;
 
 const httpProxy = createProxyMiddleware({

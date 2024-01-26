@@ -38,15 +38,16 @@ const PORT = process.env.NODE_ENV === "development"
                 ? 3000
                 : config.SERVER_PORT;
 
-config.URL = `${config.SERVER_PROTO}://${ADDR}:${PORT}`;
+const WS_PROTO = config.SERVER_PROTO === "https" ? "wss" : "ws";
 
-// for use with Nginx reverse proxy
-// config.URL = `${config.SERVER_PROTO}://${ADDR}`;
-
-config.SERVER_URL = `${config.SERVER_PROTO}://${config.SERVER_ADDR}:${config.SERVER_PORT}`;
-
-const WS_PROTO = config.SERVER_PROTO === 'https' ? 'wss' : 'ws';
-
-config.WEBSOCKET_URL = `${WS_PROTO}://${config.SERVER_ADDR}:${config.SERVER_PORT}/ws`;
+if (process.env.REACT_APP_NGINX_REVERSE_PROXY === "yes") {
+    config.URL = `${config.SERVER_PROTO}://${ADDR}`;
+    config.SERVER_URL = `${config.SERVER_PROTO}://${config.SERVER_ADDR}`;
+    config.WEBSOCKET_URL = `${WS_PROTO}://${config.SERVER_ADDR}/ws`;
+} else {
+    config.URL = `${config.SERVER_PROTO}://${ADDR}:${PORT}`;
+    config.SERVER_URL = `${config.SERVER_PROTO}://${config.SERVER_ADDR}:${config.SERVER_PORT}`;
+    config.WEBSOCKET_URL = `${WS_PROTO}://${config.SERVER_ADDR}:${config.SERVER_PORT}/ws`;
+}
 
 export default config;
